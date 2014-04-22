@@ -1,0 +1,78 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    tools:context="ch.ffhs.privatecloudffhs.Main" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_gap"
+        android:orientation="vertical"
+        tools:ignore="UselessParent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_gap"
+                android:scaleType="centerInside"
+                android:src="@drawable/logo"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:text="Last synced on 04.03.2014 17:03"
+            android:textColor="#FFF"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/Main_Button_SyncNow"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:onClick="onButtonClicked"
+            android:text="@string/main_button_syncnow" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="40dp" >
+
+            <Button
+                android:id="@+id/Main_Button_Settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_gap"
+                android:layout_marginRight="@dimen/default_gap"
+                android:layout_weight="1"
+                android:onClick="onButtonClicked"
+                android:text="@string/main_button_settings" />
+
+            <Button
+                android:id="@+id/Main_Button_Folders"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"          
+                android:layout_marginRight="@dimen/default_gap"
+                android:layout_weight="1"
+                android:onClick="onButtonClicked"
+                android:text="@string/main_button_folders" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
