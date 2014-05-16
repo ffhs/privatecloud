@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="PrivateCloudFFHS/libs/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="PrivateCloudFFHS/bin/dexedLibs/appcompat_v7_2-d111bef8a3eb93007dc1408a9c34444c.jar"/>
+	<classpathentry exported="true" kind="lib" path="PrivateCloudFFHS/bin/dexedLibs/android-support-v7-appcompat-c96615ffa81386c526ffcea067c56e0d.jar"/>
+	<classpathentry exported="true" kind="lib" path="PrivateCloudFFHS/bin/dexedLibs/android-support-v4-35d54f5a49a5d9935d4988601f5e8434.jar"/>
+	<classpathentry kind="src" path="PrivateCloudFFHS/gen"/>
+	<classpathentry kind="src" path="PrivateCloudFFHS/src"/>
+	<classpathentry kind="output" path="PrivateCloudFFHS/bin/classes"/>
+</classpath>
