@@ -12,20 +12,34 @@
         android:orientation="vertical"
         tools:ignore="UselessParent" >
 
-        <ListView
-            android:id="@+id/Folders_List"
-            android:layout_width="match_parent"
-            android:layout_height="272dp"
-            android:layout_weight="0.10" >
-        </ListView>
-
         <Button
             android:id="@+id/Folders_Button_Add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:onClick="onButtonClicked"
             android:text="@string/folders_button_add" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <Button
+                android:id="@+id/Folders_Button_Edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onButtonClicked"
+                android:text="@string/folders_button_edit" />
+
+            <Button
+                android:id="@+id/Folders_Button_Delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onButtonClicked"
+                android:text="@string/folders_button_delete" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

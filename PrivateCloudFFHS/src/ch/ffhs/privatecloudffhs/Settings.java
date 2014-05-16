@@ -1,13 +1,8 @@
 package ch.ffhs.privatecloudffhs;
 
-import ch.ffhs.privatecloudffhs.util.SystemUiHider;
-
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 
 public class Settings extends Activity {
@@ -19,6 +14,20 @@ public class Settings extends Activity {
 		setContentView(R.layout.activity_settings);
 
 	}
-
+    public void onButtonClicked(View v){
+    	switch(v.getId()) {
+    		case R.id.Settings_Button_Genkey:
+    			RsaKeyGen rsakeygen = new RsaKeyGen(this);
+    			//rsakeygen.GenerateKey();
+    			rsakeygen.GenerateMockKey();
+    		break;
+    		case R.id.Settings_Button_Showkey:
+    			ReadKey readkey = new ReadKey(this);
+    			readkey.ReadFile();
+    		break;
+    		
+    		
+    	}
+    }
 
 }

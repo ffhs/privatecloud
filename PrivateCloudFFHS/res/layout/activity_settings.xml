@@ -106,10 +106,11 @@
         </FrameLayout>
 
         <Button
-            android:id="@+id/Folders_Button_Add"
+            android:id="@+id/Settings_Button_Showkey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:onClick="onButtonClicked"
             android:text="@string/settings_button_showpubkey" />
 
         <Button
@@ -117,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:onClick="onButtonClicked"
             android:text="@string/settings_button_genkey" />
 
         <LinearLayout
