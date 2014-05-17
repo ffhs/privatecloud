@@ -13,6 +13,8 @@
     <string name="folders_button_add">Add</string>
     <string name="folders_button_edit">Edit</string>
     <string name="folders_button_delete">Delete</string>
+    <string name="folders_button_save">Save</string>
+    <string name="folders_button_cancel">cancel</string>
     <string name="settings_label_title">Settings</string>
     <string name="settings_label_hostname">Hostname</string>
     <string name="settings_label_port">Port</string>

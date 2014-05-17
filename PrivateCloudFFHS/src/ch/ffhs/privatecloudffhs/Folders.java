@@ -7,17 +7,19 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView.MultiChoiceModeListener;
-
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -115,6 +117,9 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
   				});
       				
       			FolderChooseDialog.chooseFile_or_Dir();
+    		break;
+    		case R.id.Folders_Button_cancel:
+    			this.finish();
     		break;
     	}
     }

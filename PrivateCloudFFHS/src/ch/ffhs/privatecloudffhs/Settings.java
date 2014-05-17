@@ -25,6 +25,10 @@ public class Settings extends Activity {
     			ReadKey readkey = new ReadKey(this);
     			readkey.ReadFile();
     		break;
+    		case R.id.Settings_Button_cancel:
+    			this.finish();
+    		break;
+    		
     		
     		
     	}

@@ -26,6 +26,19 @@
             android:layout_margin="10dp"
             android:onClick="onButtonClicked"
             android:text="@string/folders_button_add" />
+
+        <Button
+            android:id="@+id/Folders_Button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"        
+            android:layout_weight="1"
+            android:onClick="onButtonClicked"
+            android:text="@string/folders_button_cancel" />
+
     </LinearLayout>
+  	
+
+            
+
 
 </FrameLayout>
