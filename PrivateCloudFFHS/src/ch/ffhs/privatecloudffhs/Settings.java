@@ -1,5 +1,7 @@
 package ch.ffhs.privatecloudffhs;
 
+import ch.ffhs.privatecloudffhs.connection.ReadKey;
+import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

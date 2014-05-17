@@ -1,5 +1,6 @@
 package ch.ffhs.privatecloudffhs;
 
+import ch.ffhs.privatecloudffhs.connection.SshConnection;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
 import android.content.Intent;
@@ -41,8 +42,6 @@ public class Main extends Activity {
     		case R.id.Main_Button_SyncNow:
     			SshConnection sshconnection = new SshConnection(this);
 	        	sshconnection.Connect();
-    			
-    			
     		break;
     		
     		case R.id.Main_Button_Folders:

@@ -2,6 +2,7 @@ package ch.ffhs.privatecloudffhs;
 
 import ch.ffhs.privatecloudffhs.list.Folder;
 import ch.ffhs.privatecloudffhs.list.FoldersListAdapter;
+import ch.ffhs.privatecloudffhs.util.SimpleFileDialog;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
 import android.os.Bundle;
