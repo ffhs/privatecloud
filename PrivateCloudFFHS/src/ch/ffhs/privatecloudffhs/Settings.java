@@ -1,6 +1,5 @@
 package ch.ffhs.privatecloudffhs;
 
-import ch.ffhs.esa.block4.save_restore_current_state.R;
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
 import android.app.Activity;
@@ -17,12 +16,9 @@ public class Settings extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_settings);
-		SharedPreferences settings = getSharedPreferences(R.string.perfname,MODE_PRIVATE);
-        counter = settings.getInt(KEY_COUNTER, 0);
-        persistText = settings.getString(KEY_PERSIST_TXT, getString(R.string.text_eingeben));
+//		SharedPreferences settings = getSharedPreferences(R.string.perf,MODE_PRIVATE);
+ //       String hostname = settings.getString(R.string.perfs_hostname);
         
-        final EditText editPersistText = (EditText) findViewById(R.id.persistentEditText);
-        editPersistText.setText(persistText);
 	}
     public void onButtonClicked(View v){
     	switch(v.getId()) {
