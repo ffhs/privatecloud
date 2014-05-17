@@ -1190,6 +1190,13 @@ containing a value of this type.
         public static final int main_button_settings=0x7f0a000f;
         public static final int main_button_syncnow=0x7f0a0011;
         public static final int main_label_title=0x7f0a000e;
+        public static final int perfname=0x7f0a002e;
+        public static final int perfs_hostname=0x7f0a0028;
+        public static final int perfs_keyorpw=0x7f0a002d;
+        public static final int perfs_password=0x7f0a002c;
+        public static final int perfs_port=0x7f0a0029;
+        public static final int perfs_remotedir=0x7f0a002b;
+        public static final int perfs_username=0x7f0a002a;
         public static final int settings_button_cancel=0x7f0a0023;
         public static final int settings_button_genkey=0x7f0a0021;
         public static final int settings_button_save=0x7f0a0022;

@@ -28,4 +28,11 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 	<string name="confirm_folder_added">Folder added successfully to sync list</string>
+	<string name="perfs_hostname">hostname</string>
+	<string name="perfs_port">port</string>
+	<string name="perfs_username">username</string>
+	<string name="perfs_remotedir">remotedir</string>
+	<string name="perfs_password">password</string>
+	<string name="perfs_keyorpw">keyorpw</string>
+	<string name="perfname">connectionsettings</string>
 </resources>
