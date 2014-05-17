@@ -990,21 +990,26 @@ containing a value of this type.
         public static final int logo=0x7f020058;
     }
     public static final class id {
-        public static final int Folders_Button_Add=0x7f05003c;
-        public static final int Folders_Button_Delete=0x7f05003e;
-        public static final int Folders_Button_Edit=0x7f05003d;
-        public static final int Main_Button_Folders=0x7f050043;
-        public static final int Main_Button_Settings=0x7f050042;
-        public static final int Main_Button_SyncNow=0x7f050041;
+        public static final int Folders_Button_Add=0x7f05003d;
+        public static final int Folders_Button_Delete=0x7f05004e;
+        public static final int Folders_Button_Edit=0x7f05004d;
+        public static final int Folders_List=0x7f05003c;
+        public static final int Folders_List_LasySync=0x7f050050;
+        public static final int Folders_List_Path=0x7f05004f;
+        public static final int Folders_Liste_Delete=0x7f050051;
+        public static final int Main_Button_Folders=0x7f050042;
+        public static final int Main_Button_Settings=0x7f050041;
+        public static final int Main_Button_SyncNow=0x7f050040;
         public static final int Settings_Button_Genkey=0x7f05004c;
-        public static final int Settings_Hostname=0x7f050045;
-        public static final int Settings_Port=0x7f050047;
-        public static final int Settings_Remotedir=0x7f05004b;
-        public static final int Settings_Username=0x7f050049;
-        public static final int TextView02=0x7f05004a;
-        public static final int TextView03=0x7f050048;
-        public static final int TextView05=0x7f050046;
-        public static final int TextView06=0x7f050044;
+        public static final int Settings_Button_Showkey=0x7f05004b;
+        public static final int Settings_Hostname=0x7f050044;
+        public static final int Settings_Port=0x7f050046;
+        public static final int Settings_Remotedir=0x7f05004a;
+        public static final int Settings_Username=0x7f050048;
+        public static final int TextView02=0x7f050049;
+        public static final int TextView03=0x7f050047;
+        public static final int TextView05=0x7f050045;
+        public static final int TextView06=0x7f050043;
         public static final int action_bar=0x7f05001c;
         public static final int action_bar_activity_content=0x7f050015;
         public static final int action_bar_container=0x7f05001b;
@@ -1034,7 +1039,7 @@ containing a value of this type.
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
-        public static final int imageView1=0x7f05003f;
+        public static final int imageView1=0x7f05003e;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int middle=0x7f050012;
@@ -1061,7 +1066,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int textView1=0x7f050040;
+        public static final int textView1=0x7f05003f;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int up=0x7f050021;
@@ -1120,7 +1125,11 @@ containing a value of this type.
         public static final int activity_folders=0x7f030017;
         public static final int activity_main=0x7f030018;
         public static final int activity_settings=0x7f030019;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001a;
+        public static final int list_folders=0x7f03001a;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+    }
+    public static final class menu {
+        public static final int folders=0x7f0c0000;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1164,6 +1173,7 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int app_name=0x7f0a000d;
+        public static final int confirm_folder_added=0x7f0a0025;
         public static final int dummy_button=0x7f0a0023;
         public static final int dummy_content=0x7f0a0024;
         public static final int folders_button_add=0x7f0a0016;

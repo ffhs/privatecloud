@@ -100,6 +100,9 @@ Context context;
 	    return bytes;  
 	  
 	}
+	
+	
+	
 	private class LongOperation extends AsyncTask<String, Void, String> {
 		
 
