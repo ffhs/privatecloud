@@ -16,7 +16,7 @@ public class Settings extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_settings);
-//		SharedPreferences settings = getSharedPreferences(R.string.perf,MODE_PRIVATE);
+//		SharedPreferences settings = getSharedPreferences(R.string.perfname,MODE_PRIVATE);
  //       String hostname = settings.getString(R.string.perfs_hostname);
         
 	}
