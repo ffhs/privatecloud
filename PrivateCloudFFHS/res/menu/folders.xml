@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/Folders_Liste_Delete"
+         android:title="delete"/>
+    
+</menu>
