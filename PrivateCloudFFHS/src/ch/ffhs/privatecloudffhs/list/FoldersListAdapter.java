@@ -1,8 +1,10 @@
 package ch.ffhs.privatecloudffhs.list;
 
 import java.util.List;
-
+import ch.ffhs.privatecloud.database.Folder;
+import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -11,18 +13,25 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+@SuppressLint("NewApi")
 public class FoldersListAdapter extends ArrayAdapter<Folder>{	
 	Context context;
 	LayoutInflater inflater;
 	List<Folder> list;
 	private SparseBooleanArray mSelectedItemsIds;
-	
-	public FoldersListAdapter(Context context, List<Folder> list) {
-		super(context, 0, list);
+	PrivateCloudDatabase db;
+
+	public FoldersListAdapter(Context context) {
+		
+		super(context, 0);
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
-		this.list = list;
 		inflater = LayoutInflater.from(context);
+	
+		db = new PrivateCloudDatabase(context);	
+		list = db.getAllFolders();
+
+		super.addAll(list);
 	}
 
 	@Override
@@ -42,7 +51,7 @@ public class FoldersListAdapter extends ArrayAdapter<Folder>{
 		}
 		
 		holder.path.setText(list.get(position).getPath());
-		holder.lastsync.setText(list.get(position).getLastsyncFormated());
+		holder.lastsync.setText(list.get(position).getLastsync());
 
 		return convertView;
 	}

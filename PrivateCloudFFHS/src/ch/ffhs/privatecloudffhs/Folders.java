@@ -1,6 +1,7 @@
 package ch.ffhs.privatecloudffhs;
 
-import ch.ffhs.privatecloudffhs.list.Folder;
+import ch.ffhs.privatecloud.database.Folder;
+import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.list.FoldersListAdapter;
 import ch.ffhs.privatecloudffhs.util.SimpleFileDialog;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
@@ -37,7 +38,7 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
 	 ListView listView=null;
 	 Context contex=null;
 	 FoldersListAdapter adapter=null;
-	 private List<Folder> list=new ArrayList<Folder>();
+	 PrivateCloudDatabase db;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,13 +47,19 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
 		contex=this;
 		listView = (ListView) findViewById(R.id.Folders_List);
 		
+		 db = new PrivateCloudDatabase(getApplicationContext());
+
+	 
+		
 		// load some dummy data
         for(int index=0; index< 4; index++){
-        	Folder test = new Folder("testpath" + index);
-        	list.add(test);
+        	Folder test = new Folder("testpath" + index, 1);
+        	
+        	db.createFolder(test);
+        	
         }
         
-        adapter	= new FoldersListAdapter(contex, list);
+        adapter	= new FoldersListAdapter(contex);
         listView.setAdapter(adapter);
         listView.setMultiChoiceModeListener(this);
         listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -113,7 +120,7 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
   						Toast.makeText(Folders.this, R.string.confirm_folder_added  + chosenDir, Toast.LENGTH_LONG).show();
   						
   						// add selected folder to list
-  						adapter.addFolder(new Folder(chosenDir));
+  						adapter.addFolder(new Folder(chosenDir, 1));
   					}
   				});
       				
