@@ -2,6 +2,7 @@ package ch.ffhs.privatecloudffhs.list;
 
 import java.util.List;
 
+import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloud.database.Server;
 import ch.ffhs.privatecloudffhs.R;
 import android.content.Context;
@@ -17,13 +18,16 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 	LayoutInflater inflater;
 	List<Server> list;
 	private SparseBooleanArray mSelectedItemsIds;
-	
+	PrivateCloudDatabase db;
 	public ServerListAdapter(Context context, List<Server> list) {
 		super(context, 0, list);
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
+		
+		db = new PrivateCloudDatabase(context);	
+	
 	}
 
 	@Override
