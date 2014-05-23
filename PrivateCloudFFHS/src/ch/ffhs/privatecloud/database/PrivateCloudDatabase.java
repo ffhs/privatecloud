@@ -96,6 +96,10 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
     
+    
+    /*
+     * getting all Folders
+     */
     public List<Folder> getAllFolders() {
         List<Folder> folders = new ArrayList<Folder>();
         String selectQuery = "SELECT  * FROM " + TABLE_FOLDER;
@@ -119,6 +123,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         return folders;
     }
     
+    
     /*
      * Creating a Folder
      */
@@ -131,8 +136,94 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         values.put(KEY_LASTSYNC, folder.getLastsync());
         
         // insert row
-        long folder_id = db.insert(TABLE_FOLDER, null, values);
+        long folderId = db.insert(TABLE_FOLDER, null, values);
      
-        return folder_id;
+        return folderId;
+    }
+    
+    
+    /*
+     * getting all Servers
+     */
+    public List<Server> getAllServers() {
+        List<Server> servers = new ArrayList<Server>();
+        String selectQuery = "SELECT  * FROM " + TABLE_SERVER;
+     
+        Log.e(LOG, selectQuery);
+     
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+     
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Server server = new Server(c.getString((c.getColumnIndex(KEY_SERVERNAME))), c.getString((c.getColumnIndex(KEY_HOST))));
+                
+                server.setUsername(c.getString((c.getColumnIndex(KEY_USER))));
+                server.setPassword(c.getString((c.getColumnIndex(KEY_PASSWORD))));
+                server.setPort(c.getInt((c.getColumnIndex(KEY_PORT))));
+                server.setPassword(c.getString((c.getColumnIndex(KEY_PASSWORD))));
+                server.setProto(c.getInt((c.getColumnIndex(KEY_PROTO))));
+                server.setCertpath(c.getString((c.getColumnIndex(KEY_CERTPATH))));
+                server.setRemoteroot(c.getString((c.getColumnIndex(KEY_REMOTEROOT))));
+                 
+                // adding to folders list
+                servers.add(server);
+            } while (c.moveToNext());
+        }
+     
+        return servers;
+    }
+    
+    
+    /*
+     * get single Server
+     */
+    public Server getServer(int serverId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+     
+        String selectQuery = "SELECT  * FROM " + TABLE_SERVER + " WHERE "
+                + KEY_ID + " = " + serverId;
+     
+        Log.e(LOG, selectQuery);
+     
+        Cursor c = db.rawQuery(selectQuery, null);
+     
+        if (c != null) c.moveToFirst();
+     
+        Server server = new Server(c.getString((c.getColumnIndex(KEY_SERVERNAME))), c.getString((c.getColumnIndex(KEY_HOST))));
+        
+        server.setUsername(c.getString((c.getColumnIndex(KEY_USER))));
+        server.setPassword(c.getString((c.getColumnIndex(KEY_PASSWORD))));
+        server.setPort(c.getInt((c.getColumnIndex(KEY_PORT))));
+        server.setPassword(c.getString((c.getColumnIndex(KEY_PASSWORD))));
+        server.setProto(c.getInt((c.getColumnIndex(KEY_PROTO))));
+        server.setCertpath(c.getString((c.getColumnIndex(KEY_CERTPATH))));
+        server.setRemoteroot(c.getString((c.getColumnIndex(KEY_REMOTEROOT))));
+        
+        return server;
+    }
+    
+    
+    /*
+     * Creating a Server
+     */
+    public long createServer(Server server) {
+        SQLiteDatabase db = this.getWritableDatabase();
+     
+        ContentValues values = new ContentValues();
+        values.put(KEY_SERVERNAME, server.getServername());
+        values.put(KEY_HOST, server.getHostname());
+        values.put(KEY_USER, server.getUsername());
+        values.put(KEY_PASSWORD, server.getPassword());
+        values.put(KEY_PORT, server.getPort());
+        values.put(KEY_PROTO, server.getProto());
+        values.put(KEY_CERTPATH, server.getCertpath());
+        values.put(KEY_REMOTEROOT, server.getRemoteroot());
+        
+        // insert row
+        long serverId = db.insert(TABLE_SERVER, null, values);
+     
+        return serverId;
     }
 }

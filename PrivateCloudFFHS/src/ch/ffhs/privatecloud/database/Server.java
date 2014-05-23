@@ -8,6 +8,25 @@ import android.text.format.DateFormat;
 import android.text.method.DateTimeKeyListener;
 
 public class Server {
+	private String servername;
+	private String hostname;
+	private String username;
+	private String password;
+	private String remoteroot;
+	private String certpath;
+	private int port;
+	private int proto;
+	
+	public Server(String servername){
+		this.servername=servername;
+		this.hostname = "No Hostname defined";
+	}
+
+	public Server(String servername, String hostname){
+		this.servername = servername;
+		this.hostname = hostname;
+	}
+	
 	public String getServername() {
 		return servername;
 	}
@@ -71,46 +90,4 @@ public class Server {
 	public void setProto(int proto) {
 		this.proto = proto;
 	}
-	
-	public String getservername() {
-		return servername;
-	}
-
-	public void setservername(String servername) {
-		this.servername = servername;
-	}
-
-	public String gethostname() {
-		return hostname;
-	}
-
-	public void sethostname(String hostname) {
-		this.hostname = hostname;
-	}	
-	
-	private String servername;
-	private String hostname;
-	private String username;
-	private String password;
-	private String remoteroot;
-	private String certpath;
-	private int port;
-	private int proto;
-	
-	public Server(String servername){
-		this.servername=servername;
-		this.hostname = "No Hostname defined";
-	}
-
-	public Server(String servername, String hostname){
-		this.servername = servername;
-		this.hostname = hostname;
-	}
-	
-
-	
-
-	
-
- 
 }

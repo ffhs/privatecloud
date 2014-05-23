@@ -18,12 +18,12 @@ public class FoldersListAdapter extends ArrayAdapter<Folder>{
 	Context context;
 	LayoutInflater inflater;
 	List<Folder> list;
-	private SparseBooleanArray mSelectedItemsIds;
+	SparseBooleanArray mSelectedItemsIds;
 	PrivateCloudDatabase db;
 
 	public FoldersListAdapter(Context context) {
-		
 		super(context, 0);
+		
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
 		inflater = LayoutInflater.from(context);
