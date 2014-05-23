@@ -28,7 +28,15 @@
     <string name="settings_label_syncinterval">Sync interval (Min)</string>
     <string name="settings_chkbox_wifi">Sync only in Wifi</string>
     <string name="settings_chkbox_charge">Sync only while on Power</string>
+    
+    <string name="server_label_servername">Enter a name for the Connection</string>
+    <string name="server_label_protocol">Protocol</string>
+    <string name="server_radio_pw">Password authentication</string>
+    <string name="server_radio_key">Privatekey authentication</string>
+    <string name="server_label_password">Server Password</string>
+    
     <string name="title_activity_folders">Folders</string>
+    <string name="title_activity_server">Server settings</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 	<string name="confirm_folder_added">Folder added successfully to sync list</string>
@@ -39,4 +47,9 @@
 	<string name="perfs_password">password</string>
 	<string name="perfs_keyorpw">keyorpw</string>
 	<string name="perfname">connectionsettings</string>
+	<string-array name="protocols">
+        <item>SFTP (ssh)</item>
+        <item>FTP</item>
+        <item>FTPS</item>
+    </string-array>
 </resources>

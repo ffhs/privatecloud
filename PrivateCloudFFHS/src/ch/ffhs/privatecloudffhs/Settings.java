@@ -57,7 +57,7 @@ public class Settings extends Activity {
     		case R.id.Settings_Button_Add:
     			int serverid = 0;
     			Intent activityserver = new Intent(this,ActivityServer.class);
-    			activityserver.putExtra("serverid", serverid);
+    			//activityserver.putExtra("serverid", serverid);
     			startActivity(activityserver);
     		break;
     		
