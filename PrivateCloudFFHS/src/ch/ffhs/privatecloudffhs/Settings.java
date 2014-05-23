@@ -39,7 +39,6 @@ public class Settings extends Activity {
 		// load some dummy data
         for(int index=0; index< 4; index++){
         	Server test = new Server("TestServer DB" + index);
-       	
         	db.createServer(test);
         }
         
@@ -52,14 +51,15 @@ public class Settings extends Activity {
           @Override
           public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
             Object o = listView.getItemAtPosition(position);
-            Log.d("jada","clicked");
-            //Intent activityserver = new Intent();
-			//activityserver.putExtra("serverid", db.);
-			//startActivity(activityserver);
+            int serverid = ((Server) o).getId();
+            Log.d("jada","clicked"+serverid);
+            Intent activityserver = new Intent(contex,ActivityServer.class);
+			activityserver.putExtra("serverid", serverid);
+			startActivity(activityserver);
           }
         });
 //		SharedPreferences settings = getSharedPreferences(R.string.perfname,MODE_PRIVATE);
- //       String hostname = settings.getString(R.string.perfs_hostname);
+//       String hostname = settings.getString(R.string.perfs_hostname);
         
 	}
 

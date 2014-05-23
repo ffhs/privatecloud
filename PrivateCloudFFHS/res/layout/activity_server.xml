@@ -33,7 +33,7 @@
                 android:text="@string/server_label_servername" />
 
             <EditText
-                android:id="@+id/Settings_Servername"
+                android:id="@+id/Server_EditText_Servername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -48,7 +48,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/server_label_protocol" />
         <Spinner
-            android:id="@+id/protocol"
+            android:id="@+id/Server_Spinner_protocol"
             android:layout_width="match_parent"
             android:entries="@array/protocols"
             android:layout_height="wrap_content" />
@@ -65,7 +65,7 @@
                 android:text="@string/settings_label_hostname" />
 
             <EditText
-                android:id="@+id/Settings_Hostname"
+                android:id="@+id/Server_EditText_Hostname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -85,7 +85,7 @@
                 android:text="@string/settings_label_port" />
 
             <EditText
-                android:id="@+id/Settings_Port"
+                android:id="@+id/Server_EditText_Port"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -105,7 +105,7 @@
                 android:text="@string/settings_label_username" />
 
             <EditText
-                android:id="@+id/Settings_Username"
+                android:id="@+id/Server_EditText_Username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -125,7 +125,7 @@
                 android:text="@string/settings_label_remotedir" />
 
             <EditText
-                android:id="@+id/Settings_Remotedir"
+                android:id="@+id/Server_EditText__Remotedir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -163,7 +163,7 @@
                 android:text="@string/server_label_password" />
 
             <EditText
-                android:id="@+id/Server_Password"
+                android:id="@+id/Server_EditText__Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

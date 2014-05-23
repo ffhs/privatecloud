@@ -1007,19 +1007,20 @@ containing a value of this type.
         public static final int Main_Button_Folders=0x7f050048;
         public static final int Main_Button_Settings=0x7f050047;
         public static final int Main_Button_SyncNow=0x7f050046;
+        public static final int Server_EditText_Hostname=0x7f05004e;
+        public static final int Server_EditText_Port=0x7f050050;
+        public static final int Server_EditText_Servername=0x7f05004a;
+        public static final int Server_EditText_Username=0x7f050052;
+        public static final int Server_EditText__Password=0x7f050059;
+        public static final int Server_EditText__Remotedir=0x7f050054;
         public static final int Server_List_Hostname=0x7f050066;
-        public static final int Server_Password=0x7f050059;
+        public static final int Server_Spinner_protocol=0x7f05004c;
         public static final int Servers_List=0x7f050061;
         public static final int Servers_List_Name=0x7f050065;
         public static final int Settings_Button_Add=0x7f050062;
         public static final int Settings_Button_cancel=0x7f05005d;
         public static final int Settings_Button_save=0x7f05005c;
-        public static final int Settings_Hostname=0x7f05004e;
-        public static final int Settings_Port=0x7f050050;
-        public static final int Settings_Remotedir=0x7f050054;
-        public static final int Settings_Servername=0x7f05004a;
         public static final int Settings_Syncinterval=0x7f05005e;
-        public static final int Settings_Username=0x7f050052;
         public static final int TextView02=0x7f050053;
         public static final int TextView03=0x7f050051;
         public static final int TextView05=0x7f05004f;
@@ -1068,7 +1069,6 @@ containing a value of this type.
         public static final int passwordlayout=0x7f050057;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
-        public static final int protocol=0x7f05004c;
         public static final int radio=0x7f05002f;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
@@ -1251,18 +1251,15 @@ containing a value of this type.
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
-
         
 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
-
     
  API 11 theme customizations can go here. 
 

@@ -7,11 +7,13 @@ import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.appcompat.R.id;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,15 +47,41 @@ public class ActivityServer extends Activity {
            {
         	   server = db.getServer(serverid);
         	   //Load from DB
+        	   Log.d("jada","ServerID:"+serverid);
            }
         }
+        loadValues();
 		setContentView(R.layout.activity_server);
 //		SharedPreferences settings = getSharedPreferences(R.string.perfname,MODE_PRIVATE);
  //       String hostname = settings.getString(R.string.perfs_hostname);
         
 	}
 	
-	
+	public void loadValues(){
+		EditText servername = (EditText) findViewById(R.id.Server_EditText_Servername);
+		EditText username = (EditText) findViewById(R.id.Server_EditText_Username);
+		EditText password = (EditText) findViewById(R.id.Server_EditText__Password);
+		EditText port = (EditText) findViewById(R.id.Server_EditText_Port);
+		Log.d("jada","test"+server.getServername()+server.getUsername()+server.getPassword());
+		if(server.getServername() != null)
+		{
+		//	servername.setText(server.getServername());
+		}
+		if(server.getUsername() != null)
+		{
+			username.setText("test");
+		//	username.setText(server.getUsername());
+		}
+		if(server.getPassword() != null)
+		{
+		//password.setText(server.getPassword());
+		}
+		if(server.getPort() != 0)
+		{
+		//port.setText(server.getPort());
+		}
+		
+	}
     public void onButtonClicked(View v){
     	switch(v.getId()) {
     		case R.id.server_Button_Genkey:
@@ -77,7 +105,7 @@ public class ActivityServer extends Activity {
     public void onRadioButtonClicked(View v){
     	Button buttongenkey = (Button) findViewById(R.id.server_Button_Genkey);
     	Button buttonshow = (Button) findViewById(R.id.server_Button_Showkey);
-    	EditText password = (EditText) findViewById(R.id.Server_Password);
+    	EditText password = (EditText) findViewById(R.id.Server_EditText__Password);
     	TextView pass = (TextView) findViewById(R.id.TextViewPW);
     	FrameLayout passlayout = (FrameLayout) findViewById(R.id.passwordlayout);
     	switch(v.getId()) {
