@@ -3,6 +3,7 @@ package ch.ffhs.privatecloudffhs;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloud.database.Server;
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
@@ -20,6 +21,8 @@ public class Settings extends Activity {
 	ListView listView=null;
 	Context contex=null;
 	ServerListAdapter adapter=null;
+	PrivateCloudDatabase db;
+
 	private List<Server> list=new ArrayList<Server>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +32,16 @@ public class Settings extends Activity {
 		contex=this;
 		listView = (ListView) findViewById(R.id.Servers_List);
 		
+		db = new PrivateCloudDatabase(getApplicationContext());
+
 		// load some dummy data
         for(int index=0; index< 4; index++){
-        	Server test = new Server("TestServer" + index);
-        	list.add(test);
+        	Server test = new Server("TestServer DB" + index);
+       	
+        	db.createServer(test);
         }
         
-        adapter	= new ServerListAdapter(contex, list);
+        adapter	= new ServerListAdapter(contex);
         listView.setAdapter(adapter);
 		
 		

@@ -47,7 +47,7 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
 		contex=this;
 		listView = (ListView) findViewById(R.id.Folders_List);
 		
-		 db = new PrivateCloudDatabase(getApplicationContext());
+		db = new PrivateCloudDatabase(getApplicationContext());
 
 	 
 		

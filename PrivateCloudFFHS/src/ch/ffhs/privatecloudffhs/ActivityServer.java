@@ -1,5 +1,6 @@
 package ch.ffhs.privatecloudffhs;
 
+import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloud.database.Server;
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
@@ -13,12 +14,16 @@ import android.widget.EditText;
 public class ActivityServer extends Activity {
 	ActivityServer serveractivity;
 	int serverid;
+	PrivateCloudDatabase db;
 	Server server;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent iin= getIntent();
         Bundle b = iin.getExtras();
+
+		db = new PrivateCloudDatabase(getApplicationContext());
 
         if(b!=null)
         {
@@ -29,6 +34,7 @@ public class ActivityServer extends Activity {
            }
            else
            {
+        	   server = db.getServer(serverid);
         	   //Load from DB
            }
         }
