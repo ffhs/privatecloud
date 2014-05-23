@@ -1,4 +1,4 @@
-package ch.ffhs.privatecloud.database;
+package ch.ffhs.privatecloudffhs.database;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +16,7 @@ public class Server {
 	private String certpath;
 	private int port;
 	private int proto;
+	private int id;
 	
 	public Server(String servername){
 		this.servername=servername;
@@ -89,5 +90,13 @@ public class Server {
 
 	public void setProto(int proto) {
 		this.proto = proto;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
 	}
 }

@@ -1,9 +1,9 @@
 package ch.ffhs.privatecloudffhs;
 
-import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
-import ch.ffhs.privatecloud.database.Server;
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
+import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
+import ch.ffhs.privatecloudffhs.database.Server;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;

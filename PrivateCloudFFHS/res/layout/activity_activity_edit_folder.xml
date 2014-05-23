@@ -1,0 +1,70 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    tools:context="ch.ffhs.privatecloudffhs.ActivityEditFolder" >
+
+    <!--
+         The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc.
+    -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="372dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <TextView
+                android:id="@+id/EditFolder_Text_Folder"
+                android:layout_width="282dp"
+                android:layout_height="wrap_content"
+                android:text="@string/editfolders_no_folder"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/EditFolder_Button_Select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="onButtonClicked"
+                android:text="@string/folders_label_title" />
+
+            <Spinner
+                android:id="@+id/EditFolder_Spinner_Servers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+            
+            <Button
+                android:id="@+id/EditFolder_Button_Save"
+ 				android:layout_width="wrap_content"
+                android:layout_height="wrap_content"           
+                android:layout_weight="1"
+                android:onClick="onButtonClicked"
+                android:text="@string/settings_button_save" />
+
+            <Button
+                android:id="@+id/EditFolder_Button_Cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"           
+                android:layout_weight="1"
+                android:onClick="onButtonClicked"
+                android:text="@string/settings_button_cancel" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

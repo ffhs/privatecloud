@@ -1,9 +1,10 @@
-package ch.ffhs.privatecloudffhs.list;
+package ch.ffhs.privatecloudffhs.adapter;
 
 import java.util.List;
-import ch.ffhs.privatecloud.database.Folder;
-import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
+
 import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.database.Folder;
+import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.SparseBooleanArray;

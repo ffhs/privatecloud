@@ -1,4 +1,4 @@
-package ch.ffhs.privatecloud.database;
+package ch.ffhs.privatecloudffhs.database;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +12,10 @@ public class Folder {
 	private int server;
 	private String lastsync;
 	 
+	public Folder(){
+	}
+
+	
 	public Folder(String path, int server){
 		this.path = path;
 		this.server = server;

@@ -1,4 +1,4 @@
-package ch.ffhs.privatecloud.database;
+package ch.ffhs.privatecloudffhs.database;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -166,7 +166,8 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
                 server.setProto(c.getInt((c.getColumnIndex(KEY_PROTO))));
                 server.setCertpath(c.getString((c.getColumnIndex(KEY_CERTPATH))));
                 server.setRemoteroot(c.getString((c.getColumnIndex(KEY_REMOTEROOT))));
-                 
+                server.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+
                 // adding to folders list
                 servers.add(server);
             } while (c.moveToNext());
@@ -200,7 +201,8 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         server.setProto(c.getInt((c.getColumnIndex(KEY_PROTO))));
         server.setCertpath(c.getString((c.getColumnIndex(KEY_CERTPATH))));
         server.setRemoteroot(c.getString((c.getColumnIndex(KEY_REMOTEROOT))));
-        
+        server.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+
         return server;
     }
     

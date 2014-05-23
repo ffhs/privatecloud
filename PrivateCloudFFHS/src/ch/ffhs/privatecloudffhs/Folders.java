@@ -1,8 +1,8 @@
 package ch.ffhs.privatecloudffhs;
 
-import ch.ffhs.privatecloud.database.Folder;
-import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
-import ch.ffhs.privatecloudffhs.list.FoldersListAdapter;
+import ch.ffhs.privatecloudffhs.adapter.FoldersListAdapter;
+import ch.ffhs.privatecloudffhs.database.Folder;
+import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.util.SimpleFileDialog;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
@@ -111,21 +111,10 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
     public void onButtonClicked(View v){
     	switch(v.getId()) {
     		case R.id.Folders_Button_Add:
-  				SimpleFileDialog FolderChooseDialog =  new SimpleFileDialog(Folders.this, "FolderChoose", new SimpleFileDialog.SimpleFileDialogListener()
-  				{
-  					@Override
-  					public void onChosenDir(String chosenDir) 
-  					{
-  						// show toast
-  						Toast.makeText(Folders.this, R.string.confirm_folder_added  + chosenDir, Toast.LENGTH_LONG).show();
-  						
-  						// add selected folder to list
-  						adapter.addFolder(new Folder(chosenDir, 1));
-  					}
-  				});
-      				
-      			FolderChooseDialog.chooseFile_or_Dir();
+    			Intent editFolders = new Intent(this,ActivityEditFolder.class);
+    			startActivity(editFolders);
     		break;
+    		
     		case R.id.Folders_Button_cancel:
     			this.finish();
     		break;

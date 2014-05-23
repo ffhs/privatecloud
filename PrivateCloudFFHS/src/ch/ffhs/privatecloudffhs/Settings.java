@@ -3,11 +3,11 @@ package ch.ffhs.privatecloudffhs;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
-import ch.ffhs.privatecloud.database.Server;
+import ch.ffhs.privatecloudffhs.adapter.ServerListAdapter;
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
-import ch.ffhs.privatecloudffhs.list.ServerListAdapter;
+import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
+import ch.ffhs.privatecloudffhs.database.Server;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
