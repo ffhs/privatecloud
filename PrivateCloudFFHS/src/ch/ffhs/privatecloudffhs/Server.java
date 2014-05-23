@@ -1,44 +1,21 @@
 package ch.ffhs.privatecloudffhs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
-import ch.ffhs.privatecloudffhs.list.Server;
-import ch.ffhs.privatecloudffhs.list.ServerListAdapter;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.EditText;
 
-public class Settings extends Activity {
+public class Server extends Activity {
 
-	ListView listView=null;
-	Context contex=null;
-	ServerListAdapter adapter=null;
-	private List<Server> list=new ArrayList<Server>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_settings);
-		contex=this;
-		listView = (ListView) findViewById(R.id.Servers_List);
-		
-		// load some dummy data
-        for(int index=0; index< 4; index++){
-        	Server test = new Server("TestServer" + index);
-        	list.add(test);
-        }
-        
-        adapter	= new ServerListAdapter(contex, list);
-        listView.setAdapter(adapter);
-		
-		
 //		SharedPreferences settings = getSharedPreferences(R.string.perfname,MODE_PRIVATE);
  //       String hostname = settings.getString(R.string.perfs_hostname);
         

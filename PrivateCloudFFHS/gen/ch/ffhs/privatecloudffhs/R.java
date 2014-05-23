@@ -995,11 +995,13 @@ containing a value of this type.
         public static final int Folders_List=0x7f05003c;
         public static final int Folders_List_LasySync=0x7f050056;
         public static final int Folders_List_Path=0x7f050055;
-        public static final int Folders_Liste_Delete=0x7f050057;
+        public static final int Folders_Liste_Delete=0x7f050059;
         public static final int Main_Button_Folders=0x7f050043;
         public static final int Main_Button_Settings=0x7f050042;
         public static final int Main_Button_SyncNow=0x7f050041;
+        public static final int Server_List_Hostname=0x7f050058;
         public static final int Servers_List=0x7f050053;
+        public static final int Servers_List_Name=0x7f050057;
         public static final int Settings_Button_Add=0x7f050054;
         public static final int Settings_Button_Genkey=0x7f05004d;
         public static final int Settings_Button_Showkey=0x7f05004c;
@@ -1133,7 +1135,8 @@ containing a value of this type.
         public static final int activity_server=0x7f030019;
         public static final int activity_settings=0x7f03001a;
         public static final int list_folders=0x7f03001b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int list_servers=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
         public static final int folders=0x7f0c0000;
