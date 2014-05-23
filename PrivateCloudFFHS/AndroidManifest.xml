@@ -43,6 +43,12 @@
             android:name="ch.ffhs.privatecloudffhs.ActivityEditFolder"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_activity_edit_folder"
+            android:theme="@style/FullscreenTheme" >   
+         </activity>
+         <activity
+            android:name="ch.ffhs.privatecloudffhs.ActivityServer"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_server"
             android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
