@@ -2,6 +2,7 @@ package ch.ffhs.privatecloudffhs.list;
 
 import java.util.List;
 
+import ch.ffhs.privatecloud.database.Server;
 import ch.ffhs.privatecloudffhs.R;
 import android.content.Context;
 import android.util.SparseBooleanArray;
