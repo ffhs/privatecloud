@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class Server extends Activity {
-
+public class ActivityServer extends Activity {
+	ActivityServer server;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,6 +19,11 @@ public class Server extends Activity {
 //		SharedPreferences settings = getSharedPreferences(R.string.perfname,MODE_PRIVATE);
  //       String hostname = settings.getString(R.string.perfs_hostname);
         
+	}
+	
+	public ActivityServer(ActivityServer server)
+	{
+		this.server = server;
 	}
     public void onButtonClicked(View v){
     	switch(v.getId()) {

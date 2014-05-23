@@ -45,17 +45,14 @@ public class Settings extends Activity {
 	}
     public void onButtonClicked(View v){
     	switch(v.getId()) {
-    		case R.id.Settings_Button_Genkey:
-    			RsaKeyGen rsakeygen = new RsaKeyGen(this);
-    			//rsakeygen.GenerateKey();
-    			rsakeygen.GenerateMockKey();
-    		break;
-    		case R.id.Settings_Button_Showkey:
-    			ReadKey readkey = new ReadKey(this);
-    			readkey.ReadFile();
-    		break;
     		case R.id.Settings_Button_cancel:
     			this.finish();
+    		break;
+    		case R.id.Settings_Button_Add:
+    			Server server = new Server("New Server");
+    			
+    			Intent activityserver = new Intent(this,ActivityServer.class);
+    			startActivity(activityserver);
     		break;
     		
     		
