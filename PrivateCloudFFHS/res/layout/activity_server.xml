@@ -17,6 +17,27 @@
         android:layout_margin="10dp"
         android:orientation="vertical"
         tools:ignore="UselessParent" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" >
+
+            <TextView
+                android:id="@+id/TextView06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_hostname" />
+
+            <EditText
+                android:id="@+id/Settings_Hostname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+        </FrameLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,65 +47,79 @@
                 android:id="@+id/TextView05"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_label_syncinterval" />
+                android:text="@string/settings_label_port" />
 
             <EditText
-                android:id="@+id/Settings_Syncinterval"
+                android:id="@+id/Settings_Port"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="textEmailAddress" />
         </FrameLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" >
 
-            <CheckBox
-                android:id="@+id/onlyWifi"
+            <TextView
+                android:id="@+id/TextView03"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_chkbox_wifi" />
-        
+                android:text="@string/settings_label_username" />
+
+            <EditText
+                android:id="@+id/Settings_Username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
         </FrameLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" >
 
-            <CheckBox
-                android:id="@+id/onlyCharging"
+            <TextView
+                android:id="@+id/TextView02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_chkbox_charge" />
-        
-        </FrameLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" >
-<ListView
-            android:id="@+id/Servers_List"
-            android:layout_width="match_parent"
-        	android:layout_height="200dp">
-        </ListView>
-      </FrameLayout>
+                android:text="@string/settings_label_remotedir" />
 
-        
+            <EditText
+                android:id="@+id/Settings_Remotedir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="UselessLeaf" >
-<Button
-            android:id="@+id/Settings_Button_Add"
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/Settings_Button_Showkey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:onClick="onButtonClicked"
-            android:text="@string/settings_button_add" />
-        </FrameLayout>
+            android:text="@string/settings_button_showpubkey" />
+
+        <Button
+            android:id="@+id/Settings_Button_Genkey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="onButtonClicked"
+            android:text="@string/settings_button_genkey" />
 
         <LinearLayout
             android:layout_width="fill_parent"

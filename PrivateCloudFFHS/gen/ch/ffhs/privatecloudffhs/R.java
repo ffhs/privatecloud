@@ -993,12 +993,16 @@ containing a value of this type.
         public static final int Folders_Button_Add=0x7f05003d;
         public static final int Folders_Button_cancel=0x7f05003e;
         public static final int Folders_List=0x7f05003c;
-        public static final int Folders_List_LasySync=0x7f050051;
-        public static final int Folders_List_Path=0x7f050050;
-        public static final int Folders_Liste_Delete=0x7f050052;
+        public static final int Folders_List_LasySync=0x7f050056;
+        public static final int Folders_List_Path=0x7f050055;
+        public static final int Folders_Liste_Delete=0x7f050059;
         public static final int Main_Button_Folders=0x7f050043;
         public static final int Main_Button_Settings=0x7f050042;
         public static final int Main_Button_SyncNow=0x7f050041;
+        public static final int Server_List_Hostname=0x7f050058;
+        public static final int Servers_List=0x7f050053;
+        public static final int Servers_List_Name=0x7f050057;
+        public static final int Settings_Button_Add=0x7f050054;
         public static final int Settings_Button_Genkey=0x7f05004d;
         public static final int Settings_Button_Showkey=0x7f05004c;
         public static final int Settings_Button_cancel=0x7f05004f;
@@ -1006,6 +1010,7 @@ containing a value of this type.
         public static final int Settings_Hostname=0x7f050045;
         public static final int Settings_Port=0x7f050047;
         public static final int Settings_Remotedir=0x7f05004b;
+        public static final int Settings_Syncinterval=0x7f050050;
         public static final int Settings_Username=0x7f050049;
         public static final int TextView02=0x7f05004a;
         public static final int TextView03=0x7f050048;
@@ -1047,6 +1052,8 @@ containing a value of this type.
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
+        public static final int onlyCharging=0x7f050052;
+        public static final int onlyWifi=0x7f050051;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1125,9 +1132,11 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int activity_folders=0x7f030017;
         public static final int activity_main=0x7f030018;
-        public static final int activity_settings=0x7f030019;
-        public static final int list_folders=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+        public static final int activity_server=0x7f030019;
+        public static final int activity_settings=0x7f03001a;
+        public static final int list_folders=0x7f03001b;
+        public static final int list_servers=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
         public static final int folders=0x7f0c0000;
@@ -1174,9 +1183,9 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int app_name=0x7f0a000d;
-        public static final int confirm_folder_added=0x7f0a0027;
-        public static final int dummy_button=0x7f0a0025;
-        public static final int dummy_content=0x7f0a0026;
+        public static final int confirm_folder_added=0x7f0a002b;
+        public static final int dummy_button=0x7f0a0029;
+        public static final int dummy_content=0x7f0a002a;
         public static final int folders_button_add=0x7f0a0016;
         public static final int folders_button_cancel=0x7f0a001a;
         public static final int folders_button_delete=0x7f0a0018;
@@ -1190,40 +1199,41 @@ containing a value of this type.
         public static final int main_button_settings=0x7f0a000f;
         public static final int main_button_syncnow=0x7f0a0011;
         public static final int main_label_title=0x7f0a000e;
-        public static final int perfname=0x7f0a002e;
-        public static final int perfs_hostname=0x7f0a0028;
-        public static final int perfs_keyorpw=0x7f0a002d;
-        public static final int perfs_password=0x7f0a002c;
-        public static final int perfs_port=0x7f0a0029;
-        public static final int perfs_remotedir=0x7f0a002b;
-        public static final int perfs_username=0x7f0a002a;
-        public static final int settings_button_cancel=0x7f0a0023;
+        public static final int perfname=0x7f0a0032;
+        public static final int perfs_hostname=0x7f0a002c;
+        public static final int perfs_keyorpw=0x7f0a0031;
+        public static final int perfs_password=0x7f0a0030;
+        public static final int perfs_port=0x7f0a002d;
+        public static final int perfs_remotedir=0x7f0a002f;
+        public static final int perfs_username=0x7f0a002e;
+        public static final int settings_button_add=0x7f0a0023;
+        public static final int settings_button_cancel=0x7f0a0024;
         public static final int settings_button_genkey=0x7f0a0021;
         public static final int settings_button_save=0x7f0a0022;
         public static final int settings_button_showpubkey=0x7f0a0020;
+        public static final int settings_chkbox_charge=0x7f0a0027;
+        public static final int settings_chkbox_wifi=0x7f0a0026;
         public static final int settings_label_hostname=0x7f0a001c;
         public static final int settings_label_port=0x7f0a001d;
         public static final int settings_label_remotedir=0x7f0a001f;
+        public static final int settings_label_syncinterval=0x7f0a0025;
         public static final int settings_label_title=0x7f0a001b;
         public static final int settings_label_username=0x7f0a001e;
-        public static final int title_activity_folders=0x7f0a0024;
+        public static final int title_activity_folders=0x7f0a0028;
     }
     public static final class style {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
-
         
 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
-
     
  API 11 theme customizations can go here. 
 

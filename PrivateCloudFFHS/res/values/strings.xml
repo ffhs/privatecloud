@@ -23,7 +23,11 @@
     <string name="settings_button_showpubkey">Show public key</string>
     <string name="settings_button_genkey">Generate new key</string>
     <string name="settings_button_save">Save</string>
+    <string name="settings_button_add">Add Server</string>
     <string name="settings_button_cancel">cancel</string>
+    <string name="settings_label_syncinterval">Sync interval (Min)</string>
+    <string name="settings_chkbox_wifi">Sync only in Wifi</string>
+    <string name="settings_chkbox_charge">Sync only while on Power</string>
     <string name="title_activity_folders">Folders</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
