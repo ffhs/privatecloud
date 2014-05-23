@@ -1,6 +1,7 @@
 package ch.ffhs.privatecloudffhs.list;
 
 import java.util.List;
+
 import ch.ffhs.privatecloud.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloud.database.Server;
 import ch.ffhs.privatecloudffhs.R;
@@ -20,6 +21,7 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 	List<Server> list;
 	SparseBooleanArray mSelectedItemsIds;
 	PrivateCloudDatabase db;
+
 
 	public ServerListAdapter(Context context) {
 		super(context, 0);
