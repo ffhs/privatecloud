@@ -102,8 +102,9 @@ public class ActivityServer extends Activity {
 		{
 			hostname.setText(server.getHostname());
 		}
-		if(server.getPassword() != null)
+		if(server.getPassword() != "" && server.getPassword() != null && server.getPassword().toString() != "")
 		{
+			Log.d("jada","Password value is:\"" + server.getPassword()+"\"");
 			password.setText(server.getPassword());
 			passauth.setChecked(true);
 			showpw(true);
@@ -123,75 +124,82 @@ public class ActivityServer extends Activity {
     	switch(v.getId()) {
     		case R.id.server_Button_Genkey:
     			RsaKeyGen rsakeygen = new RsaKeyGen(this);
-    			//rsakeygen.GenerateKey();
-    			rsakeygen.GenerateMockKey();
+    			//rsakeygen.GenerateKey(server.getServername());
+    			
+    			server.setCertpath(rsakeygen.GenerateMockKey(server.getId()));
+    			Log.d("jada","Setting certpath to :" + server.getCertpath());
     		break;
     		case R.id.server_Button_Showkey:
     			ReadKey readkey = new ReadKey(this);
-    			readkey.ReadFile();
+    			readkey.ReadFile(server.getId());
     		break;
     		case R.id.Server_Button_cancel:
     			this.finish();
     		break;
     		case R.id.Server_Button_save:
-    			if(hostname.getText().toString() != "" && servername.getText().toString() != "" && port.getText().toString() != "" && remoteroot.getText().toString() != "" && (passauth.isChecked() || keyauth.isChecked()))
-    			{
-    				server.setHostname(hostname.getText().toString());
-        			server.setServername(servername.getText().toString());
-        			server.setPort(Integer.parseInt(port.getText().toString()));
-        			Log.d("jada", "Protofield: "+ proto.getSelectedItem().toString());
-        			if(proto.getSelectedItemId() == 0){
-        				protoint = 0;
-        				Log.d("jada", "SFTP");
-        			}else if(proto.getSelectedItemId() == 1){
-        				protoint = 1;
-        				Log.d("jada", "FTP");
-        			}else if(proto.getSelectedItemId() == 2){
-        				protoint = 2;
-        				Log.d("jada", "FTPS");
-        			}
-        			else{
-        				protoint = 0;
-        			}
-        			server.setProto(protoint);
-        			server.setRemoteroot(remoteroot.getText().toString());
-        			server.setUsername(username.getText().toString());
-        			if(passauth.isChecked()){
-        				String passw;
-        				if (password.getText().toString() == "")
-        				{
-        					passw = "dummypw";
-        				}
-        				else
-        				{
-        					passw = password.getText().toString();
-        				}
-        				server.setPassword(passw);
-        				server.setCertpath(null);
-        			}
-        			if(keyauth.isChecked()){
-        				server.setCertpath("iu");
-        				server.setPassword(null);
-        			}
-        			if ( serverid == 0)
-        			{
-        				db.createServer(server);
-        			}
-        			else
-        			{
-        				db.updateServer(server);
-        			}
-        			this.finish();
-    			}
-    			else
-    			{
-    				Toast.makeText(ActivityServer.this, "Not all required information supplied", Toast.LENGTH_LONG).show();
-    			}
+    			savesettings();
     			
     		break;
     	}
     }
-    
+    private void savesettings(){
+    	if(hostname.getText().toString() != "" && servername.getText().toString() != "" && port.getText().toString() != "" && remoteroot.getText().toString() != "" && (passauth.isChecked() || keyauth.isChecked()))
+		{
+			server.setHostname(hostname.getText().toString());
+			server.setServername(servername.getText().toString());
+			server.setPort(Integer.parseInt(port.getText().toString()));
+			Log.d("jada", "Protofield: "+ proto.getSelectedItem().toString());
+			if(proto.getSelectedItemId() == 0){
+				protoint = 0;
+				Log.d("jada", "SFTP");
+			}else if(proto.getSelectedItemId() == 1){
+				protoint = 1;
+				Log.d("jada", "FTP");
+			}else if(proto.getSelectedItemId() == 2){
+				protoint = 2;
+				Log.d("jada", "FTPS");
+			}
+			else{
+				protoint = 0;
+			}
+			server.setProto(protoint);
+			server.setRemoteroot(remoteroot.getText().toString());
+			server.setUsername(username.getText().toString());
+			if(passauth.isChecked()){
+				String passw;
+				if (password.getText().toString() == "")
+				{
+					passw = "dummypw";
+				}
+				else
+				{
+					passw = password.getText().toString();
+				}
+				server.setPassword(passw);
+				server.setCertpath(null);
+			}
+			if(keyauth.isChecked()){
+				if(server.getCertpath()== "")
+				{
+					server.setCertpath("iu");
+				}
+				server.setPassword(null);
+			}
+			if ( serverid == 0)
+			{
+				db.createServer(server);
+			}
+			else
+			{
+				db.updateServer(server);
+			}
+			this.finish();
+		}
+		else
+		{
+			Toast.makeText(ActivityServer.this, "Not all required information supplied", Toast.LENGTH_LONG).show();
+		}
+    }
     public void onRadioButtonClicked(View v){
     	switch(v.getId()) {
 		    case R.id.server_radio_key:
