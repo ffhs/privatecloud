@@ -125,7 +125,7 @@
                 android:text="@string/settings_label_remotedir" />
 
             <EditText
-                android:id="@+id/Server_EditText__Remotedir"
+                android:id="@+id/Server_EditText_Remotedir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -163,7 +163,7 @@
                 android:text="@string/server_label_password" />
 
             <EditText
-                android:id="@+id/Server_EditText__Password"
+                android:id="@+id/Server_EditText_Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -194,7 +194,7 @@
             android:layout_height="fill_parent" >
 
             <Button
-                android:id="@+id/Settings_Button_save"
+                android:id="@+id/Server_Button_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"           
                 android:layout_weight="1"
@@ -202,7 +202,7 @@
                 android:text="@string/settings_button_save" />
 
             <Button
-                android:id="@+id/Settings_Button_cancel"
+                android:id="@+id/Server_Button_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"        
                 android:layout_weight="1"

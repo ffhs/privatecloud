@@ -9,6 +9,7 @@ import java.util.Locale;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -227,5 +228,39 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         long serverId = db.insert(TABLE_SERVER, null, values);
      
         return serverId;
+    }
+    
+    public boolean updateServer(Server server){
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	String password = "";
+    	String certPath = "";
+    	if ( server.getPassword() != null)
+    	{
+    		password = server.getPassword();
+    	}
+    	if ( server.getCertpath() != null)
+    	{
+    		certPath = server.getCertpath();
+    	}
+    	String updateQuerie = "UPDATE " + TABLE_SERVER + " SET " 
+    	+ KEY_SERVERNAME + " = \"" + server.getServername() + "\" , " 
+    	+ KEY_HOST + " = \"" + server.getHostname() + "\", " 
+    	+ KEY_USER + " = \"" + server.getUsername() + "\", " 
+    	+ KEY_PASSWORD + " = \"" + password + "\", " 
+    	+ KEY_PORT + " = \"" + server.getPort() + "\", " 
+    	+ KEY_PROTO + " = \"" + server.getProto() + "\", " 
+    	+ KEY_CERTPATH + " = \"" + certPath + "\", " 
+    	+ KEY_REMOTEROOT+ " = \"" + server.getRemoteroot() + "\" WHERE " 
+    	+ KEY_ID + " = \"" + server.getId() + "\"";
+    	Log.d("jada", "Updatequerie: " +updateQuerie);
+    	try {
+			db.execSQL(updateQuerie);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+    	
+    	return true;
     }
 }

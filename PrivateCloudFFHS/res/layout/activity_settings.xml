@@ -42,7 +42,7 @@
             android:layout_margin="10dp" >
 
             <CheckBox
-                android:id="@+id/onlyWifi"
+                android:id="@+id/Settings_chkbx_onlyWifi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_chkbox_wifi" />
@@ -54,7 +54,7 @@
             android:layout_margin="10dp" >
 
             <CheckBox
-                android:id="@+id/onlyCharging"
+                android:id="@+id/Settings_chkbx_onlyCharging"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_chkbox_charge" />

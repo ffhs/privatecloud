@@ -16,15 +16,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class Settings extends Activity {
 
+	private static final String NAME_MYPREF = "cloudsettings";
+	private static final String KEY_SYNCINTERVAL = "syncinterval";
+	private static final String KEY_ONWIFI = "onwifi";
+	private static final String KEY_ONCHARGE = "oncharge";
 	ListView listView=null;
 	Context contex=null;
 	ServerListAdapter adapter=null;
 	PrivateCloudDatabase db;
-
+	int syncinterval;
+	boolean onwifi;
+	boolean oncharge;
+	EditText syncintervalEditText;
+	CheckBox onwifiCheckBox;
+	CheckBox onchargeCheckBox;
+	SharedPreferences settings;
 	private List<Server> list=new ArrayList<Server>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +46,23 @@ public class Settings extends Activity {
 		setContentView(R.layout.activity_settings);
 		contex=this;
 		listView = (ListView) findViewById(R.id.Servers_List);
-		
+		syncintervalEditText = (EditText) findViewById(R.id.Settings_Syncinterval);
+		onwifiCheckBox = (CheckBox) findViewById(R.id.Settings_chkbx_onlyWifi);
+		onchargeCheckBox = (CheckBox) findViewById(R.id.Settings_chkbx_onlyCharging);
+		settings = getSharedPreferences(NAME_MYPREF,MODE_PRIVATE);
 		db = new PrivateCloudDatabase(getApplicationContext());
 
 		// load some dummy data
         for(int index=0; index< 4; index++){
-        	Server test = new Server("TestServer DB" + index);
-        	db.createServer(test);
+        	//Server test = new Server("TestServer DB" + index);
+        	//db.createServer(test);
         }
         
         adapter	= new ServerListAdapter(contex);
         listView.setAdapter(adapter);
 		
         listView.setClickable(true);
+        loadValues();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
           @Override
@@ -65,7 +82,14 @@ public class Settings extends Activity {
 
 
 	
-
+	private void loadValues(){
+        syncinterval = settings.getInt(KEY_SYNCINTERVAL, 0);
+        onwifi = settings.getBoolean(KEY_ONWIFI, false);
+        oncharge = settings.getBoolean(KEY_ONCHARGE, false);
+        syncintervalEditText.setText(""+syncinterval);
+        onwifiCheckBox.setChecked(onwifi);
+        onchargeCheckBox.setChecked(oncharge);
+	}
     public void onButtonClicked(View v){
     	switch(v.getId()) {
     		case R.id.Settings_Button_cancel:
@@ -76,6 +100,21 @@ public class Settings extends Activity {
     			Intent activityserver = new Intent(this,ActivityServer.class);
     			activityserver.putExtra("serverid", serverid);
     			startActivity(activityserver);
+    		break;
+    		case R.id.Settings_Button_save:
+    			if (!syncintervalEditText.getText().toString().matches(""))
+    			{
+	    			SharedPreferences.Editor editor = settings.edit();
+	    			editor.putInt(KEY_SYNCINTERVAL, Integer.parseInt(syncintervalEditText.getText().toString()));
+	    			editor.putBoolean(KEY_ONWIFI, onwifiCheckBox.isChecked());
+	    			editor.putBoolean(KEY_ONCHARGE, onchargeCheckBox.isChecked());
+	    			editor.commit();
+	    			this.finish();
+    			}
+    			else
+    			{
+    				Toast.makeText(Settings.this, "Invalid Sync interval", Toast.LENGTH_LONG).show();
+    			}
     		break;
     		
     		
