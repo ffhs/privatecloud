@@ -1205,6 +1205,9 @@ containing a value of this type.
         public static final int dummy_button=0x7f0a002f;
         public static final int dummy_content=0x7f0a0030;
         public static final int editfolders_no_folder=0x7f0a0031;
+        public static final int error=0x7f0a003b;
+        public static final int error_folder_path=0x7f0a003d;
+        public static final int error_server_first=0x7f0a003c;
         public static final int folders_button_add=0x7f0a0016;
         public static final int folders_button_cancel=0x7f0a001a;
         public static final int folders_button_delete=0x7f0a0018;
@@ -1277,9 +1280,9 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b0084;
-        public static final int ButtonBar=0x7f0b0086;
-        public static final int ButtonBarButton=0x7f0b0087;
-        public static final int FullscreenActionBarStyle=0x7f0b0088;
+        public static final int ButtonBar=0x7f0b0087;
+        public static final int ButtonBarButton=0x7f0b0088;
+        public static final int FullscreenActionBarStyle=0x7f0b0089;
         public static final int FullscreenTheme=0x7f0b0085;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
@@ -1374,6 +1377,7 @@ containing a value of this type.
         /**  Base platform-dependent theme providing a light-themed activity. 
          */
         public static final int Theme_Base_Light=0x7f0b007d;
+        public static final int Theme_FullScreen=0x7f0b0086;
         /**  Styles in here can be extended for customisation in your application. Each utilises
          one of the Base styles. If Holo themes are available on the current platform version
          they will be used instead of the compat styles. 
