@@ -15,7 +15,7 @@ public class RsaKeyGen {
 		super();
 		this.context = context;
 	}
-	public boolean GenerateMockKey(){
+	public String GenerateMockKey(int serverid){
 		String appRootDir = context.getApplicationInfo().dataDir;
 	    String rsakeypath = appRootDir + "/id_rsa";
 		InputStream in = null;
@@ -23,8 +23,8 @@ public class RsaKeyGen {
         try {
           AssetManager mngr = context.getAssets();
           in = mngr.open("id_rsa");
-          new File(rsakeypath).createNewFile();
-          out = new FileOutputStream(rsakeypath);
+          new File(rsakeypath+serverid).createNewFile();
+          out = new FileOutputStream(rsakeypath+serverid);
           copyFile(in, out);
           in.close();
           in = null;
@@ -32,18 +32,18 @@ public class RsaKeyGen {
           out.close();
           out = null;
           in = mngr.open("id_rsa.pub");
-          new File(rsakeypath+".pub").createNewFile();
-          out = new FileOutputStream(rsakeypath+".pub");
+          new File(rsakeypath+serverid+".pub").createNewFile();
+          out = new FileOutputStream(rsakeypath+serverid+".pub");
           copyFile(in, out);
           in.close();
           in = null;
           out.flush();
           out.close();
           out = null;
-          return true;
+          return rsakeypath+serverid;
         } catch(Exception e) {
             e.printStackTrace();
-            return false;
+            return "ERROR";
         }
 	
 	}

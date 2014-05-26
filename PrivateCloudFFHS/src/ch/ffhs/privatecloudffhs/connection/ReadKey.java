@@ -19,11 +19,11 @@ public class ReadKey {
 		super();
 		this.context = context;
 	}
-	public void ReadFile(){
+	public void ReadFile(int serverid){
 		StringBuilder text = new StringBuilder();
 
 			String appRootDir = context.getApplicationInfo().dataDir;
-		    String rsakeypath = appRootDir + "/id_rsa.pub";
+		    String rsakeypath = appRootDir + "/id_rsa"+serverid+".pub";
 			InputStream instream;
 			try {
 				instream = new FileInputStream(rsakeypath);
