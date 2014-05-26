@@ -20,7 +20,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
     private static final String LOG = "DatabaseHelper";
  
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
  
     // Database Name
     private static final String DATABASE_NAME = "privateCloud.db";
@@ -114,7 +114,8 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
             do {
                 Folder folder = new Folder(c.getString((c.getColumnIndex(KEY_PATH))), c.getInt((c.getColumnIndex(KEY_SERVER_ID))));
                 folder.setLastsync(c.getString((c.getColumnIndex(KEY_LASTSYNC))));
-                
+                folder.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+
                 // adding to folders list
                 folders.add(folder);
             } while (c.moveToNext());
@@ -122,6 +123,29 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
      
         return folders;
     }
+    
+    /*
+     * get single Folder
+     */
+    public Folder getFolder(int folderId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+     
+        String selectQuery = "SELECT  * FROM " + TABLE_FOLDER + " WHERE "
+                + KEY_ID + " = " + folderId;
+     
+        Log.e(LOG, selectQuery);
+     
+        Cursor c = db.rawQuery(selectQuery, null);
+     
+        if (c != null) c.moveToFirst();
+     
+        Folder folder = new Folder(c.getString((c.getColumnIndex(KEY_PATH))), c.getInt((c.getColumnIndex(KEY_SERVER_ID))));
+        folder.setLastsync(c.getString((c.getColumnIndex(KEY_LASTSYNC))));
+        folder.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+
+        return folder;
+    }
+    
     
     
     /*
@@ -131,7 +155,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
      
         ContentValues values = new ContentValues();
-        values.put(KEY_SERVER_ID, folder.getServer());
+        values.put(KEY_SERVER_ID, folder.getServerId());
         values.put(KEY_PATH, folder.getPath());
         values.put(KEY_LASTSYNC, folder.getLastsync());
         
@@ -143,12 +167,38 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
     
     
     /*
+     * Updating a Folder
+     */
+    public int updateFolder(Folder folder) {
+        SQLiteDatabase db = this.getWritableDatabase();
+     
+        ContentValues values = new ContentValues();
+        values.put(KEY_SERVER_ID, folder.getServerId());
+        values.put(KEY_PATH, folder.getPath());
+        values.put(KEY_LASTSYNC, folder.getLastsync());
+        values.put(KEY_ID, folder.getId());
+     
+        // updating row
+        return db.update(TABLE_FOLDER, values, KEY_ID + " = ?", new String[] { String.valueOf(folder.getId()) });
+    }
+    
+    
+    /*
+     * Deleting a Folder
+     */
+    public void deleteFolder(long folderId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FOLDER, KEY_ID + " = ?", new String[] { String.valueOf(folderId) });
+    }
+    
+    
+    /*
      * getting all Servers
      */
     public List<Server> getAllServers() {
         List<Server> servers = new ArrayList<Server>();
         String selectQuery = "SELECT  * FROM " + TABLE_SERVER;
-     
+
         Log.e(LOG, selectQuery);
      
         SQLiteDatabase db = this.getReadableDatabase();
@@ -228,4 +278,12 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
      
         return serverId;
     }
+    
+    // closing database
+    public void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        
+        if(db != null && db.isOpen()) db.close();
+    }
+ 
 }

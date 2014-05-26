@@ -10,6 +10,9 @@ import ch.ffhs.privatecloudffhs.util.SimpleFileDialog;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,57 +21,68 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.AnalogClock;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class ActivityEditFolder extends Activity {
-		int folderid;
 		PrivateCloudDatabase db;
 		Folder folder;
 		Spinner serverSpinner;
 	    EditFolderSpinServerAdapter adapter;
         TextView selectedFolderText;
+        int folderId;
+        Context context;
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			Intent iin= getIntent();
-	        Bundle b = iin.getExtras();
+			Intent intent = getIntent();
+	        Bundle intentExtras = intent.getExtras();
 
 	        setContentView(R.layout.activity_activity_edit_folder);	        
+			context = this;
 
-			db = new PrivateCloudDatabase(getApplicationContext());
+			db = new PrivateCloudDatabase(context);
 
 			folder = new Folder();
 	        selectedFolderText = (TextView) findViewById(R.id.EditFolder_Text_Folder);	        
 
-	        if(b!=null)
+	        if(intentExtras != null)
 	        {
-	           folderid =(int) b.getInt("folderid");
+	        	folderId = (int)intentExtras.getInt("folderid");
 	           
-			   if(folderid != 0)
+			   if(folderId != 0)
 			   {
 				   //Load from DB
-//				   server = db.getServer(serverid);
-//					selectedFolderText.
+				   folder = db.getFolder(folderId);
 			   }
 	        }
 	        
-	        
 	        adapter = new EditFolderSpinServerAdapter(ActivityEditFolder.this, android.R.layout.simple_spinner_item);
+	        adapter.refreshList(db.getAllServers());
+	        
 	        serverSpinner = (Spinner) findViewById(R.id.EditFolder_Spinner_Servers);
 	        serverSpinner.setAdapter(adapter); // Set the custom adapter to the spinner
-	       
+
+
 	        serverSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 	            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 	            	Server server = adapter.getItem(position);	                
-	                folder.setServer(server.getId());
+	                folder.setServerId(server.getId());
 	            }
 	            public void onNothingSelected(AdapterView<?> adapter) {  }
 	        });
 	        
+	        if(folderId != 0)
+	        {
+		        serverSpinner.setSelection(adapter.getPosition(adapter.getServerById(folder.getServerId())));
+		        selectedFolderText.setText(folder.getPath());
+	        }
+	        
+	        db.closeDB();
 		}
 		
 		
@@ -79,10 +93,7 @@ public class ActivityEditFolder extends Activity {
 	  				{
 	  					@Override
 	  					public void onChosenDir(String chosenDir) 
-	  					{
-	  						// show toast
-	  						Toast.makeText(ActivityEditFolder.this, R.string.confirm_folder_added  + chosenDir, Toast.LENGTH_LONG).show();
-	  						
+	  					{	  						
 	  						folder.setPath(chosenDir);
 	  						selectedFolderText.setText(chosenDir);
 	  					}
@@ -92,10 +103,50 @@ public class ActivityEditFolder extends Activity {
 	    		break;
 	    		
 		    	case R.id.EditFolder_Button_Save:
-		    		
-		    		
-						Toast.makeText(ActivityEditFolder.this, folder.getPath() +  " " + folder.getServer(), Toast.LENGTH_LONG).show();
-
+		    		if(folder.getPath() == null)
+		    		{
+		    			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		    			 
+						// set title
+						alertDialogBuilder.setTitle(R.string.error);
+			 
+						// set dialog message
+						alertDialogBuilder
+							.setMessage(R.string.error_folder_path)
+							.setCancelable(false)
+							.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,int id) {
+									// if this button is clicked, just close
+									// the dialog box and do nothing
+									dialog.cancel();
+								}
+							}
+						);				
+						
+		 				// create alert dialog
+						AlertDialog alertDialog = alertDialogBuilder.create();
+		 
+						// show it
+						alertDialog.show();
+		    		}
+		    		else
+		    		{
+			    		if(folderId == 0)
+			    		{
+			    			db.createFolder(folder);	
+			    		}
+			    		else
+			    		{
+			    			db.updateFolder(folder);
+			    		}
+			    		
+				        db.closeDB();
+		    			this.finish();		    			
+		    		}
+	    		break;
+	    		
+		    	case R.id.EditFolder_Button_Cancel:
+	    			this.finish();
 	    		break;
 	    	
 	    		

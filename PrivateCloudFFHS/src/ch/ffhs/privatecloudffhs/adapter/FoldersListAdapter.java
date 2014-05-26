@@ -28,11 +28,6 @@ public class FoldersListAdapter extends ArrayAdapter<Folder>{
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
 		inflater = LayoutInflater.from(context);
-	
-		db = new PrivateCloudDatabase(context);	
-		list = db.getAllFolders();
-
-		super.addAll(list);
 	}
 
 	@Override
@@ -79,12 +74,22 @@ public class FoldersListAdapter extends ArrayAdapter<Folder>{
 	}
 	
 	public void addFolder(Folder folder) {
-		list.add(folder);
+		this.list.add(folder);
+		add(folder);
+		
 		notifyDataSetChanged();
 	}
 	
 	
-	
+	public void refreshList(List<Folder> list) {
+		this.list = list;
+
+		clear();
+		addAll(this.list);
+		
+		notifyDataSetChanged();
+	}
+
 	
 	private class ViewHolder {
 		TextView path;

@@ -1,8 +1,13 @@
 package ch.ffhs.privatecloudffhs;
 
+import ch.ffhs.privatecloudffhs.R.string;
 import ch.ffhs.privatecloudffhs.connection.SshConnection;
+import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,12 +22,16 @@ import android.widget.Button;
  */
 public class Main extends Activity {
 
+	 PrivateCloudDatabase db;
+	 Context context = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
-        
+		db = new PrivateCloudDatabase(getApplicationContext());
+		context = this;
+
         setContentView(R.layout.activity_main);
         
         //clickhandler.onButtonClicked(v);
@@ -45,8 +54,37 @@ public class Main extends Activity {
     		break;
     		
     		case R.id.Main_Button_Folders:
-    			Intent folders = new Intent(this,Folders.class);
-    			startActivity(folders);
+    			if(db.getAllServers() == null)
+    			{
+    				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+		 
+					// set title
+					alertDialogBuilder.setTitle(R.string.error);
+		 
+					// set dialog message
+					alertDialogBuilder
+						.setMessage(R.string.error_server_first)
+						.setCancelable(false)
+						.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,int id) {
+								// if this button is clicked, just close
+								// the dialog box and do nothing
+								dialog.cancel();
+							}
+						}
+					);				
+					
+	 				// create alert dialog
+					AlertDialog alertDialog = alertDialogBuilder.create();
+	 
+					// show it
+					alertDialog.show();
+    			}
+    			else
+    			{
+    				Intent folders = new Intent(this,Folders.class);
+        			startActivity(folders);
+    			}
     		break;
     	}
     }

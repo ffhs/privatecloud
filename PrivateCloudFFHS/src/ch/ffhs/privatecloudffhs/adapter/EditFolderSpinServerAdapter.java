@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 
@@ -22,12 +23,6 @@ public class EditFolderSpinServerAdapter extends ArrayAdapter<Server>{
 	public EditFolderSpinServerAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         this.context = context;
-        
-        db = new PrivateCloudDatabase(context);	
-		list = db.getAllServers();
-
-		super.addAll(list);
-        
     }
 
     public int getCount(){
@@ -41,6 +36,17 @@ public class EditFolderSpinServerAdapter extends ArrayAdapter<Server>{
     public long getItemId(int position){
        return position;
     }
+    
+    public Server getServerById(int serverId){
+    	for (Server flist: list ) {
+    		if(flist.getId() == serverId)
+    		{
+    			return flist;
+    		}
+    	}
+    	
+    	return null;
+     }
 
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,4 +64,13 @@ public class EditFolderSpinServerAdapter extends ArrayAdapter<Server>{
 
         return label;
     }
+    
+    public void refreshList(List<Server> list) {
+		this.list = list;
+
+		clear();
+		addAll(this.list);
+		
+		notifyDataSetChanged();
+	}
 }

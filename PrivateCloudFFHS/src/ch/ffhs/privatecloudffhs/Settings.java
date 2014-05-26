@@ -20,9 +20,9 @@ import android.widget.ListView;
 
 public class Settings extends Activity {
 
-	ListView listView=null;
-	Context contex=null;
-	ServerListAdapter adapter=null;
+	ListView listView = null;
+	Context context = null;
+	ServerListAdapter adapter = null;
 	PrivateCloudDatabase db;
 
 	private List<Server> list=new ArrayList<Server>();
@@ -31,19 +31,19 @@ public class Settings extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_settings);
-		contex=this;
+		context=this;
 		listView = (ListView) findViewById(R.id.Servers_List);
 		
 		db = new PrivateCloudDatabase(getApplicationContext());
 
 		// load some dummy data
-        for(int index=0; index< 4; index++){
+    /*    for(int index=0; index< 4; index++){
         	Server test = new Server("TestServer DB" + index);
        	
         	db.createServer(test);
-        }
+        }*/
         
-        adapter	= new ServerListAdapter(contex);
+        adapter	= new ServerListAdapter(context);
         listView.setAdapter(adapter);
 		
         listView.setClickable(true);

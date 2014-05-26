@@ -6,7 +6,9 @@ import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.util.SimpleFileDialog;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,7 +17,9 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -35,34 +39,46 @@ import android.os.Bundle;
 @SuppressLint("NewApi")
 public class Folders extends Activity  implements MultiChoiceModeListener{
 
-	 ListView listView=null;
-	 Context contex=null;
-	 FoldersListAdapter adapter=null;
+	 ListView listView = null;
+	 Context context = null;
+	 FoldersListAdapter adapter = null;
 	 PrivateCloudDatabase db;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_folders);
 
-		contex=this;
+		context = this;
 		listView = (ListView) findViewById(R.id.Folders_List);
 		
 		db = new PrivateCloudDatabase(getApplicationContext());
-
-	 
 		
-		// load some dummy data
-        for(int index=0; index< 4; index++){
-        	Folder test = new Folder("testpath" + index, 1);
-        	
-        	db.createFolder(test);
-        	
-        }
+		adapter	= new FoldersListAdapter(context);
+        refreshFolderList();
         
-        adapter	= new FoldersListAdapter(contex);
         listView.setAdapter(adapter);
         listView.setMultiChoiceModeListener(this);
         listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE_MODAL);
+        
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+            	Folder selecteditem = adapter.getItem(position);
+
+            	Intent editFolders = new Intent(context, ActivityEditFolder.class);
+                
+            	editFolders.putExtra("folderid", selecteditem.getId());
+  				startActivity(editFolders);
+            }
+        });
+        
+        db.closeDB();
+	}
+	
+	private void refreshFolderList()
+	{
+        adapter.refreshList(db.getAllFolders());
+        db.closeDB();
 	}
 
 	@Override
@@ -74,8 +90,11 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
 					if (selected.valueAt(i)) {
 						Folder selecteditem = adapter.getItem(selected.keyAt(i));
 						adapter.remove(selecteditem);
+						db.deleteFolder(selecteditem.getId());
 					}
 				}
+				
+		        db.closeDB();
 				// Close CAB
 				arg0.finish();
 			return true;
@@ -112,13 +131,19 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
     	switch(v.getId()) {
     		case R.id.Folders_Button_Add:
     			Intent editFolders = new Intent(this,ActivityEditFolder.class);
-    			startActivity(editFolders);
+        		startActivity(editFolders);    				
     		break;
     		
     		case R.id.Folders_Button_cancel:
     			this.finish();
     		break;
     	}
+    }
+    
+    public void onResume() {
+        super.onResume();
+
+        refreshFolderList();
     }
 }
 

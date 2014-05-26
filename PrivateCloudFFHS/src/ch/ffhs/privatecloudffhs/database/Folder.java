@@ -9,8 +9,9 @@ import android.text.method.DateTimeKeyListener;
 
 public class Folder {
 	private String path;
-	private int server;
+	private int serverId;
 	private String lastsync;
+	private int id;
 	 
 	public Folder(){
 	}
@@ -18,7 +19,7 @@ public class Folder {
 	
 	public Folder(String path, int server){
 		this.path = path;
-		this.server = server;
+		this.serverId = server;
 		this.lastsync = null;
 	}
 
@@ -39,13 +40,24 @@ public class Folder {
 		this.lastsync = lastsync;
 	}
 	
-	public int getServer()
+	public int getServerId()
 	{
-		return server;
+		return serverId;
 	}
 	
-	public void setServer(int server)
+	public void setServerId(int serverId)
 	{
-		this.server = server;
+		this.serverId = serverId;
+	}
+	
+
+	public int getId()
+	{
+		return id;
+	}
+	
+	public void setId(int id)
+	{
+		this.id= id;
 	}
 }
