@@ -281,7 +281,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
     }
     
 
-    public boolean updateServer(Server server){
+    public int updateServer(Server server){
     	SQLiteDatabase db = this.getWritableDatabase();
     	String password = "";
     	String certPath = "";
@@ -293,6 +293,19 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
     	{
     		certPath = server.getCertpath();
     	}
+    	
+    	ContentValues values = new ContentValues();
+        values.put(KEY_SERVERNAME, server.getServername());
+        values.put(KEY_HOST, server.getHostname());
+        values.put(KEY_USER, server.getUsername());
+        values.put(KEY_PASSWORD, server.getPassword());
+        values.put(KEY_PORT, server.getPort());
+        values.put(KEY_PROTO, server.getProto());
+        values.put(KEY_CERTPATH, server.getCertpath());
+        values.put(KEY_REMOTEROOT, server.getRemoteroot());
+        return db.update(TABLE_SERVER, values, KEY_ID + " = ?", new String[] { String.valueOf(server.getId()) });
+        
+        /*
     	String updateQuerie = "UPDATE " + TABLE_SERVER + " SET " 
     	+ KEY_SERVERNAME + " = \"" + server.getServername() + "\" , " 
     	+ KEY_HOST + " = \"" + server.getHostname() + "\", " 
@@ -313,6 +326,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 		}
     	
     	return true;
+    	*/
     }
     
 
