@@ -329,6 +329,11 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
     	*/
     }
     
+    public void deleteServer(long serverId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_SERVER, KEY_ID + " = ?", new String[] { String.valueOf(serverId) });
+    }
+    
 
     // closing database
     public void closeDB() {

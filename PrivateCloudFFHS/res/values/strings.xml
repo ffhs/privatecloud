@@ -34,6 +34,7 @@
     <string name="server_radio_pw">Password authentication</string>
     <string name="server_radio_key">Privatekey authentication</string>
     <string name="server_label_password">Server Password</string>
+    <string name="settings_button_delete">Delete</string>
     
     <string name="title_activity_folders">Folders</string>
     <string name="title_activity_server">Server settings</string>

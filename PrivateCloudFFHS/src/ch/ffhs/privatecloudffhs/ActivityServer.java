@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
+import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import android.app.Activity;
@@ -128,6 +129,7 @@ public class ActivityServer extends Activity {
     			
     			server.setCertpath(rsakeygen.GenerateMockKey(server.getId()));
     			Log.d("jada","Setting certpath to :" + server.getCertpath());
+    			Toast.makeText(ActivityServer.this, "New keypair calculated", Toast.LENGTH_LONG).show();
     		break;
     		case R.id.server_Button_Showkey:
     			ReadKey readkey = new ReadKey(this);
@@ -140,11 +142,19 @@ public class ActivityServer extends Activity {
     			savesettings();
     			
     		break;
+    		case R.id.Server_Button_delete:
+				db.deleteServer(server.getId());
+				this.finish();
+    		break;
     	}
     }
     private void savesettings(){
-    	if(hostname.getText().toString() != "" && servername.getText().toString() != "" && port.getText().toString() != "" && remoteroot.getText().toString() != "" && (passauth.isChecked() || keyauth.isChecked()))
-		{
+    	if(isEmpty(port) || isEmpty(hostname)  || isEmpty(servername) || isEmpty(username) || isEmpty(remoteroot) || (passauth.isChecked() && keyauth.isChecked()))
+    	{
+    		Toast.makeText(ActivityServer.this, "Not all required information supplied", Toast.LENGTH_LONG).show();
+    	}
+    	else
+    	{
 			server.setHostname(hostname.getText().toString());
 			server.setServername(servername.getText().toString());
 			server.setPort(Integer.parseInt(port.getText().toString()));
@@ -193,12 +203,18 @@ public class ActivityServer extends Activity {
 			{
 				db.updateServer(server);
 			}
+			db.close();
 			this.finish();
 		}
-		else
-		{
-			Toast.makeText(ActivityServer.this, "Not all required information supplied", Toast.LENGTH_LONG).show();
-		}
+		
+    }
+    
+    private boolean isEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
     public void onRadioButtonClicked(View v){
     	switch(v.getId()) {
