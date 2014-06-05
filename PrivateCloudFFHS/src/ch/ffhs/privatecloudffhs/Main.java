@@ -4,6 +4,7 @@ import ch.ffhs.privatecloudffhs.R.string;
 import ch.ffhs.privatecloudffhs.connection.SshConnection;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.sync.SyncService;
+import ch.ffhs.privatecloudffhs.sync.SyncService.SyncServiceBinder;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -30,6 +31,7 @@ public class Main extends Activity {
 
 	 PrivateCloudDatabase db;
 	 Context context = null;
+		private SyncServiceBinder syncService = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,18 @@ public class Main extends Activity {
 		context = this;
 		
         setContentView(R.layout.activity_main);
+        
+        Intent syncServiceIntent = new Intent(this, SyncService.class);
+    	startService(syncServiceIntent);
+   		bindService(syncServiceIntent, syncServiceConnection, Context.BIND_AUTO_CREATE);
     }
    
+    
+    protected void onDestroy() {
+		Log.d("MAIN", "onDestroy");
+		super.onDestroy();
+	}
+
 
 
 
@@ -53,8 +65,9 @@ public class Main extends Activity {
     		break;
     		
     		case R.id.Main_Button_SyncNow:
-    			SshConnection sshconnection = new SshConnection(this);
-	        	sshconnection.Connect();
+    			syncService.syncNow();
+    			//SshConnection sshconnection = new SshConnection(this);
+	        	//sshconnection.Connect();
     		break;
     		
     		case R.id.Main_Button_Folders:
@@ -92,5 +105,24 @@ public class Main extends Activity {
     		break;
     	}
     }
+    
+    
+	
+	private ServiceConnection syncServiceConnection = new ServiceConnection() {
+		private final String TAG = "syncServiceConnection";
+		@Override
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			Log.d(TAG, "onServiceConnected");
+			syncService = (SyncServiceBinder) service;
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+			syncService = null;
+			Log.d(TAG, "onServiceDisconnected");
+		}
+
+	};
+
     
 }
