@@ -25,10 +25,10 @@
         <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
     </style>
     
-    <style name="Theme.FullScreen" parent="@android:style/Theme.Holo">
-   <item name="android:windowNoTitle">false</item>
-   <item name="android:windowFullscreen">true</item>
-   </style>
+	<style name="Theme.FullScreen" parent="@android:style/Theme.Holo">
+   		<item name="android:windowNoTitle">false</item>
+   		<item name="android:windowFullscreen">true</item>
+   	</style>
 
     <style name="ButtonBar">
         <item name="android:paddingLeft">2dp</item>

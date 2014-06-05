@@ -3,13 +3,19 @@ package ch.ffhs.privatecloudffhs;
 import ch.ffhs.privatecloudffhs.R.string;
 import ch.ffhs.privatecloudffhs.connection.SshConnection;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
+import ch.ffhs.privatecloudffhs.sync.SyncService;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,10 +37,8 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
 		db = new PrivateCloudDatabase(getApplicationContext());
 		context = this;
-
+		
         setContentView(R.layout.activity_main);
-        
-        //clickhandler.onButtonClicked(v);
     }
    
 
