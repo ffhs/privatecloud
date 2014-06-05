@@ -42,7 +42,7 @@ public class ActivityEditFolder extends Activity {
 			Intent intent = getIntent();
 	        Bundle intentExtras = intent.getExtras();
 
-	        setContentView(R.layout.activity_activity_edit_folder);	        
+	        setContentView(R.layout.activity_edit_folder);	        
 			context = this;
 
 			db = new PrivateCloudDatabase(context);

@@ -59,8 +59,9 @@ public class Settings extends Activity {
 		
         listView.setClickable(true);
         loadValues();
+        refreshFolderList();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        
           @Override
           public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
             Object o = listView.getItemAtPosition(position);
@@ -76,7 +77,11 @@ public class Settings extends Activity {
         
 	}
 
-
+	private void refreshFolderList()
+	{
+        adapter.refreshList(db.getAllServers());
+        db.closeDB();
+	}
 	
 	private void loadValues(){
         syncinterval = settings.getInt(KEY_SYNCINTERVAL, 0);
@@ -117,5 +122,9 @@ public class Settings extends Activity {
     		
     	}
     }
+    public void onResume() {
+        super.onResume();
 
+        refreshFolderList();
+    }
 }

@@ -200,7 +200,13 @@
                 android:layout_weight="1"
                 android:onClick="onButtonClicked"
                 android:text="@string/settings_button_save" />
-
+			<Button
+                android:id="@+id/Server_Button_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"        
+                android:layout_weight="1"
+                android:onClick="onButtonClicked"
+                android:text="@string/settings_button_delete" />
             <Button
                 android:id="@+id/Server_Button_cancel"
                 android:layout_width="wrap_content"
@@ -208,6 +214,7 @@
                 android:layout_weight="1"
                 android:onClick="onButtonClicked"
                 android:text="@string/settings_button_cancel" />
+            
         </LinearLayout>
 
     </LinearLayout>

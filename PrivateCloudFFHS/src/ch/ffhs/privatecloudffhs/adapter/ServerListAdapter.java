@@ -3,6 +3,7 @@ package ch.ffhs.privatecloudffhs.adapter;
 import java.util.List;
 
 import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import android.annotation.SuppressLint;
@@ -20,8 +21,6 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 	LayoutInflater inflater;
 	List<Server> list;
 	SparseBooleanArray mSelectedItemsIds;
-	PrivateCloudDatabase db;
-
 
 	public ServerListAdapter(Context context) {
 		super(context, 0);
@@ -29,10 +28,6 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 		this.context = context;
 		inflater = LayoutInflater.from(context);
 		
-		db = new PrivateCloudDatabase(context);	
-		list = db.getAllServers();
-
-		super.addAll(list);
 	}
 
 	@Override
@@ -77,12 +72,14 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 	public SparseBooleanArray getSelectedIds() {
 		return mSelectedItemsIds;
 	}
+	public void refreshList(List<Server> list) {
+		this.list = list;
+		clear();
+		addAll(this.list);
+		notifyDataSetChanged();
+	}
 	
-	
-	
-	
-	
-	
+
 	private class ViewHolder {
 		TextView servername;
 		TextView hostname;
