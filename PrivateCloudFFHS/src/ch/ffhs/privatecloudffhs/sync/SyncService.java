@@ -20,6 +20,8 @@ import android.util.Log;
 
 
 public class SyncService extends Service {
+	private static final String TAG = "SyncService";
+
 	private Timer myTimer = null;
 	private final IBinder syncServiceBinder = new SyncServiceBinder ();
 	
@@ -27,7 +29,8 @@ public class SyncService extends Service {
 	private static final String NAME_MYPREF = "cloudsettings";
 	private SharedPreferences settings;
 	
-	private static final String TAG = "SyncService";
+	private SyncManager syncManagerObj;
+
 	
 	/** inner class implements the broadcast timer*/
 	private class TimeServiceTimerTask extends TimerTask {	
@@ -50,7 +53,7 @@ public class SyncService extends Service {
 			Log.d(TAG, "RUNNING");
 
 		}
-		
+		syncManagerObj.syncAllFolders();
 		Log.d(TAG, "SYNC CALLED");
 
 	}
@@ -61,10 +64,13 @@ public class SyncService extends Service {
 		
 		super.onCreate();
 		
-		settings = getSharedPreferences(NAME_MYPREF,MODE_PRIVATE);
+		settings = getSharedPreferences(NAME_MYPREF, MODE_PRIVATE);
 		
-		myTimer = new Timer("myTimer");
-		myTimer.scheduleAtFixedRate( new TimeServiceTimerTask(), 0, settings.getInt(KEY_SYNCINTERVAL, 1) * 1000 * 60);
+	//	myTimer = new Timer("myTimer");
+	//	myTimer.scheduleAtFixedRate( new TimeServiceTimerTask(), 0, settings.getInt(KEY_SYNCINTERVAL, 1) * 1000 * 60);
+	//	myTimer.scheduleAtFixedRate( new TimeServiceTimerTask(), 0,1000);
+
+		syncManagerObj = new SyncManager(this);
 	}
 
 	@Override
@@ -83,18 +89,17 @@ public class SyncService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.d(TAG, "onStartCommand");
 		
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 	    Intent bIntent = new Intent(this, SyncService.class);       
 	    PendingIntent pbIntent = PendingIntent.getActivity(this, 0 , bIntent, Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	  
 	    NotificationCompat.Builder bBuilder =
 	            new NotificationCompat.Builder(this)
-	                .setContentTitle("title")
-	                .setContentText("sub title")
+	                .setContentTitle("privatecloud")
+	                .setContentText("sync")
 	                .setAutoCancel(true)
 	                .setOngoing(true)
 	                .setContentIntent(pbIntent);
-	    Notification barNotif = bBuilder.build();
-	    this.startForeground(1, barNotif);
+	    startForeground(1, bBuilder.build());
 	    
 	    return START_STICKY;
 	}
@@ -113,30 +118,11 @@ public class SyncService extends Service {
 		stopForeground(true);
 	}
 	
-	public class SyncServiceBinder extends Binder {
-		private final String TAG = "SyncServiceBinder";
 	
-		public int getPID(){
-			return android.os.Process.myPid();
-		}
-		
-		
-		public int getTID(){
-			return android.os.Process.myTid();
-		}
-		
+	public class SyncServiceBinder extends Binder {		
 		public void syncNow()
 		{
 			sync();
 		}
-		
-		public void sendCounter() {
-
-		}
-
-		public void sendTime() {
-
-		}
-		
 	}
 }

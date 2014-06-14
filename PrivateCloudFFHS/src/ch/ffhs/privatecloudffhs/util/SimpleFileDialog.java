@@ -15,6 +15,7 @@ import android.content.DialogInterface.OnClickListener;
 //import android.content.DialogInterface.OnKeyListener;
 import android.os.Environment;
 import android.text.Editable;
+import android.util.Log;
 import android.view.Gravity;
 //import android.view.KeyEvent;
 import android.view.View;
@@ -56,6 +57,7 @@ public class SimpleFileDialog
 		m_context = context;
 		m_SimpleFileDialogListener = SimpleFileDialogListener;
 		m_sdcardDirectory = Environment.getRootDirectory().getAbsolutePath();
+		m_sdcardDirectory = "/";
 
 		try
 		{
@@ -108,7 +110,7 @@ public class SimpleFileDialog
 				String m_dir_old = m_dir;
 				String sel = "" + ((AlertDialog) dialog).getListView().getAdapter().getItem(item);
 				if (sel.charAt(sel.length()-1) == '/')	sel = sel.substring(0, sel.length()-1);
-				
+
 				// Navigate into the sub-directory
 				if (sel.equals(".."))
 				{
@@ -116,8 +118,15 @@ public class SimpleFileDialog
 				}
 				else
 				{
-					   m_dir += "/" + sel;
+				Log.d("SYNC TEST3", String.valueOf(sel.charAt(0)));
+				Log.d("SYNC TEST3 -1", m_dir);
+				
+					if(sel.charAt(1) != '/') m_dir += "/";
+					m_dir += sel;
+					Log.d("SYNC TEST3 -2", m_dir);
+					
 				}
+				
 				Selected_File_Name = Default_File_Name;
 				
 				if ((new File(m_dir).isFile())) // If the selection is a regular file

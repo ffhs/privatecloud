@@ -193,6 +193,139 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
     }
     
     
+
+    /*
+     * getting all Files
+     */
+    public List<SyncFile> getAllFiles() {
+        List<SyncFile> files = new ArrayList<SyncFile>();
+        String selectQuery = "SELECT  * FROM " + TABLE_FILE;
+     
+        Log.e(LOG, selectQuery);
+     
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+     
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                SyncFile file = new SyncFile(c.getInt(c.getColumnIndex(KEY_FOLDER_ID)), c.getString(c.getColumnIndex(KEY_PATH)));
+
+                file.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                file.setLocalCheckSum(c.getString(c.getColumnIndex(KEY_LOCALCHECKSUM)));
+                file.setRemoteCheckSum(c.getString(c.getColumnIndex(KEY_REMOTECHECKSUM)));
+                file.setConflict(c.getInt(c.getColumnIndex(KEY_CONFLICT)) == 1 ? true : false);
+
+                // adding to files list
+                files.add(file);
+            } while (c.moveToNext());
+        }
+     
+        return files;
+    }
+    
+    /*
+     * get single File
+     */
+    public SyncFile getFile(int fileId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+     
+        String selectQuery = "SELECT  * FROM " + TABLE_FILE + " WHERE "
+                + KEY_ID + " = " + fileId;
+     
+        Log.e(LOG, selectQuery);
+     
+        Cursor c = db.rawQuery(selectQuery, null);
+     
+        if (c != null) c.moveToFirst();
+     
+        SyncFile file = new SyncFile(c.getInt(c.getColumnIndex(KEY_FOLDER_ID)), c.getString(c.getColumnIndex(KEY_PATH)));
+
+        file.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+        file.setLocalCheckSum(c.getString(c.getColumnIndex(KEY_LOCALCHECKSUM)));
+        file.setRemoteCheckSum(c.getString(c.getColumnIndex(KEY_REMOTECHECKSUM)));
+        file.setConflict(c.getInt(c.getColumnIndex(KEY_CONFLICT)) == 1 ? true : false);
+
+        return file;
+    }
+    
+    /*
+     * get single File
+     */
+    public SyncFile getFile(String path, int folderId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+     
+        String selectQuery = "SELECT  * FROM " + TABLE_FILE + " WHERE "
+                + KEY_FOLDER_ID + " = " + folderId + " AND " + KEY_PATH + " = '" + path + "'";
+     
+        Log.e(LOG, selectQuery);
+     
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if(c!= null && c.moveToFirst()) {
+            SyncFile file = new SyncFile(c.getInt(c.getColumnIndex(KEY_FOLDER_ID)), c.getString(c.getColumnIndex(KEY_PATH)));
+
+        	file.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+        	file.setLocalCheckSum(c.getString(c.getColumnIndex(KEY_LOCALCHECKSUM)));
+        	file.setRemoteCheckSum(c.getString(c.getColumnIndex(KEY_REMOTECHECKSUM)));
+            file.setConflict(c.getInt(c.getColumnIndex(KEY_CONFLICT)) == 1 ? true : false);
+
+        	return file;
+        }
+                
+        return null;
+    }
+    
+    
+    
+    /*
+     * Creating a File
+     */
+    public long createFile(SyncFile file) {
+        SQLiteDatabase db = this.getWritableDatabase();
+     
+        ContentValues values = new ContentValues();
+        values.put(KEY_FOLDER_ID, file.getFolderId());
+        values.put(KEY_PATH, file.getPath());
+        values.put(KEY_LOCALCHECKSUM, file.getLocalCheckSum());
+        values.put(KEY_REMOTECHECKSUM, file.getRemoteCheckSum());
+        values.put(KEY_CONFLICT, (file.isConflict() ? 1 : 0));
+
+        // insert row
+        long fileId = db.insert(TABLE_FILE, null, values);
+     
+        return fileId;
+    }
+    
+    
+    /*
+     * Updating a File
+     */
+    public int updateFile(SyncFile file) {
+        SQLiteDatabase db = this.getWritableDatabase();
+     
+        ContentValues values = new ContentValues();
+        values.put(KEY_FOLDER_ID, file.getFolderId());
+        values.put(KEY_PATH, file.getPath());
+        values.put(KEY_LOCALCHECKSUM, file.getLocalCheckSum());
+        values.put(KEY_REMOTECHECKSUM, file.getRemoteCheckSum());
+        values.put(KEY_CONFLICT, (file.isConflict() ? 1 : 0));
+
+        // updating row
+        return db.update(TABLE_FILE, values, KEY_ID + " = ?", new String[] { String.valueOf(file.getId()) });
+    }
+    
+    
+    /*
+     * Deleting a File
+     */
+    public void deleteFile(long fileId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FILE, KEY_ID + " = ?", new String[] { String.valueOf(fileId) });
+    }
+    
+    
+    
     /*
      * getting all Servers
      */

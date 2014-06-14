@@ -50,6 +50,8 @@ public class Main extends Activity {
     
     protected void onDestroy() {
 		Log.d("MAIN", "onDestroy");
+		unbindService(syncServiceConnection);
+
 		super.onDestroy();
 	}
 
@@ -118,8 +120,8 @@ public class Main extends Activity {
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			syncService = null;
 			Log.d(TAG, "onServiceDisconnected");
+			syncService = null;
 		}
 
 	};

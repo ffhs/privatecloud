@@ -1,30 +1,76 @@
 package ch.ffhs.privatecloudffhs.sync;
 
+import java.util.Iterator;
+import java.util.List;
+
+import ch.ffhs.privatecloudffhs.connection.SshConnection;
+import ch.ffhs.privatecloudffhs.connection.SshPwConnection;
+import ch.ffhs.privatecloudffhs.database.Folder;
+import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
+import ch.ffhs.privatecloudffhs.database.Server;
+import android.content.Context;
 import android.util.Log;
 
 public class SyncManager {
 	private Boolean running;
-	int counter;
 	private static final String TAG = "TimeService";
+	private PrivateCloudDatabase db;
+	private Context context;
 
 
-	public SyncManager() {
+	public SyncManager(Context context) {
+		this.context = context;
 		this.running = true;
+		
+		db = new PrivateCloudDatabase(context);
 	}
 
-	public Boolean isRunning() {
-		counter++;
+	public void syncAllFolders()
+	{
+		List<Folder> syncfolders = db.getAllFolders();
 		
-		if((counter % 5) == 0)
-		{
-			Log.d(TAG, "NOT RUNNING");
+		
+		for (Folder folder : syncfolders) {
+			Server server = db.getServer(folder.getServerId());
+			SyncConnection syncConnectionObj = null;
 
-		}
-		else
-		{
-			Log.d(TAG, "RUNNING");
+			if(server.getPassword() == null)
+			{
+				// build connection using cert
 
+			}
+			else
+			{
+				syncConnectionObj = new SshPwConnection(server);
+			}
+			
+			for (int i = 0; i < 3; i++) {
+				if(!syncConnectionObj.isReady())
+				{
+					try {
+						Thread.sleep(1000);
+					} catch(InterruptedException e) {
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+			
+			if(syncConnectionObj.isReady())
+			{
+				SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj);
+				syncClientObj.sync();				
+			}
 		}
+		
+		
+	}
+	
+	public Boolean isRunning() {
+		
+		Log.d(TAG, "RUNNING");
 		return running;
 	}	
 	
