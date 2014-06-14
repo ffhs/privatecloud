@@ -1,141 +1,154 @@
 package ch.ffhs.privatecloudffhs.connection;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+
+import ch.ffhs.privatecloudffhs.database.SyncFile;
+import ch.ffhs.privatecloudffhs.sync.SyncConnection;
 
 import com.jcraft.jsch.*;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Bundle;
+import android.util.Log;
 
-public class SshConnection {
-Context context;
-	public SshConnection(Context context) {
-	super();
-	this.context = context;
-}
-	public void Connect()  {
-		/*
-		JSch jsch=new JSch();
-		
+public class SshConnection implements SyncConnection{
+	
+	protected ChannelSftp channelSftp = null; 
+	protected Session session =  null;
+	protected String remoteDir;
+	
+	protected Boolean connectionReady = false;
+	
+	public Boolean isReady()
+	{
+		return connectionReady;
+	}
+
+	private String sendCommand(String command)
+	  {
+	     StringBuilder outputBuffer = new StringBuilder();
+
+	     try
+	     {
+	        Channel channel = session.openChannel("exec");
+	        ((ChannelExec)channel).setCommand(command);
+	        channel.connect();
+	        InputStream commandOutput = channel.getInputStream();
+	        int readByte = commandOutput.read();
+
+	        while(readByte != 0xffffffff)
+	        {
+	           outputBuffer.append((char)readByte);
+	           readByte = commandOutput.read();
+	        }
+
+	        channel.disconnect();
+	     }
+	     catch(IOException ioX)
+	     {
+	        Log.d("ERROR SYNCTEST2", ioX.getMessage());
+	        return null;
+	     }
+	     catch(JSchException jschX)
+	     {
+	    	 Log.d("ERROR SYNCTEST1", jschX.getMessage());
+	        return null;
+	     }
+
+	     return outputBuffer.toString();
+	 }
+	
+	
+	public SyncFile uploadFile(File file, SyncFile syncFile)
+	{
 		try {
-			String appRootDir = context.getApplicationInfo().dataDir;
-		    String rsakeypath = appRootDir + "/id_rsa";
-		    final byte[] privateKey = getPrivateKeyAsByteStream(rsakeypath);
-		    final byte[] emptyPassPhrase = new byte[0];
-			jsch.addIdentity(
-		            "syncuser01",    // String userName
-		            privateKey,          // byte[] privateKey 
-		            null,            // byte[] publicKey
-		            emptyPassPhrase  // byte[] passPhrase
-		        );
-			Session session=jsch.getSession("syncuser01", "ffhs.p45q.net", 22);
-			session.connect();
+			channelSftp.put(new FileInputStream(file), file.getName()); 
+
+			// get remote checksum from new uploaded file
+			syncFile.setRemoteCheckSum(getRemoteCheckSum(file.getPath()));
 			
-		} catch (JSchException e) {
+			return syncFile;
+		} catch (Exception e) {
+			// TODO: handle exception
+			Log.d("SYNC", "ERROR UPLOAD");
+		}
+		
+		return null;
+	}
+	
+	
+	public SyncFile downloadFile(File file, SyncFile syncFile)
+	{
+		try { 
+			byte[] buffer = new byte[1024]; 
+			BufferedInputStream bis = new BufferedInputStream(channelSftp.get(remoteDir + file.getPath())); 
+			File newFile = new File(file.getPath()); 
+			
+			OutputStream os = new FileOutputStream(newFile); 
+			BufferedOutputStream bos = new BufferedOutputStream(os); 
+			int readCount; 
+			//System.out.println("Getting: " + theLine); 
+			while( (readCount = bis.read(buffer)) > 0) { 
+				bos.write(buffer, 0, readCount); 
+			} 
+		
+			bis.close(); 
+			bos.close(); 
+			
+			// get remote checksum from downloaded file
+			syncFile.setRemoteCheckSum(getRemoteCheckSum(file.getPath()));
+			
+			return syncFile;
+			
+		} catch(Exception ex){ 
+			ex.printStackTrace(); 
+		}
+		
+		return null;
+	}
+	
+	public void mkDir(String directory)
+	{
+		try {					
+			channelSftp.mkdir(remoteDir + directory);
+
+		} catch (SftpException e) {
+			// FOLDER exists
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
-		new LongOperation().execute("");
-		}
-	private static byte[] getPrivateKeyAsByteStream(String pathk) {  
-	    // TODO Auto-generated method stub  
-	    final File privateKeyLocation = new File(pathk);  
-	    InputStream is = null;  
-	    try {  
-	        is = new FileInputStream(privateKeyLocation);  
-	    } catch (FileNotFoundException e) {  
-	        // TODO Auto-generated catch block  
-	        e.printStackTrace();  
-	    }  
-	    long length = privateKeyLocation.length();  
-	    if (length > Integer.MAX_VALUE) {  
-	        try {  
-	            throw new IOException(  
-	                    "File to process is too big to process in this example.");  
-	        } catch (IOException e) {  
-	            // TODO Auto-generated catch block  
-	            e.printStackTrace();  
-	        }  
-	    }  
-	  
-	    final byte[] bytes = new byte[(int) length];  
-	  
-	    // Read in the bytes  
-	    int offset = 0;  
-	    int numRead = 0;  
-	    try {  
-	        while ((offset < bytes.length)  
-	                && ((numRead = is.read(bytes, offset, bytes.length - offset)) >= 0)) {  
-	  
-	            offset += numRead;  
-	  
-	        }  
-	    } catch (IOException e) {  
-	        // TODO Auto-generated catch block  
-	        e.printStackTrace();  
-	    }  
-	  
-	    // Ensure all the bytes have been read in  
-	    if (offset < bytes.length) {  
-	        try {  
-	            throw new IOException("Could not completely read file "  
-	                    + privateKeyLocation.getName());  
-	        } catch (IOException e) {  
-	            // TODO Auto-generated catch block  
-	            e.printStackTrace();  
-	        }  
-	    }  
-	  
-	    try {  
-	        is.close();  
-	    } catch (IOException e) {  
-	        // TODO Auto-generated catch block  
-	        e.printStackTrace();  
-	    }  
-	    return bytes;  
-	  
 	}
 	
-	
-	
-	private class LongOperation extends AsyncTask<String, Void, String> {
-		
 
-		@Override
-		protected String doInBackground(String... params) {
-			// TODO Auto-generated method stub
-						JSch jsch=new JSch();
-						
-						try {
-							String appRootDir = context.getApplicationInfo().dataDir;
-						    String rsakeypath = appRootDir + "/id_rsa";
-						    final byte[] privateKey = getPrivateKeyAsByteStream(rsakeypath);
-						    final byte[] emptyPassPhrase = new byte[0];
-							jsch.addIdentity(
-						            "syncuser01",    // String userName
-						            privateKey,          // byte[] privateKey 
-						            null,            // byte[] publicKey
-						            emptyPassPhrase  // byte[] passPhrase
-						        );
-							java.util.Properties config = new java.util.Properties(); 
-							config.put("StrictHostKeyChecking", "no");
-							
-							Session session=jsch.getSession("syncuser01", "ffhs.p45q.net", 22);
-							session.setConfig(config);
-							session.connect();
-						} catch (JSchException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						return "jada";
-			
-		} 
+	
+	
+	public String getRemoteCheckSum(String filePath)
+	{
+		StringBuilder command = new StringBuilder();
+		command.append("md5sum").append(" ");
+		command.append("\"").append(remoteDir).append(filePath).append("\"");
+		
+		String result = sendCommand(command.toString());
+		
+		if(result.length() > 32) return result.substring(0, 32);
+
+		return result;
 	}
 	
+	public void initFolderSync(String directory)
+	{
+		try {
+			channelSftp.cd(remoteDir + directory);
+		} catch (SftpException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 	
+	}
 }
+
+
 

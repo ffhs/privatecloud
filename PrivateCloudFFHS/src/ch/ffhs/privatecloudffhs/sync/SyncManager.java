@@ -3,6 +3,7 @@ package ch.ffhs.privatecloudffhs.sync;
 import java.util.Iterator;
 import java.util.List;
 
+import ch.ffhs.privatecloudffhs.connection.SshCertConnection;
 import ch.ffhs.privatecloudffhs.connection.SshConnection;
 import ch.ffhs.privatecloudffhs.connection.SshPwConnection;
 import ch.ffhs.privatecloudffhs.database.Folder;
@@ -37,10 +38,11 @@ public class SyncManager {
 			if(server.getPassword() == null)
 			{
 				// build connection using cert
-
+				syncConnectionObj = new SshCertConnection(server, context);
 			}
 			else
 			{
+				// build connection with password-based authentication 
 				syncConnectionObj = new SshPwConnection(server);
 			}
 			
