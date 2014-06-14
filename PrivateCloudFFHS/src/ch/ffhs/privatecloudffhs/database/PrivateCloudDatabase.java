@@ -324,6 +324,15 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         db.delete(TABLE_FILE, KEY_ID + " = ?", new String[] { String.valueOf(fileId) });
     }
     
+    /*
+     * Deleting Files
+     */
+    public void deleteFiles(long folderId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FILE, KEY_FOLDER_ID + " = ?", new String[] { String.valueOf(folderId) });
+    }
+    
+    
     
     
     /*

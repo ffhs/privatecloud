@@ -35,6 +35,7 @@ public class ActivityEditFolder extends Activity {
         TextView selectedFolderText;
         int folderId;
         Context context;
+        private Boolean serverChanged ;
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,18 @@ public class ActivityEditFolder extends Activity {
 	        serverSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 	            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 	            	Server server = adapter.getItem(position);	                
-	                folder.setServerId(server.getId());
+	            	int newServerId = server.getId();
+	            	
+	            	if(folder.getServerId() != newServerId)
+	            	{
+	            		serverChanged = true;
+	            	}
+	            	else
+	            	{
+	            		serverChanged = false;
+	            	}
+	            	
+	                folder.setServerId(newServerId);
 	            }
 	            public void onNothingSelected(AdapterView<?> adapter) {  }
 	        });
@@ -131,6 +143,11 @@ public class ActivityEditFolder extends Activity {
 		    		}
 		    		else
 		    		{
+		    			if(serverChanged)
+		    			{
+		    				db.deleteFiles(folder.getId());
+		    			}
+		    			
 			    		if(folderId == 0)
 			    		{
 			    			db.createFolder(folder);	

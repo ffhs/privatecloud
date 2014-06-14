@@ -15,14 +15,12 @@ import android.util.Log;
 
 public class SshCertConnection extends SshConnection {
 	private Server server;
-	private Context context;
 
 
-	public SshCertConnection(Server server, Context context) {
+	public SshCertConnection(Server server) {
 		super();
 		
 		this.server = server;
-		this.context = context;
 		
 		new LongOperation().execute("");
 	}
@@ -125,9 +123,9 @@ public class SshCertConnection extends SshConnection {
 			
 			try {					
 				JSch jsch = new JSch(); 
-				
-				String appRootDir = context.getApplicationInfo().dataDir;
-			    String rsakeypath = appRootDir + "/id_rsa";
+								
+			    String rsakeypath =    server.getCertpath();
+			    
 			    final byte[] privateKey = getPrivateKeyAsByteStream(rsakeypath);
 			    final byte[] emptyPassPhrase = new byte[0];
 				jsch.addIdentity(
@@ -139,8 +137,7 @@ public class SshCertConnection extends SshConnection {
 				java.util.Properties config = new java.util.Properties(); 
 				config.put("StrictHostKeyChecking", "no");
 			
-//					session = jsch.getSession(server.getUsername(),server.getHostname(),server.getPort()); 
-				session = jsch.getSession("syncuser01", "ffhs.p45q.net", 22);
+				session = jsch.getSession(server.getUsername(),server.getHostname(),server.getPort()); 
 				session.setConfig(config);
 				session.connect();
 

@@ -119,7 +119,7 @@ public class SshConnection implements SyncConnection{
 		} catch (SftpException e) {
 			// FOLDER exists
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//	e.printStackTrace();
 		}
 	}
 	

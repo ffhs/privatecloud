@@ -38,7 +38,7 @@ public class SyncManager {
 			if(server.getPassword() == null)
 			{
 				// build connection using cert
-				syncConnectionObj = new SshCertConnection(server, context);
+				syncConnectionObj = new SshCertConnection(server);
 			}
 			else
 			{

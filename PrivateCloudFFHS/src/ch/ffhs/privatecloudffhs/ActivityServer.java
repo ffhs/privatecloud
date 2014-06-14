@@ -179,7 +179,7 @@ public class ActivityServer extends Activity {
 				String passw;
 				if (password.getText().toString() == "")
 				{
-					passw = "dummypw";
+					passw = "checked";
 				}
 				else
 				{
@@ -191,10 +191,11 @@ public class ActivityServer extends Activity {
 			if(keyauth.isChecked()){
 				if(server.getCertpath()== "")
 				{
-					server.setCertpath("iu");
+					server.setCertpath("checked");
 				}
 				server.setPassword(null);
 			}
+			
 			if ( serverid == 0)
 			{
 				db.createServer(server);
