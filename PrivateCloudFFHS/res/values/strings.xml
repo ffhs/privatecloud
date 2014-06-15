@@ -56,7 +56,8 @@
 	<string name="error_server_first">Add your sync-server in settings first</string>
 	<string name="error_folder_path">Select folder</string>
 	<string name="server_key_sendmail">Send via Email</string>
-		
+	<string name="notification_title">Sync conflict</string>
+	<string name="notification_text">There was a problem synchronizing files, please resolve</string>
 	
 	<string-array name="protocols">
         <item>SFTP (ssh)</item>

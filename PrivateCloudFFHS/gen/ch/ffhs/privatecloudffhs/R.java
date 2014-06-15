@@ -991,6 +991,7 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int ic_launcher=0x7f020057;
         public static final int logo=0x7f020058;
+        public static final int notification_icon=0x7f020059;
     }
     public static final class id {
         public static final int EditFolder_Button_Cancel=0x7f050040;
@@ -1224,6 +1225,8 @@ containing a value of this type.
         public static final int main_button_settings=0x7f0a000f;
         public static final int main_button_syncnow=0x7f0a0011;
         public static final int main_label_title=0x7f0a000e;
+        public static final int notification_text=0x7f0a0041;
+        public static final int notification_title=0x7f0a0040;
         public static final int perfname=0x7f0a003b;
         public static final int perfs_hostname=0x7f0a0035;
         public static final int perfs_keyorpw=0x7f0a003a;
