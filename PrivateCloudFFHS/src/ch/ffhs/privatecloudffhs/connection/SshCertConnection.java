@@ -27,28 +27,6 @@ public class SshCertConnection extends SshConnection {
 	
 
 	public void Connect()  {
-		/*
-		JSch jsch=new JSch();
-		
-		try {
-			String appRootDir = context.getApplicationInfo().dataDir;
-		    String rsakeypath = appRootDir + "/id_rsa";
-		    final byte[] privateKey = getPrivateKeyAsByteStream(rsakeypath);
-		    final byte[] emptyPassPhrase = new byte[0];
-			jsch.addIdentity(
-		            "syncuser01",    // String userName
-		            privateKey,          // byte[] privateKey 
-		            null,            // byte[] publicKey
-		            emptyPassPhrase  // byte[] passPhrase
-		        );
-			Session session=jsch.getSession("syncuser01", "ffhs.p45q.net", 22);
-			session.connect();
-			
-		} catch (JSchException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
 		new LongOperation().execute("");
 	}
 	
@@ -148,6 +126,8 @@ public class SshCertConnection extends SshConnection {
 				
 				Log.d("SYNC CONNECT", "CONNECTION READY");
 				channelSftp = (ChannelSftp)channel; 
+				
+				mkDir(remoteDir);
 				channelSftp.cd(remoteDir); 			
 				
 		    	connectionReady = true;

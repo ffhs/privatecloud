@@ -62,7 +62,7 @@ public class SyncManager {
 			
 			if(syncConnectionObj.isReady())
 			{
-				SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj);
+				SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj, server);
 				syncClientObj.sync();				
 			}
 		}

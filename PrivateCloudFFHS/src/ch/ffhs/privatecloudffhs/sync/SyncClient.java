@@ -19,15 +19,16 @@ public class SyncClient  {
 
 	private Context context;
 	private Folder folder;
-	
+	private Server server;
 	private PrivateCloudDatabase db;
 	private SyncConnection syncConnectionObj;
 
-	public SyncClient(Context context, Folder folder, SyncConnection syncConnectionObj) {
+	public SyncClient(Context context, Folder folder, SyncConnection syncConnectionObj, Server server) {
 		this.folder = folder;
 		this.context = context;
-
 		this.syncConnectionObj = syncConnectionObj;
+		this.server = server;
+		
 		db = new PrivateCloudDatabase(context);
 	}
 	
@@ -46,27 +47,27 @@ public class SyncClient  {
 	private void syncLocalDirectory(File dir) {
 		File[] localFiles = dir.listFiles();
    		
-		syncConnectionObj.mkDir(dir.getPath());			
-   		
+		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());			
+   	
 	   for (File file : localFiles) {
 		   	if(file.isDirectory())
 			{
 		   		syncLocalDirectory(file);
 			}
 			else{
-		   		syncConnectionObj.initFolderSync(dir.getPath());			
+		   		syncConnectionObj.initFolderSync(server.getRemoteroot() + dir.getPath());			
 
 				SyncFile cachedFile = db.getFile(file.getPath(), folder.getId());
 				
 				String localCheckSum = getLocalCheckSum(file.getPath());
 				String remoteCheckSum = getRemoteCheckSum(file.getPath());
 
-				//Read text from file
-				StringBuilder text = new StringBuilder();
-
 				// ****************  DELETE NUR ZUM TESTEN ****************
 				if(file.getPath().contains("txt"))
 				{
+					//Read text from file
+					StringBuilder text = new StringBuilder();
+
 					try {
 					    BufferedReader br = new BufferedReader(new FileReader(file));
 					    String line;
@@ -94,22 +95,52 @@ public class SyncClient  {
 				}
 				else
 				{
-					// check if remote has hasn't been changed since last sync
-					if(!cachedFile.getRemoteCheckSum().equals(remoteCheckSum))
+					if(!cachedFile.isConflict())
 					{
-						// !conflict! file has been changed on remote server...
-						cachedFile.setConflict(true);
-						Log.d("SYNC SSHPW", "CONFILCT ...");
-						//db.updateFile(downloadFile(file, cachedFile));
+						if(cachedFile.getRemoteCheckSum() == null)
+						{
+							Log.d("SYNC SSHPW", "REMOTE NULL UPLOAD...");
+
+							cachedFile = uploadFile(file, cachedFile);
+						}
+						else if(cachedFile.getLocalCheckSum() == null)
+						{
+							Log.d("SYNC SSHPW", "LOCAL NULL DOWNLOAD...");
+
+							cachedFile = downloadFile(file, cachedFile);
+						}
+						// check if remote has been changed since last sync
+						else if(cachedFile.getRemoteCheckSum().equals(remoteCheckSum))
+						{
+							if(!cachedFile.getLocalCheckSum().equals(localCheckSum))
+							{			
+								Log.d("SYNC SSHPW", "LOCAL CHANGED UPLOAD...");
+
+								cachedFile = uploadFile(file, cachedFile);
+							}					
+						}
+						// file has been changed on remote srv
+						else 
+						{
+							// check if file has been changed on the mobile device
+							if(cachedFile.getLocalCheckSum().equals(localCheckSum))
+							{
+								cachedFile = downloadFile(file, cachedFile);
+								Log.d("SYNC SSHPW", "FILE DOWNLOADED...");
+							}
+							else
+							{
+								// !conflict! file has been changed on remote srv and local device
+								cachedFile.setConflict(true);
+								Log.d("SYNC SSHPW", "FILE CHANGED REMOTE AND LOCAL...");
+							}
+						}					
 						
 						db.updateFile(cachedFile);
-
 					}
-					// check if file has been changed on the mobile device
-					else if(!cachedFile.getLocalCheckSum().equals(localCheckSum))
+					else
 					{
-						Log.d("SYNC SSHPW", "FILE UPDATED CHANGED ON MOBILE ...");
-						db.updateFile(uploadFile(file, cachedFile));
+						Log.d("SYNC SSHPW", "CONFILCT FILE");
 					}
 				}
 			}			
