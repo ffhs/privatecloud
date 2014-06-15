@@ -7,6 +7,9 @@ import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +42,7 @@ public class ActivityServer extends Activity {
 	FrameLayout passlayout;
 	boolean newserver;
 	int protoint;
+	Context context = this;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -140,8 +144,26 @@ public class ActivityServer extends Activity {
     			
     		break;
     		case R.id.Server_Button_delete:
-				db.deleteServer(server.getId());
-				this.finish();
+    			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+    			    @Override
+    			    public void onClick(DialogInterface dialog, int which) {
+    			        switch (which){
+    			        case DialogInterface.BUTTON_POSITIVE:
+    			        		db.deleteServer(server.getId());
+    			        		((Activity) context).finish();
+    			            break;
+
+    			        case DialogInterface.BUTTON_NEGATIVE:
+    			            	
+    			            break;
+    			        }
+    			    }
+    			};
+
+    			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    			builder.setMessage("Are you sure to delete the server?").setPositiveButton("Yes", dialogClickListener)
+    			.setNegativeButton("No", dialogClickListener).show();
+				
     		break;
     	}
     }
