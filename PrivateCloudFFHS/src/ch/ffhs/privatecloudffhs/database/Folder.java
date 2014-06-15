@@ -1,12 +1,5 @@
 package ch.ffhs.privatecloudffhs.database;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import android.content.Context;
-import android.text.format.DateFormat;
-import android.text.method.DateTimeKeyListener;
-
 public class Folder {
 	private String path;
 	private int serverId;

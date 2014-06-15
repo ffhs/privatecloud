@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.ffhs.privatecloudffhs.adapter.ServerListAdapter;
-import ch.ffhs.privatecloudffhs.connection.ReadKey;
-import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import android.app.Activity;
@@ -122,7 +120,8 @@ public class Settings extends Activity {
     		
     	}
     }
-    public void onResume() {
+    @Override
+	public void onResume() {
         super.onResume();
 
         refreshFolderList();

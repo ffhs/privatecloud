@@ -26,6 +26,7 @@ public class ConflictActivity extends Activity {
 	 private ConflictListAdapter adapter = null;
 	 private PrivateCloudDatabase db;
 	 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_conflict);

@@ -994,46 +994,51 @@ containing a value of this type.
         public static final int notification_icon=0x7f020059;
     }
     public static final class id {
-        public static final int EditFolder_Button_Cancel=0x7f050040;
-        public static final int EditFolder_Button_Save=0x7f05003f;
-        public static final int EditFolder_Button_Select=0x7f05003d;
-        public static final int EditFolder_Spinner_Servers=0x7f05003e;
-        public static final int EditFolder_Text_Folder=0x7f05003c;
-        public static final int Folders_Button_Add=0x7f050042;
-        public static final int Folders_Button_cancel=0x7f050043;
-        public static final int Folders_List=0x7f050041;
-        public static final int Folders_List_LasySync=0x7f050067;
-        public static final int Folders_List_Path=0x7f050066;
-        public static final int Folders_Liste_Delete=0x7f05006a;
-        public static final int Main_Button_Folders=0x7f050048;
-        public static final int Main_Button_Settings=0x7f050047;
-        public static final int Main_Button_SyncNow=0x7f050046;
-        public static final int Server_Button_cancel=0x7f05005e;
-        public static final int Server_Button_delete=0x7f05005d;
-        public static final int Server_Button_save=0x7f05005c;
-        public static final int Server_EditText_Hostname=0x7f05004e;
-        public static final int Server_EditText_Password=0x7f050059;
-        public static final int Server_EditText_Port=0x7f050050;
-        public static final int Server_EditText_Remotedir=0x7f050054;
-        public static final int Server_EditText_Servername=0x7f05004a;
-        public static final int Server_EditText_Username=0x7f050052;
-        public static final int Server_List_Hostname=0x7f050069;
-        public static final int Server_Spinner_protocol=0x7f05004c;
-        public static final int Servers_List=0x7f050062;
-        public static final int Servers_List_Name=0x7f050068;
-        public static final int Settings_Button_Add=0x7f050063;
-        public static final int Settings_Button_cancel=0x7f050065;
-        public static final int Settings_Button_save=0x7f050064;
-        public static final int Settings_Syncinterval=0x7f05005f;
-        public static final int Settings_chkbx_onlyCharging=0x7f050061;
-        public static final int Settings_chkbx_onlyWifi=0x7f050060;
-        public static final int TextView02=0x7f050053;
-        public static final int TextView03=0x7f050051;
-        public static final int TextView05=0x7f05004f;
-        public static final int TextView06=0x7f050049;
-        public static final int TextView09=0x7f05004b;
-        public static final int TextView11=0x7f05004d;
-        public static final int TextViewPW=0x7f050058;
+        public static final int Conflict_List=0x7f05003c;
+        public static final int Conflict_List_Download=0x7f05006a;
+        public static final int Conflict_List_Path=0x7f050067;
+        public static final int Conflict_List_Server=0x7f050068;
+        public static final int Conflict_List_Upload=0x7f050069;
+        public static final int EditFolder_Button_Cancel=0x7f050043;
+        public static final int EditFolder_Button_Save=0x7f050042;
+        public static final int EditFolder_Button_Select=0x7f050040;
+        public static final int EditFolder_Spinner_Servers=0x7f050041;
+        public static final int EditFolder_Text_Folder=0x7f05003f;
+        public static final int Folders_Button_Add=0x7f05003d;
+        public static final int Folders_Button_cancel=0x7f05003e;
+        public static final int Folders_List=0x7f050044;
+        public static final int Folders_List_LasySync=0x7f05006c;
+        public static final int Folders_List_Path=0x7f05006b;
+        public static final int Folders_Liste_Delete=0x7f05006f;
+        public static final int Main_Button_Folders=0x7f050049;
+        public static final int Main_Button_Settings=0x7f050048;
+        public static final int Main_Button_SyncNow=0x7f050047;
+        public static final int Server_Button_cancel=0x7f05005f;
+        public static final int Server_Button_delete=0x7f05005e;
+        public static final int Server_Button_save=0x7f05005d;
+        public static final int Server_EditText_Hostname=0x7f05004f;
+        public static final int Server_EditText_Password=0x7f05005a;
+        public static final int Server_EditText_Port=0x7f050051;
+        public static final int Server_EditText_Remotedir=0x7f050055;
+        public static final int Server_EditText_Servername=0x7f05004b;
+        public static final int Server_EditText_Username=0x7f050053;
+        public static final int Server_List_Hostname=0x7f05006e;
+        public static final int Server_Spinner_protocol=0x7f05004d;
+        public static final int Servers_List=0x7f050063;
+        public static final int Servers_List_Name=0x7f05006d;
+        public static final int Settings_Button_Add=0x7f050064;
+        public static final int Settings_Button_cancel=0x7f050066;
+        public static final int Settings_Button_save=0x7f050065;
+        public static final int Settings_Syncinterval=0x7f050060;
+        public static final int Settings_chkbx_onlyCharging=0x7f050062;
+        public static final int Settings_chkbx_onlyWifi=0x7f050061;
+        public static final int TextView02=0x7f050054;
+        public static final int TextView03=0x7f050052;
+        public static final int TextView05=0x7f050050;
+        public static final int TextView06=0x7f05004a;
+        public static final int TextView09=0x7f05004c;
+        public static final int TextView11=0x7f05004e;
+        public static final int TextViewPW=0x7f050059;
         public static final int action_bar=0x7f05001c;
         public static final int action_bar_activity_content=0x7f050015;
         public static final int action_bar_container=0x7f05001b;
@@ -1063,14 +1068,14 @@ containing a value of this type.
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
-        public static final int imageView1=0x7f050044;
+        public static final int imageView1=0x7f050045;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
-        public static final int passwordlayout=0x7f050057;
+        public static final int passwordlayout=0x7f050058;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1084,10 +1089,10 @@ containing a value of this type.
         public static final int search_plate=0x7f050036;
         public static final int search_src_text=0x7f050037;
         public static final int search_voice_btn=0x7f05003b;
-        public static final int server_Button_Genkey=0x7f05005b;
-        public static final int server_Button_Showkey=0x7f05005a;
-        public static final int server_radio_key=0x7f050055;
-        public static final int server_radio_pw=0x7f050056;
+        public static final int server_Button_Genkey=0x7f05005c;
+        public static final int server_Button_Showkey=0x7f05005b;
+        public static final int server_radio_key=0x7f050056;
+        public static final int server_radio_pw=0x7f050057;
         public static final int shortcut=0x7f05002e;
         public static final int showCustom=0x7f050007;
         public static final int showHome=0x7f050004;
@@ -1095,7 +1100,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int textView1=0x7f050045;
+        public static final int textView1=0x7f050046;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int up=0x7f050021;
@@ -1151,14 +1156,16 @@ containing a value of this type.
         public static final int abc_popup_menu_item_layout=0x7f030014;
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
-        public static final int activity_edit_folder=0x7f030017;
-        public static final int activity_folders=0x7f030018;
-        public static final int activity_main=0x7f030019;
-        public static final int activity_server=0x7f03001a;
-        public static final int activity_settings=0x7f03001b;
-        public static final int list_folders=0x7f03001c;
-        public static final int list_servers=0x7f03001d;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
+        public static final int activity_conflict=0x7f030017;
+        public static final int activity_edit_folder=0x7f030018;
+        public static final int activity_folders=0x7f030019;
+        public static final int activity_main=0x7f03001a;
+        public static final int activity_server=0x7f03001b;
+        public static final int activity_settings=0x7f03001c;
+        public static final int list_conflict=0x7f03001d;
+        public static final int list_folders=0x7f03001e;
+        public static final int list_servers=0x7f03001f;
+        public static final int support_simple_spinner_dropdown_item=0x7f030020;
     }
     public static final class menu {
         public static final int folders=0x7f0d0000;
@@ -1204,14 +1211,15 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
+        public static final int action_settings=0x7f0a0044;
         public static final int app_name=0x7f0a000d;
-        public static final int confirm_folder_added=0x7f0a0034;
+        public static final int confirm_folder_added=0x7f0a0036;
         public static final int dummy_button=0x7f0a0030;
         public static final int dummy_content=0x7f0a0031;
         public static final int editfolders_no_folder=0x7f0a0032;
-        public static final int error=0x7f0a003c;
-        public static final int error_folder_path=0x7f0a003e;
-        public static final int error_server_first=0x7f0a003d;
+        public static final int error=0x7f0a003e;
+        public static final int error_folder_path=0x7f0a0040;
+        public static final int error_server_first=0x7f0a003f;
         public static final int folders_button_add=0x7f0a0016;
         public static final int folders_button_cancel=0x7f0a001a;
         public static final int folders_button_delete=0x7f0a0018;
@@ -1221,20 +1229,21 @@ containing a value of this type.
         public static final int folders_label_lastsync=0x7f0a0014;
         public static final int folders_label_path=0x7f0a0013;
         public static final int folders_label_title=0x7f0a0012;
+        public static final int hello_world=0x7f0a0043;
         public static final int main_button_folders=0x7f0a0010;
         public static final int main_button_settings=0x7f0a000f;
         public static final int main_button_syncnow=0x7f0a0011;
         public static final int main_label_title=0x7f0a000e;
-        public static final int notification_text=0x7f0a0041;
-        public static final int notification_title=0x7f0a0040;
-        public static final int perfname=0x7f0a003b;
-        public static final int perfs_hostname=0x7f0a0035;
-        public static final int perfs_keyorpw=0x7f0a003a;
-        public static final int perfs_password=0x7f0a0039;
-        public static final int perfs_port=0x7f0a0036;
-        public static final int perfs_remotedir=0x7f0a0038;
-        public static final int perfs_username=0x7f0a0037;
-        public static final int server_key_sendmail=0x7f0a003f;
+        public static final int notification_text=0x7f0a0035;
+        public static final int notification_title=0x7f0a0034;
+        public static final int perfname=0x7f0a003d;
+        public static final int perfs_hostname=0x7f0a0037;
+        public static final int perfs_keyorpw=0x7f0a003c;
+        public static final int perfs_password=0x7f0a003b;
+        public static final int perfs_port=0x7f0a0038;
+        public static final int perfs_remotedir=0x7f0a003a;
+        public static final int perfs_username=0x7f0a0039;
+        public static final int server_key_sendmail=0x7f0a0041;
         public static final int server_label_password=0x7f0a002c;
         public static final int server_label_protocol=0x7f0a0029;
         public static final int server_label_servername=0x7f0a0028;
@@ -1255,6 +1264,7 @@ containing a value of this type.
         public static final int settings_label_title=0x7f0a001b;
         public static final int settings_label_username=0x7f0a001e;
         public static final int title_activity_activity_edit_folder=0x7f0a0033;
+        public static final int title_activity_conflict=0x7f0a0042;
         public static final int title_activity_folders=0x7f0a002e;
         public static final int title_activity_server=0x7f0a002f;
     }
@@ -1262,18 +1272,15 @@ containing a value of this type.
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
-
         
 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
-
     
  API 11 theme customizations can go here. 
 

@@ -1,12 +1,5 @@
 package ch.ffhs.privatecloudffhs.database;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import android.content.Context;
-import android.text.format.DateFormat;
-import android.text.method.DateTimeKeyListener;
-
 public class Server {
 	private String servername;
 	private String hostname;

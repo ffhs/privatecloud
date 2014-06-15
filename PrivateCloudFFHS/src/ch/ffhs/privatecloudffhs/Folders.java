@@ -3,31 +3,21 @@ package ch.ffhs.privatecloudffhs;
 import ch.ffhs.privatecloudffhs.adapter.FoldersListAdapter;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
-import ch.ffhs.privatecloudffhs.util.SimpleFileDialog;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView.MultiChoiceModeListener;
-import android.app.Activity;
-import android.os.Bundle;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -44,6 +34,7 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
 	 private FoldersListAdapter adapter = null;
 	 private PrivateCloudDatabase db;
 
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_folders);
@@ -58,7 +49,7 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
         
         listView.setAdapter(adapter);
         listView.setMultiChoiceModeListener(this);
-        listView.setChoiceMode(listView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -140,7 +131,8 @@ public class Folders extends Activity  implements MultiChoiceModeListener{
     	}
     }
     
-    public void onResume() {
+    @Override
+	public void onResume() {
         super.onResume();
 
         refreshFolderList();

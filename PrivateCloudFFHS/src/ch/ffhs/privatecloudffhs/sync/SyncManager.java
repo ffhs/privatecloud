@@ -1,12 +1,10 @@
 package ch.ffhs.privatecloudffhs.sync;
 
-import java.util.Iterator;
 import java.util.List;
 
 import ch.ffhs.privatecloudffhs.Main;
 import ch.ffhs.privatecloudffhs.R;
 import ch.ffhs.privatecloudffhs.connection.SshCertConnection;
-import ch.ffhs.privatecloudffhs.connection.SshConnection;
 import ch.ffhs.privatecloudffhs.connection.SshPwConnection;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
@@ -17,8 +15,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationCompat.Builder;
 import android.util.Log;
 
 public class SyncManager {

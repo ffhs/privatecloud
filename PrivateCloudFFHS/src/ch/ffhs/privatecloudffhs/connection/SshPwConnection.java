@@ -1,25 +1,5 @@
 package ch.ffhs.privatecloudffhs.connection;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import ch.ffhs.privatecloudffhs.database.Folder;
-import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
-import ch.ffhs.privatecloudffhs.database.SyncFile;
-import ch.ffhs.privatecloudffhs.sync.SyncConnection;
-
 import com.jcraft.jsch.*;
 
 import android.os.AsyncTask;
@@ -38,6 +18,7 @@ public class SshPwConnection extends SshConnection{
 	
 	
 	private class LongOperation extends AsyncTask<String, Void, String> {
+		@Override
 		protected String doInBackground(String... params) {
 			connect();			
 			return "Executed";

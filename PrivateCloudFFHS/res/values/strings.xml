@@ -40,27 +40,12 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="editfolders_no_folder">No folder selected</string>
     <string name="title_activity_activity_edit_folder">Folder</string>
-<<<<<<< HEAD
     
-	<string name="confirm_folder_added">Folder added successfully to sync list</string>
-	<string name="perfs_hostname">hostname</string>
-	<string name="perfs_port">port</string>
-	<string name="perfs_username">username</string>
-	<string name="perfs_remotedir">remotedir</string>
-	<string name="perfs_password">password</string>
-	<string name="perfs_keyorpw">keyorpw</string>
-	<string name="perfname">connectionsettings</string>
-	
-	<string name="error">Error</string>
-	<string name="error_server_first">Add your sync-server in settings first</string>
-	<string name="error_folder_path">Select folder</string>
-	<string name="server_key_sendmail">Send via Email</string>
+
 	<string name="notification_title">Sync conflict</string>
 	<string name="notification_text">There was a problem synchronizing files, please resolve</string>
 	
-	<string-array name="protocols">
-=======
-    <string name="confirm_folder_added">Folder added successfully to sync list</string>
+  <string name="confirm_folder_added">Folder added successfully to sync list</string>
     <string name="perfs_hostname">hostname</string>
     <string name="perfs_port">port</string>
     <string name="perfs_username">username</string>
@@ -74,7 +59,6 @@
     <string name="server_key_sendmail">Send via Email</string>
 
     <string-array name="protocols">
->>>>>>> 2fc135cf22954561a57e518de09e87082cf49948
         <item>SFTP (ssh)</item>
         <item>FTP</item>
         <item>FTPS</item>

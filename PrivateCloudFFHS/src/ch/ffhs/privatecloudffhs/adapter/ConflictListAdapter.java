@@ -49,10 +49,8 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile>{
 		}
 
 		holder.path.setText(list.get(position).getPath());		
-		
 		Folder folder = db.getFolder(list.get(position).getFolderId());
 		holder.server.setText(db.getServer(folder.getServerId()).getServername());
-
 		return convertView;
 	}
 	

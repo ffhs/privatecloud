@@ -59,12 +59,14 @@ public class ReadKey {
 		    .setTitle("RSA Key")
 		    .setMessage(text)
 		    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int which) { 
+		        @Override
+				public void onClick(DialogInterface dialog, int which) { 
 		            // continue with delete
 		        }
 		     })
 		    .setNegativeButton(R.string.server_key_sendmail, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int which) { 
+		        @Override
+				public void onClick(DialogInterface dialog, int which) { 
 		        	Intent intent = new Intent(Intent.ACTION_SEND);
 		        	intent.setType("text/html");
 		        	intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");

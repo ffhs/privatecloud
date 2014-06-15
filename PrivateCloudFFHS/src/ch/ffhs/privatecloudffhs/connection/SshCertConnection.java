@@ -9,7 +9,6 @@ import ch.ffhs.privatecloudffhs.database.Server;
 
 import com.jcraft.jsch.*;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -91,6 +90,7 @@ public class SshCertConnection extends SshConnection {
 
 	
 	private class LongOperation extends AsyncTask<String, Void, String> {
+		@Override
 		protected String doInBackground(String... params) {
 			connect();			
 			return "Executed";
