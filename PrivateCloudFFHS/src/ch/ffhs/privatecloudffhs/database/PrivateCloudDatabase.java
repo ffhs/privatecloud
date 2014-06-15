@@ -138,13 +138,16 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
      
         Cursor c = db.rawQuery(selectQuery, null);
      
-        if (c != null) c.moveToFirst();
-     
-        Folder folder = new Folder(c.getString((c.getColumnIndex(KEY_PATH))), c.getInt((c.getColumnIndex(KEY_SERVER_ID))));
-        folder.setLastsync(c.getString((c.getColumnIndex(KEY_LASTSYNC))));
-        folder.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+        if(c!= null && c.moveToFirst()) {
+        	Folder folder = new Folder(c.getString((c.getColumnIndex(KEY_PATH))), c.getInt((c.getColumnIndex(KEY_SERVER_ID))));
+           
+        	folder.setLastsync(c.getString((c.getColumnIndex(KEY_LASTSYNC))));
+            folder.setId(c.getInt((c.getColumnIndex(KEY_ID))));
 
-        return folder;
+            return folder;
+        }
+                
+        return null;
     }
     
     
@@ -237,16 +240,18 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
      
         Cursor c = db.rawQuery(selectQuery, null);
      
-        if (c != null) c.moveToFirst();
-     
-        SyncFile file = new SyncFile(c.getInt(c.getColumnIndex(KEY_FOLDER_ID)), c.getString(c.getColumnIndex(KEY_PATH)));
+        if(c!= null && c.moveToFirst()) {
+            SyncFile file = new SyncFile(c.getInt(c.getColumnIndex(KEY_FOLDER_ID)), c.getString(c.getColumnIndex(KEY_PATH)));
 
-        file.setId(c.getInt((c.getColumnIndex(KEY_ID))));
-        file.setLocalCheckSum(c.getString(c.getColumnIndex(KEY_LOCALCHECKSUM)));
-        file.setRemoteCheckSum(c.getString(c.getColumnIndex(KEY_REMOTECHECKSUM)));
-        file.setConflict(c.getInt(c.getColumnIndex(KEY_CONFLICT)) == 1 ? true : false);
+            file.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+            file.setLocalCheckSum(c.getString(c.getColumnIndex(KEY_LOCALCHECKSUM)));
+            file.setRemoteCheckSum(c.getString(c.getColumnIndex(KEY_REMOTECHECKSUM)));
+            file.setConflict(c.getInt(c.getColumnIndex(KEY_CONFLICT)) == 1 ? true : false);
 
-        return file;
+            return file;
+        }
+                
+        return null;
     }
     
     /*
@@ -383,20 +388,23 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
      
         Cursor c = db.rawQuery(selectQuery, null);
      
-        if (c != null) c.moveToFirst();
-     
-        Server server = new Server(c.getString((c.getColumnIndex(KEY_SERVERNAME))), c.getString((c.getColumnIndex(KEY_HOST))));
-        
-        server.setUsername(c.getString((c.getColumnIndex(KEY_USER))));
-        server.setPassword(c.getString((c.getColumnIndex(KEY_PASSWORD))));
-        server.setPort(c.getInt((c.getColumnIndex(KEY_PORT))));
-        server.setPassword(c.getString((c.getColumnIndex(KEY_PASSWORD))));
-        server.setProto(c.getInt((c.getColumnIndex(KEY_PROTO))));
-        server.setCertpath(c.getString((c.getColumnIndex(KEY_CERTPATH))));
-        server.setRemoteroot(c.getString((c.getColumnIndex(KEY_REMOTEROOT))));
-        server.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+        if (c != null && c.moveToFirst())
+        {
+            Server server = new Server(c.getString((c.getColumnIndex(KEY_SERVERNAME))), c.getString((c.getColumnIndex(KEY_HOST))));
+            
+            server.setUsername(c.getString((c.getColumnIndex(KEY_USER))));
+            server.setPassword(c.getString((c.getColumnIndex(KEY_PASSWORD))));
+            server.setPort(c.getInt((c.getColumnIndex(KEY_PORT))));
+            server.setPassword(c.getString((c.getColumnIndex(KEY_PASSWORD))));
+            server.setProto(c.getInt((c.getColumnIndex(KEY_PROTO))));
+            server.setCertpath(c.getString((c.getColumnIndex(KEY_CERTPATH))));
+            server.setRemoteroot(c.getString((c.getColumnIndex(KEY_REMOTEROOT))));
+            server.setId(c.getInt((c.getColumnIndex(KEY_ID))));
 
-        return server;
+            return server;	
+        }
+        
+        return null;
     }
     
     
@@ -427,6 +435,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
     	SQLiteDatabase db = this.getWritableDatabase();
     	String password = "";
     	String certPath = "";
+    	
     	if ( server.getPassword() != null)
     	{
     		password = server.getPassword();
@@ -445,30 +454,8 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         values.put(KEY_PROTO, server.getProto());
         values.put(KEY_CERTPATH, server.getCertpath());
         values.put(KEY_REMOTEROOT, server.getRemoteroot());
-        return db.update(TABLE_SERVER, values, KEY_ID + " = ?", new String[] { String.valueOf(server.getId()) });
         
-        /*
-    	String updateQuerie = "UPDATE " + TABLE_SERVER + " SET " 
-    	+ KEY_SERVERNAME + " = \"" + server.getServername() + "\" , " 
-    	+ KEY_HOST + " = \"" + server.getHostname() + "\", " 
-    	+ KEY_USER + " = \"" + server.getUsername() + "\", " 
-    	+ KEY_PASSWORD + " = \"" + password + "\", " 
-    	+ KEY_PORT + " = \"" + server.getPort() + "\", " 
-    	+ KEY_PROTO + " = \"" + server.getProto() + "\", " 
-    	+ KEY_CERTPATH + " = \"" + certPath + "\", " 
-    	+ KEY_REMOTEROOT+ " = \"" + server.getRemoteroot() + "\" WHERE " 
-    	+ KEY_ID + " = \"" + server.getId() + "\"";
-    	Log.d("jada", "Updatequerie: " +updateQuerie);
-    	try {
-			db.execSQL(updateQuerie);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-    	
-    	return true;
-    	*/
+        return db.update(TABLE_SERVER, values, KEY_ID + " = ?", new String[] { String.valueOf(server.getId()) });
     }
     
     public void deleteServer(long serverId) {

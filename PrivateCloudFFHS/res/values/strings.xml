@@ -28,20 +28,19 @@
     <string name="settings_label_syncinterval">Sync interval (Min)</string>
     <string name="settings_chkbox_wifi">Sync only in Wifi</string>
     <string name="settings_chkbox_charge">Sync only while on Power</string>
-    
     <string name="server_label_servername">Enter a name for the Connection</string>
     <string name="server_label_protocol">Protocol</string>
     <string name="server_radio_pw">Password authentication</string>
     <string name="server_radio_key">Privatekey authentication</string>
     <string name="server_label_password">Server Password</string>
     <string name="settings_button_delete">Delete</string>
-    
     <string name="title_activity_folders">Folders</string>
     <string name="title_activity_server">Server settings</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="editfolders_no_folder">No folder selected</string>
     <string name="title_activity_activity_edit_folder">Folder</string>
+<<<<<<< HEAD
     
 	<string name="confirm_folder_added">Folder added successfully to sync list</string>
 	<string name="perfs_hostname">hostname</string>
@@ -60,8 +59,29 @@
 	<string name="notification_text">There was a problem synchronizing files, please resolve</string>
 	
 	<string-array name="protocols">
+=======
+    <string name="confirm_folder_added">Folder added successfully to sync list</string>
+    <string name="perfs_hostname">hostname</string>
+    <string name="perfs_port">port</string>
+    <string name="perfs_username">username</string>
+    <string name="perfs_remotedir">remotedir</string>
+    <string name="perfs_password">password</string>
+    <string name="perfs_keyorpw">keyorpw</string>
+    <string name="perfname">connectionsettings</string>
+    <string name="error">Error</string>
+    <string name="error_server_first">Add your sync-server in settings first</string>
+    <string name="error_folder_path">Select folder</string>
+    <string name="server_key_sendmail">Send via Email</string>
+
+    <string-array name="protocols">
+>>>>>>> 2fc135cf22954561a57e518de09e87082cf49948
         <item>SFTP (ssh)</item>
         <item>FTP</item>
         <item>FTPS</item>
     </string-array>
+
+    <string name="title_activity_conflict">ConflictActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

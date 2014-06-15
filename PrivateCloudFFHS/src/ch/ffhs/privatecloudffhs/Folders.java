@@ -39,10 +39,10 @@ import android.os.Bundle;
 @SuppressLint("NewApi")
 public class Folders extends Activity  implements MultiChoiceModeListener{
 
-	 ListView listView = null;
-	 Context context = null;
-	 FoldersListAdapter adapter = null;
-	 PrivateCloudDatabase db;
+	 private ListView listView = null;
+	 private Context context = null;
+	 private FoldersListAdapter adapter = null;
+	 private PrivateCloudDatabase db;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

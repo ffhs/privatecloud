@@ -5,9 +5,9 @@
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -46,25 +46,31 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_activity_edit_folder"
             android:theme="@style/Theme.FullScreen" >
-         </activity>
-         <activity
+        </activity>
+        <activity
             android:name="ch.ffhs.privatecloudffhs.ActivityServer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_server"
             android:theme="@style/Theme.FullScreen" >
         </activity>
+
+        <activity
+            android:name="ch.ffhs.privatecloudffhs.ConflictActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_conflict" 
+            android:theme="@style/Theme.FullScreen" >
+        </activity>
         
         <service android:name="ch.ffhs.privatecloudffhs.sync.SyncService" />
 
-           <receiver android:enabled="true" android:name="ch.ffhs.privatecloudffhs.sync.SyncReceiver">
+        <receiver
+            android:name="ch.ffhs.privatecloudffhs.sync.SyncReceiver"
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-             </intent-filter>
-         </receiver>
-         
-         
-        
-         
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

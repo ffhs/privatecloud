@@ -114,7 +114,7 @@ public class SshConnection implements SyncConnection{
 	public void mkDir(String directory)
 	{
 		try {					
-			channelSftp.mkdir(remoteDir + directory);
+			channelSftp.mkdir(directory);
 
 		} catch (SftpException e) {
 			// FOLDER exists
@@ -142,7 +142,7 @@ public class SshConnection implements SyncConnection{
 	public void initFolderSync(String directory)
 	{
 		try {
-			channelSftp.cd(remoteDir + directory);
+			channelSftp.cd(directory);
 		} catch (SftpException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
