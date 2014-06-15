@@ -14,7 +14,7 @@
         android:padding="5dp" >
 
         <TextView
-            android:id="@+id/Folders_List_Path"
+            android:id="@+id/Conflict_List_Path"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -22,12 +22,24 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/Folders_List_LasySync"
+            android:id="@+id/Conflict_List_Server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
             android:textSize="10sp" />
+
+        <CheckBox
+	        android:id="@+id/Conflict_List_Upload"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="checkbox1" />
+	
+	    <CheckBox
+	        android:id="@+id/Conflict_List_Download"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="checkbox2" />
     </LinearLayout>
 
 </LinearLayout>

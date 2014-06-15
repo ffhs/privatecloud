@@ -54,6 +54,13 @@
             android:theme="@style/Theme.FullScreen" >
         </activity>
 
+        <activity
+            android:name="ch.ffhs.privatecloudffhs.ConflictActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_conflict" 
+            android:theme="@style/Theme.FullScreen" >
+        </activity>
+        
         <service android:name="ch.ffhs.privatecloudffhs.sync.SyncService" />
 
         <receiver
@@ -64,10 +71,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="ch.ffhs.privatecloudffhs.ConflictActivity"
-            android:label="@string/title_activity_conflict" >
-        </activity>
     </application>
 
 </manifest>
