@@ -70,7 +70,6 @@ public class ReadKey {
 		        	intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
 		        	intent.putExtra(Intent.EXTRA_SUBJECT, "RSA Public key");
 		        	intent.putExtra(Intent.EXTRA_TEXT, "text");
-
 		        	context.startActivity(Intent.createChooser(intent, "Send Email"));
 		        }
 		     })
