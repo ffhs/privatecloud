@@ -69,7 +69,7 @@ public class SyncManager {
 		
 		
 	}
-	
+
 	public Boolean isRunning() {
 		
 		Log.d(TAG, "RUNNING");

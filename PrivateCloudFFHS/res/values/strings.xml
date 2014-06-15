@@ -55,6 +55,7 @@
 	<string name="error">Error</string>
 	<string name="error_server_first">Add your sync-server in settings first</string>
 	<string name="error_folder_path">Select folder</string>
+	<string name="server_key_sendmail">Send via Email</string>
 		
 	
 	<string-array name="protocols">
