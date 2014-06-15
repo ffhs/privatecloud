@@ -2,6 +2,7 @@ package ch.ffhs.privatecloudffhs.sync;
 
 import java.util.List;
 
+import ch.ffhs.privatecloudffhs.ConflictActivity;
 import ch.ffhs.privatecloudffhs.Main;
 import ch.ffhs.privatecloudffhs.R;
 import ch.ffhs.privatecloudffhs.connection.SshCertConnection;
@@ -160,8 +161,14 @@ public class SyncManager {
 	                    context.getResources().getString(R.string.notification_text)).setSmallIcon(R.drawable.notification_icon)
 	                    .setContentIntent(pending).setWhen(when).setAutoCancel(true)
 	                    .build();
+	            	//notification.flags = Notification.FLAG_ONGOING_EVENT;
+	            	notification.setLatestEventInfo(
+		                    context,
+		                    context.getResources().getString(R.string.notification_title),
+		                    context.getResources().getString(R.string.notification_text),
+		                    pending);
 	        }
-			mNotificationManager.notify(0, notification);
+			mNotificationManager.notify(1, notification);
 			
 		
 		/*
