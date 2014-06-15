@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import ch.ffhs.privatecloudffhs.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 
 
 
@@ -19,11 +21,10 @@ public class ReadKey {
 		super();
 		this.context = context;
 	}
-	public void ReadFile(int serverid){
+	public void ReadFile(String keypath){
 		StringBuilder text = new StringBuilder();
 
-			String appRootDir = context.getApplicationInfo().dataDir;
-		    String rsakeypath = appRootDir + "/id_rsa"+serverid+".pub";
+		    String rsakeypath = keypath+".pub";
 			InputStream instream;
 			try {
 				instream = new FileInputStream(rsakeypath);
@@ -62,9 +63,14 @@ public class ReadKey {
 		            // continue with delete
 		        }
 		     })
-		    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+		    .setNegativeButton(R.string.server_key_sendmail, new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int which) { 
-		            // do nothing
+		        	Intent intent = new Intent(Intent.ACTION_SEND);
+		        	intent.setType("text/html");
+		        	intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+		        	intent.putExtra(Intent.EXTRA_SUBJECT, "RSA Public key");
+		        	intent.putExtra(Intent.EXTRA_TEXT, "text");
+		        	context.startActivity(Intent.createChooser(intent, "Send Email"));
 		        }
 		     })
 		    .setIcon(android.R.drawable.ic_dialog_alert)

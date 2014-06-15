@@ -483,5 +483,17 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         
         if(db != null && db.isOpen()) db.close();
     }
+    
+    public boolean isanyconflict() {
+    	SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT  * FROM " + TABLE_FILE + " WHERE "
+                + KEY_CONFLICT + " = " + 1;
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.getCount() == 0) {
+        	return false;
+        }else{
+        	return true;
+        }
+    }
  
 }

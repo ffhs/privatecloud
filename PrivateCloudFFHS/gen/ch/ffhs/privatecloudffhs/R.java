@@ -1231,6 +1231,7 @@ containing a value of this type.
         public static final int perfs_port=0x7f0a0036;
         public static final int perfs_remotedir=0x7f0a0038;
         public static final int perfs_username=0x7f0a0037;
+        public static final int server_key_sendmail=0x7f0a003f;
         public static final int server_label_password=0x7f0a002c;
         public static final int server_label_protocol=0x7f0a0029;
         public static final int server_label_servername=0x7f0a0028;

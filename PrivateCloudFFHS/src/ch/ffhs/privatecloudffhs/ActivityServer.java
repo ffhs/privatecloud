@@ -130,12 +130,13 @@ public class ActivityServer extends Activity {
     			RsaKeyGen rsakeygen = new RsaKeyGen(this);
     			//server.setCertpath(rsakeygen.GenerateKey("id_rsa"+randomInt));;
     			server.setCertpath(rsakeygen.GenerateMockKey("id_rsa"+randomInt));
+    			
     			Log.d("jada","Setting certpath to :" + server.getCertpath());
     			Toast.makeText(ActivityServer.this, "New keypair calculated", Toast.LENGTH_LONG).show();
     		break;
     		case R.id.server_Button_Showkey:
     			ReadKey readkey = new ReadKey(this);
-    			readkey.ReadFile(server.getId());
+    			readkey.ReadFile(server.getCertpath());
     		break;
     		case R.id.Server_Button_cancel:
     			this.finish();

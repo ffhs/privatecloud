@@ -18,7 +18,6 @@ public class SyncManager {
 	private PrivateCloudDatabase db;
 	private Context context;
 
-
 	public SyncManager(Context context) {
 		this.context = context;
 		this.running = true;
@@ -66,12 +65,20 @@ public class SyncManager {
 				syncClientObj.sync();				
 			}
 		}
+		conflictnotification();
 		
 		
 	}
-	
+	public void conflictnotification(){
+		db = new PrivateCloudDatabase(context);
+		if(db.isanyconflict()){
+			Log.d("jada", "There is a conflict");
+		}
+		else{
+			Log.d("jada", "There is no conflict");
+		}
+	}
 	public Boolean isRunning() {
-		
 		Log.d(TAG, "RUNNING");
 		return running;
 	}	
