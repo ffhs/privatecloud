@@ -1,14 +1,10 @@
 package ch.ffhs.privatecloudffhs;
 
-import ch.ffhs.privatecloudffhs.R.string;
-import ch.ffhs.privatecloudffhs.connection.SshConnection;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.sync.SyncService;
 import ch.ffhs.privatecloudffhs.sync.SyncService.SyncServiceBinder;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,7 +15,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -62,7 +57,8 @@ public class Main extends Activity {
     }
    
     
-    protected void onDestroy() {
+    @Override
+	protected void onDestroy() {
 		Log.d("MAIN", "onDestroy");
 		unbindService(syncServiceConnection);
 
@@ -103,6 +99,7 @@ public class Main extends Activity {
 						.setMessage(R.string.error_server_first)
 						.setCancelable(false)
 						.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+							@Override
 							public void onClick(DialogInterface dialog,int id) {
 								// if this button is clicked, just close
 								// the dialog box and do nothing

@@ -47,7 +47,12 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="editfolders_no_folder">No folder selected</string>
     <string name="title_activity_activity_edit_folder">Folder</string>
-    <string name="confirm_folder_added">Folder added successfully to sync list</string>
+    
+
+	<string name="notification_title">Sync conflict</string>
+	<string name="notification_text">There was a problem synchronizing files, please resolve</string>
+	
+  <string name="confirm_folder_added">Folder added successfully to sync list</string>
     <string name="perfs_hostname">hostname</string>
     <string name="perfs_port">port</string>
     <string name="perfs_username">username</string>

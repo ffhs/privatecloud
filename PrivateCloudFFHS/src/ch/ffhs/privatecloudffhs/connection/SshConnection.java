@@ -23,6 +23,7 @@ public class SshConnection implements SyncConnection{
 	
 	protected Boolean connectionReady = false;
 	
+	@Override
 	public Boolean isReady()
 	{
 		return connectionReady;
@@ -63,6 +64,7 @@ public class SshConnection implements SyncConnection{
 	 }
 	
 	
+	@Override
 	public SyncFile uploadFile(File file, SyncFile syncFile)
 	{
 		try {
@@ -81,6 +83,7 @@ public class SshConnection implements SyncConnection{
 	}
 	
 	
+	@Override
 	public SyncFile downloadFile(File file, SyncFile syncFile)
 	{
 		try { 
@@ -111,6 +114,7 @@ public class SshConnection implements SyncConnection{
 		return null;
 	}
 	
+	@Override
 	public void mkDir(String directory)
 	{
 		try {					
@@ -126,6 +130,7 @@ public class SshConnection implements SyncConnection{
 
 	
 	
+	@Override
 	public String getRemoteCheckSum(String filePath)
 	{
 		StringBuilder command = new StringBuilder();
@@ -139,6 +144,7 @@ public class SshConnection implements SyncConnection{
 		return result;
 	}
 	
+	@Override
 	public void initFolderSync(String directory)
 	{
 		Log.d("SYNC INIT FOLDER", directory);

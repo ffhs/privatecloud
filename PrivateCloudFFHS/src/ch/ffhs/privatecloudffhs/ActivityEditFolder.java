@@ -1,7 +1,5 @@
 package ch.ffhs.privatecloudffhs;
 
-import java.util.List;
-
 import ch.ffhs.privatecloudffhs.adapter.EditFolderSpinServerAdapter;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
@@ -15,7 +13,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -23,10 +20,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.AnalogClock;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class ActivityEditFolder extends Activity {
@@ -71,7 +66,8 @@ public class ActivityEditFolder extends Activity {
 
 
 	        serverSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-	            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+	            @Override
+				public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
 	            	Server server = adapter.getItem(position);	                
 	            	int newServerId = server.getId();
 	            	
@@ -86,7 +82,8 @@ public class ActivityEditFolder extends Activity {
 	            	
 	                folder.setServerId(newServerId);
 	            }
-	            public void onNothingSelected(AdapterView<?> adapter) {  }
+	            @Override
+				public void onNothingSelected(AdapterView<?> adapter) {  }
 	        });
 	        
 	        if(folderId != 0)
@@ -128,6 +125,7 @@ public class ActivityEditFolder extends Activity {
 							.setMessage(R.string.error_folder_path)
 							.setCancelable(false)
 							.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+								@Override
 								public void onClick(DialogInterface dialog,int id) {
 									// if this button is clicked, just close
 									// the dialog box and do nothing

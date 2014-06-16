@@ -14,7 +14,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 //import android.content.DialogInterface.OnKeyListener;
 import android.os.Environment;
-import android.text.Editable;
 import android.util.Log;
 import android.view.Gravity;
 //import android.view.KeyEvent;
@@ -22,12 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SimpleFileDialog 
 {
@@ -105,6 +101,7 @@ public class SimpleFileDialog
 
 		class SimpleFileDialogOnClickListener implements DialogInterface.OnClickListener
 		{
+			@Override
 			public void onClick(DialogInterface dialog, int item) 
 			{
 				String m_dir_old = m_dir;
@@ -198,6 +195,7 @@ public class SimpleFileDialog
 
 		Collections.sort(dirs, new Comparator<String>()
 		{	
+			@Override
 			public int compare(String o1, String o2) 
 			{
 				return o1.compareTo(o2);

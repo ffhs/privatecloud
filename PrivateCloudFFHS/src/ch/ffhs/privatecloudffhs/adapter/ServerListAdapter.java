@@ -3,8 +3,6 @@ package ch.ffhs.privatecloudffhs.adapter;
 import java.util.List;
 
 import ch.ffhs.privatecloudffhs.R;
-import ch.ffhs.privatecloudffhs.database.Folder;
-import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import android.annotation.SuppressLint;
 import android.content.Context;

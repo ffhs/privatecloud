@@ -8,16 +8,11 @@ import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.provider.MediaStore.Files;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -81,7 +76,7 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile>{
 		
 		holder.decision.setTag(syncFile);
 		holder.decision.setChecked(true);
-
+		
 		return convertView;
 	}
 	
@@ -123,19 +118,14 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile>{
 			if(file.getDecision() == 1)
 			{
 				file.setRemoteCheckSum(null);
-				Log.d("SYNC LOCAL", new Integer(file.getDecision()).toString());
-
 			}
 			else
 			{
 				file.setLocalCheckSum(null);
-				Log.d("SYNC REMOTE", new Integer(file.getDecision()).toString());
 			}
 			
 			file.setConflict(false);
-			
-			Log.d("SYNC ADAPTER", new Integer(file.getDecision()).toString());
-			
+						
 			db.updateFile(file);
 			db.close();
 		}

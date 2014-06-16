@@ -47,7 +47,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -138,6 +137,7 @@ public class ServerDialog
 
 		class SimpleFileDialogOnClickListener implements DialogInterface.OnClickListener
 		{
+			@Override
 			public void onClick(DialogInterface dialog, int item) 
 			{
 				String m_dir_old = m_dir;
@@ -236,6 +236,7 @@ public class ServerDialog
 
 		Collections.sort(dirs, new Comparator<String>()
 		{	
+			@Override
 			public int compare(String o1, String o2) 
 			{
 				return o1.compareTo(o2);
@@ -294,6 +295,7 @@ public class ServerDialog
 					setTitle("New Folder Name").
 					setView(input).setPositiveButton("OK", new DialogInterface.OnClickListener() 
 					{
+						@Override
 						public void onClick(DialogInterface dialog, int whichButton) 
 						{
 							Editable newDir = input.getText();
