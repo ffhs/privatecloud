@@ -7,6 +7,7 @@ public class SyncFile {
 	private String localCheckSum;
 	private String remoteCheckSum;
 	private Boolean conflict;
+	private int decision;  // 1 == local; 2 == remote
 	
 	public SyncFile(int folderid, String path){
 		this.folderId = folderid;
@@ -68,6 +69,15 @@ public class SyncFile {
 
 	public void setConflict(Boolean conflict) {
 		this.conflict = conflict;
+	}	
+	
+	public int getDecision() {
+		return decision;
+	}
+
+
+	public void setDecision(int decision) {
+		this.decision = decision;
 	}	
 	
 

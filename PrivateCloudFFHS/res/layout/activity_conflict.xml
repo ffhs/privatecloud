@@ -3,7 +3,7 @@
   	android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#000"
-    tools:context="ch.ffhs.privatecloudffhs.ConflictActivity" >
+    tools:context="ch.ffhs.privatecloudffhs.ActivityConflict" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,21 +19,22 @@
             android:layout_weight="0.10" >
         </ListView>
 
-        <Button
-            android:id="@+id/Folders_Button_Add"
+         <Button
+            android:id="@+id/Conflict_Button_Save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:onClick="onButtonClicked"
-            android:text="@string/folders_button_add" />
-
-        <Button
-            android:id="@+id/Folders_Button_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"        
-            android:layout_margin="10dp"
+            android:text="@string/conflict_button_save" />
+         
+         <Button
+            android:id="@+id/Conflict_Button_Cancel"
+			android:layout_width="match_parent"
+         	android:layout_height="wrap_content"
+         	android:layout_margin="10dp"
             android:onClick="onButtonClicked"
-            android:text="@string/folders_button_cancel" />
+            android:text="@string/conflict_button_cancel" />
+
     </LinearLayout>
 
 </FrameLayout>

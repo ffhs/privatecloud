@@ -8,12 +8,12 @@ import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.provider.MediaStore.Files;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
@@ -26,7 +26,8 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile>{
 
 	public ConflictListAdapter(Context context) {
 		super(context, 0);
-		
+		db = new PrivateCloudDatabase(context);
+
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
 		inflater = LayoutInflater.from(context);
@@ -35,22 +36,47 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile>{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
+		SyncFile syncFile = list.get(position);
+		
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_conflict, null);
 			
 			holder.path = (TextView) convertView.findViewById(R.id.Conflict_List_Path);
-			holder.server = (TextView) convertView.findViewById(R.id.Conflict_List_Server);
+			holder.server = (TextView) convertView.findViewById(R.id.Conflict_List_Server);	    
+			holder.decision = (Switch) convertView.findViewById(R.id.Conflict_List_Decision);	    
 			
-			convertView.setTag(holder);
+			// if switch is toggled, update the decision  
+			holder.decision.setOnClickListener( new View.OnClickListener() {  
+				public void onClick(View v) {  
+					Switch cb = (Switch) v ;  
+					SyncFile file = (SyncFile) cb.getTag();  
+					
+					// local file chosen
+					if(cb.isChecked()) {
+						file.setDecision(1);
+					}
+					else
+					{
+						file.setDecision(2);
+					}
+				}  
+	        });  
 		} 
 		else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		holder.path.setText(list.get(position).getPath());		
+		syncFile.setDecision(1);
+
+		holder.path.setText(list.get(position).getPath());	
+
 		Folder folder = db.getFolder(list.get(position).getFolderId());
 		holder.server.setText(db.getServer(folder.getServerId()).getServername());
+		
+		holder.decision.setTag(syncFile);
+		holder.decision.setChecked(true);
+		
 		return convertView;
 	}
 	
@@ -84,9 +110,30 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile>{
 		
 		notifyDataSetChanged();
 	}
+	
+	public void saveList()
+	{
+		for(SyncFile file : list)
+		{
+			if(file.getDecision() == 1)
+			{
+				file.setRemoteCheckSum(null);
+			}
+			else
+			{
+				file.setLocalCheckSum(null);
+			}
+			
+			file.setConflict(false);
+						
+			db.updateFile(file);
+			db.close();
+		}
+	}
 
 	
 	private class ViewHolder {
+		public Switch decision;
 		TextView path;
 		TextView server;
 	}

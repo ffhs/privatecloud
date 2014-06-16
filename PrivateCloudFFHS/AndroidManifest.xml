@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
     <application
@@ -55,7 +55,7 @@
         </activity>
 
         <activity
-            android:name="ch.ffhs.privatecloudffhs.ConflictActivity"
+            android:name="ch.ffhs.privatecloudffhs.ActivityConflict"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_conflict" 
             android:theme="@style/Theme.FullScreen" >

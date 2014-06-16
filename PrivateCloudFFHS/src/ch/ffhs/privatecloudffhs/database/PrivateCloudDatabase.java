@@ -476,5 +476,35 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         	return true;
         }
     }
+    
+    
+    /*
+     * getting all Files
+     */
+    public List<SyncFile> getAllConflicts() {
+        List<SyncFile> files = new ArrayList<SyncFile>();
+        String selectQuery = "SELECT  * FROM " + TABLE_FILE + " WHERE "
+                + KEY_CONFLICT + " = " + 1;
+        
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+     
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                SyncFile file = new SyncFile(c.getInt(c.getColumnIndex(KEY_FOLDER_ID)), c.getString(c.getColumnIndex(KEY_PATH)));
+
+                file.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                file.setLocalCheckSum(c.getString(c.getColumnIndex(KEY_LOCALCHECKSUM)));
+                file.setRemoteCheckSum(c.getString(c.getColumnIndex(KEY_REMOTECHECKSUM)));
+                file.setConflict(c.getInt(c.getColumnIndex(KEY_CONFLICT)) == 1 ? true : false);
+                	Log.d("SYNC DB CONFILCT FILE",file.getPath());
+                // adding to files list
+                files.add(file);
+            } while (c.moveToNext());
+        }
+
+        return files;
+    }
  
 }
