@@ -37,6 +37,7 @@ public class SyncManager {
 		for (Folder folder : syncfolders) {
 			Server server = db.getServer(folder.getServerId());
 			SyncConnection syncConnectionObj = null;
+			Log.d("SyncManager", "working on folder" + folder.getPath());
 
 			if(server.getPassword() == null)
 			{
@@ -66,6 +67,7 @@ public class SyncManager {
 			if(syncConnectionObj.isReady())
 			{
 				SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj, server);
+				Log.d("SyncManager", "Calling syncClient");
 				syncClientObj.sync();				
 			}
 		}

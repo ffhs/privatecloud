@@ -35,6 +35,7 @@ public class SyncClient  {
 	
 	public void sync()
 	{
+		Log.d("SyncClient", "syncing folder" + folder.getPath());
 		syncLocalDirectory(new File(folder.getPath()));
 		
 		folder.setLastsync("10-06-2014");

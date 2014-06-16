@@ -63,7 +63,7 @@ public class Main extends Activity {
                  * method you would use to setup whatever you want done once the
                  * device has been shook.
                  */
-            	Log.d("MAIN", "onShake");
+            	Log.d("MAIN", "Device shake detected");
             	syncService.syncNow();
                 //handleShakeEvent(count);
             }
@@ -111,6 +111,7 @@ public class Main extends Activity {
     		break;
     		
     		case R.id.Main_Button_SyncNow:
+    			Log.d("MAIN", "R.id.Main_Button_SyncNow clicked");
     			syncService.syncNow();
     		break;
     		
@@ -175,14 +176,14 @@ public class Main extends Activity {
 
 	};
 	
-	@Override
-    public void onResume() {
-        Log.d("MAIN", "onResume");
-        super.onResume();
-        // register the Session Manager Listener onResume
-        mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
-    }
- 
+//	@Override
+//    public void onResume() {
+//        Log.d("MAIN", "onResume");
+//        super.onResume();
+//        // register the Session Manager Listener onResume
+//        mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
+//    }
+// 
     @Override
     public void onPause() {
     	Log.d("MAIN", "onPause");

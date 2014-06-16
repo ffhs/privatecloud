@@ -48,6 +48,7 @@ public class SyncService extends Service {
 			Log.d(TAG, "RUNNING");
 
 		}
+		Log.d("SyncService", "Calling SyncManager");
 		syncManagerObj.syncAllFolders();
 		Log.d(TAG, "SYNC CALLED");
 
