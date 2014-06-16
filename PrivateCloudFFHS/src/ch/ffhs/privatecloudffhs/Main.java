@@ -1,5 +1,7 @@
 package ch.ffhs.privatecloudffhs;
 
+import ch.ffhs.privatecloud.triggers.ShakeDetector;
+import ch.ffhs.privatecloud.triggers.ShakeDetector.OnShakeListener;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.sync.SyncService;
 import ch.ffhs.privatecloudffhs.sync.SyncService.SyncServiceBinder;
@@ -11,10 +13,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
+
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -23,6 +29,13 @@ import android.view.View;
  * @see SystemUiHider 
  */
 public class Main extends Activity {
+	
+	
+	//The following are used for the shake detection
+	private SensorManager mSensorManager;
+	private Sensor mAccelerometer;
+	private ShakeDetector mShakeDetector;
+
 
 	 PrivateCloudDatabase db;
 	 Context context = null;
@@ -34,6 +47,26 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
 		db = new PrivateCloudDatabase(getApplicationContext());
 		context = this;
+		
+		// ShakeDetector initialization
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new OnShakeListener() {
+ 
+            @Override
+            public void onShake(int count) {
+                /*
+                 * The following method, "handleShakeEvent(count):" is a stub //
+                 * method you would use to setup whatever you want done once the
+                 * device has been shook.
+                 */
+            	Log.d("MAIN", "onShake");
+            	syncService.syncNow();
+                //handleShakeEvent(count);
+            }
+        });
 		
         setContentView(R.layout.activity_main);
         
@@ -122,6 +155,22 @@ public class Main extends Activity {
 		}
 
 	};
+	
+	@Override
+    public void onResume() {
+        Log.d("MAIN", "onResume");
+        super.onResume();
+        // register the Session Manager Listener onResume
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
+    }
+ 
+    @Override
+    public void onPause() {
+    	Log.d("MAIN", "onPause");
+        // unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
+    }
 
     
 }
