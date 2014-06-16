@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

@@ -1,8 +1,6 @@
 package ch.ffhs.privatecloudffhs.sync;
 
 import java.util.List;
-
-import ch.ffhs.privatecloudffhs.ConflictActivity;
 import ch.ffhs.privatecloudffhs.Main;
 import ch.ffhs.privatecloudffhs.R;
 import ch.ffhs.privatecloudffhs.connection.SshCertConnection;
@@ -10,6 +8,7 @@ import ch.ffhs.privatecloudffhs.connection.SshPwConnection;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -76,6 +75,7 @@ public class SyncManager {
 	}
 	
 	
+	@SuppressLint("NewApi")
 	public void conflictnotification(){
 		db = new PrivateCloudDatabase(context);
 		if(db.isanyconflict()){
