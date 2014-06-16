@@ -48,7 +48,7 @@ public class SyncClient  {
 		File[] localFiles = dir.listFiles();
    		
 		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());			
-   	
+
 	   for (File file : localFiles) {
 		   	if(file.isDirectory())
 			{
@@ -80,10 +80,11 @@ public class SyncClient  {
 					catch (IOException e) {
 					    //You'll need to add proper error handling here
 					}
-					Log.d("SYNC FILE DATA", text.toString());
+					Log.d("SYNC FILE DATA222", text.toString());
 	
 				}
-				
+				Log.d("SYNC LOOP", remoteCheckSum.toString());
+
 				// first run
 				if(cachedFile == null)
 				{
@@ -97,7 +98,7 @@ public class SyncClient  {
 				{
 					if(!cachedFile.isConflict())
 					{
-						if(cachedFile.getRemoteCheckSum() == null)
+						if(cachedFile.getRemoteCheckSum() == null || remoteCheckSum.isEmpty())
 						{
 							Log.d("SYNC SSHPW", "REMOTE NULL UPLOAD...");
 

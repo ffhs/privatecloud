@@ -14,32 +14,35 @@
         android:padding="5dp" >
 
         <TextView
-            android:id="@+id/Conflict_List_Path"
+                android:id="@+id/Conflict_List_Path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/Conflict_List_Server"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <Switch
+            android:id="@+id/Conflict_List_Decision"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textSize="15sp" />
+            android:layout_gravity="right"
+            android:textOff="@string/conflict_switch_remote"
+            android:textOn="@string/conflict_switch_local" />
 
-        <TextView
-            android:id="@+id/Conflict_List_Server"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textSize="10sp" />
-
-        <CheckBox
-	        android:id="@+id/Conflict_List_Upload"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="checkbox1" />
-	
-	    <CheckBox
-	        android:id="@+id/Conflict_List_Download"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="checkbox2" />
     </LinearLayout>
 
 </LinearLayout>

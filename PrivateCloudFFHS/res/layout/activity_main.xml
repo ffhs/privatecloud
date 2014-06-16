@@ -48,6 +48,16 @@
             android:onClick="onButtonClicked"
             android:text="@string/main_button_syncnow" />
 
+       <Button
+            android:id="@+id/Main_Button_Conflict"
+            android:layout_width="202dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:onClick="onButtonClicked"
+            android:text="@string/main_button_conflict" 
+			android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -68,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"          
                 android:layout_marginRight="@dimen/default_gap"
+                android:layout_marginLeft="@dimen/default_gap"
                 android:layout_weight="1"
                 android:onClick="onButtonClicked"
                 android:text="@string/main_button_folders" />

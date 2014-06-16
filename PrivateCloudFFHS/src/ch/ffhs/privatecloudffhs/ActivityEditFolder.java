@@ -8,6 +8,7 @@ import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.util.SimpleFileDialog;
 import ch.ffhs.privatecloudffhs.util.SystemUiHider;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,12 +56,11 @@ public class ActivityEditFolder extends Activity {
 	        if(intentExtras != null)
 	        {
 	        	folderId = (int)intentExtras.getInt("folderid");
-	           
-			   if(folderId != 0)
-			   {
-				   //Load from DB
-				   folder = db.getFolder(folderId);
-			   }
+	        	if(folderId != 0)
+	        	{
+	        		//Load from DB
+	        		folder = db.getFolder(folderId);
+	        	}
 	        }
 	        
 	        adapter = new EditFolderSpinServerAdapter(ActivityEditFolder.this, android.R.layout.simple_spinner_item);

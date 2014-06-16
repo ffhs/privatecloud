@@ -29,7 +29,6 @@ public class SyncManager {
 	{
 		List<Folder> syncfolders = db.getAllFolders();
 		
-		
 		for (Folder folder : syncfolders) {
 			Server server = db.getServer(folder.getServerId());
 			SyncConnection syncConnectionObj = null;
@@ -65,10 +64,12 @@ public class SyncManager {
 				syncClientObj.sync();				
 			}
 		}
+		
+		
 		conflictnotification();
-		
-		
 	}
+	
+	
 	public void conflictnotification(){
 		db = new PrivateCloudDatabase(context);
 		if(db.isanyconflict()){

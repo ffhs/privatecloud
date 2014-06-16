@@ -141,6 +141,7 @@ public class SshConnection implements SyncConnection{
 	
 	public void initFolderSync(String directory)
 	{
+		Log.d("SYNC INIT FOLDER", directory);
 		try {
 			channelSftp.cd(directory);
 		} catch (SftpException e) {

@@ -20,7 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.os.Build;
 
-public class ConflictActivity extends Activity {
+public class ActivityConflict extends Activity {
 	 private ListView listView = null;
 	 private Context context = null;
 	 private ConflictListAdapter adapter = null;
@@ -46,8 +46,22 @@ public class ConflictActivity extends Activity {
 	
 	private void refreshConflictList()
 	{
-       // adapter.refreshList(db.get());
+        adapter.refreshList(db.getAllConflicts());
         db.closeDB();
 	}
+	
+	  public void onButtonClicked(View v){
+	    	switch(v.getId()) {
+	    		case R.id.Conflict_Button_Save:
+	    			adapter.saveList();
+	    			this.finish();
+	    		break;
+	    		
+	    		case R.id.Conflict_Button_Cancel:
+	    			this.finish();
+	    		break;
+	    	
+	    	}
+	    }
 
 }

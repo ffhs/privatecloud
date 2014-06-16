@@ -61,9 +61,12 @@ public class SshPwConnection extends SshConnection{
 				channel.connect(); 
 				
 				remoteDir = server.getRemoteroot();
-				
+				Log.d("SYNC CONNECT", remoteDir);
+
 				Log.d("SYNC CONNECT", "CONNECTION READY");
 				channelSftp = (ChannelSftp)channel; 
+				
+				mkDir(remoteDir);
 				channelSftp.cd(remoteDir); 			
 				
 		    	connectionReady = true;

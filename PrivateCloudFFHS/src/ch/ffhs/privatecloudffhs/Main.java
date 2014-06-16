@@ -44,7 +44,21 @@ public class Main extends Activity {
         
         Intent syncServiceIntent = new Intent(this, SyncService.class);
     	startService(syncServiceIntent);
-   		bindService(syncServiceIntent, syncServiceConnection, Context.BIND_AUTO_CREATE);
+   		bindService(syncServiceIntent, syncServiceConnection, Context.BIND_AUTO_CREATE);   		
+    }
+    
+    protected void onResume() {
+	 	super.onResume();
+		Button buttonConflict = (Button) findViewById(R.id.Main_Button_Conflict);
+
+   		if(db.isanyconflict())
+   		{
+   			buttonConflict.setVisibility(View.VISIBLE);
+    	}
+    	else
+    	{
+    		buttonConflict.setVisibility(View.GONE);	    	
+   		}
     }
    
     
@@ -68,12 +82,16 @@ public class Main extends Activity {
     		
     		case R.id.Main_Button_SyncNow:
     			syncService.syncNow();
-    			//SshConnection sshconnection = new SshConnection(this);
-	        	//sshconnection.Connect();
     		break;
     		
+    		case R.id.Main_Button_Conflict:
+        		Intent conflict = new Intent(this,ActivityConflict.class);
+        		startActivity(conflict);
+        	break;
+        		
+    		
     		case R.id.Main_Button_Folders:
-    			if(db.getAllServers() == null)
+    			if(db.getAllServers().size() == 0)
     			{
     				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		 

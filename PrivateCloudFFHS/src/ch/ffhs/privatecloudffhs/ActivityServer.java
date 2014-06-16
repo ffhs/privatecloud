@@ -1,22 +1,16 @@
 package ch.ffhs.privatecloudffhs;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
-import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.appcompat.R.id;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -176,8 +170,16 @@ public class ActivityServer extends Activity {
 				protoint = 0;
 			}
 			server.setProto(protoint);
-			server.setRemoteroot(remoteroot.getText().toString());
+			
+			String remoteRoot = remoteroot.getText().toString();
+			if(remoteRoot.substring(remoteRoot.length() -1 ).equals("/")) 
+			{
+				remoteRoot =  remoteRoot.substring(0, remoteRoot.length() - 1);
+			}
+			server.setRemoteroot(remoteRoot);
+			
 			server.setUsername(username.getText().toString());
+			
 			if(passauth.isChecked()){
 				String passw;
 				if (password.getText().toString() == "")
