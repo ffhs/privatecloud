@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.Server;
 
 import com.jcraft.jsch.*;
@@ -13,16 +14,14 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class SshCertConnection extends SshConnection {
-	private Server server;
 
-
-	public SshCertConnection(Server server) {
-		super();
-		
-		this.server = server;
+	public SshCertConnection(Server server, Folder folder) {
+		super(server,folder);
 		
 		new LongOperation().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 	}
+	
+	
 		
 	private static byte[] getPrivateKeyAsByteStream(String pathk) {  
 	    // TODO Auto-generated method stub  
@@ -120,7 +119,10 @@ public class SshCertConnection extends SshConnection {
 				channelSftp = (ChannelSftp)channel; 
 
 				remoteDir = server.getRemoteroot();
-				mkDir(remoteDir);
+				
+				checkremotedir();
+
+				
 				channelSftp.cd(remoteDir); 			
 				
 		    	connected = true;
@@ -130,5 +132,6 @@ public class SshCertConnection extends SshConnection {
 				e.printStackTrace();
 			}
 		}
+
 	}
 }

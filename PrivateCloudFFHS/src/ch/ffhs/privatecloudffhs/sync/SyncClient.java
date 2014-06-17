@@ -43,6 +43,7 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 		syncLocalDirectory(new File(folder.getPath()));
 		
 		syncRemoteFile(server.getRemoteroot() + folder.getPath());
+		
 		folder.setLastsync("10-06-2014");
 		db.updateFolder(folder);
 		
@@ -63,8 +64,10 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 	private void syncLocalDirectory(File dir) {
 		File[] localFiles = dir.listFiles();
    		
-		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());			
-
+		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());	
+		
+		Log.d("jada","Dir"+dir.getAbsolutePath());
+		Log.d("jada","files:"+localFiles);
 	   for (File file : localFiles) {
 		   	if(file.isDirectory())
 			{

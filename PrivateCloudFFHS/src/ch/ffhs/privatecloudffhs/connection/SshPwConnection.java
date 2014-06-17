@@ -1,20 +1,15 @@
 package ch.ffhs.privatecloudffhs.connection;
+import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.Server;
+
 import com.jcraft.jsch.*;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class SshPwConnection extends SshConnection{
-
-	
-	private Server server;
-	
-	public SshPwConnection(Server server) {
-		super();
-		
-		this.server = server;
-		
+public class SshPwConnection extends SshConnection{	
+	public SshPwConnection(Server server, Folder folder) {
+		super(server,folder);		
 		new LongOperation().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 	}
 	
@@ -44,9 +39,9 @@ public class SshPwConnection extends SshConnection{
 				channel.connect(); 
 				
 				channelSftp = (ChannelSftp)channel; 
-
+				
 				remoteDir = server.getRemoteroot();
-				mkDir(remoteDir);
+				checkremotedir();
 				channelSftp.cd(remoteDir); 			
 				
 		    	connected = true;
