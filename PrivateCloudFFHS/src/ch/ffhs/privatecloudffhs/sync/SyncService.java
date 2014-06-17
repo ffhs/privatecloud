@@ -103,11 +103,13 @@ public class SyncService extends Service {
 			myTimer.cancel();
 			myTimer = null;
 		}
-
+		int syncint = settings.getInt(KEY_SYNCINTERVAL, 0);
 		myTimer = new Timer();			
-
-		int syncInterval = settings.getInt(KEY_SYNCINTERVAL, 1) * 1000 *60;
-		myTimer.schedule( new TimeServiceTimerTask(this), syncInterval, syncInterval);		
+		if(syncint != 0)
+		{
+			int syncInterval = syncint * 1000 *60;
+			myTimer.schedule( new TimeServiceTimerTask(this), syncInterval, syncInterval);		
+		}
 	}
 		
 	@Override
