@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.Server;
 
 import com.jcraft.jsch.*;
@@ -14,15 +15,17 @@ import android.util.Log;
 
 public class SshCertConnection extends SshConnection {
 	private Server server;
+	private Folder folder;
 
-
-	public SshCertConnection(Server server) {
+	public SshCertConnection(Server server, Folder folder) {
 		super();
-		
+		this.folder = folder;
 		this.server = server;
 		
 		new LongOperation().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 	}
+	
+	
 		
 	private static byte[] getPrivateKeyAsByteStream(String pathk) {  
 	    // TODO Auto-generated method stub  
@@ -120,7 +123,29 @@ public class SshCertConnection extends SshConnection {
 				channelSftp = (ChannelSftp)channel; 
 
 				remoteDir = server.getRemoteroot();
-				mkDir(remoteDir);
+				
+				
+				SftpATTRS attrs=null;
+				channelSftp.cd( "/" );
+				
+				
+				String completepath = server.getRemoteroot() + folder.getPath();
+				Log.d("jada","Complete path: "+ completepath);
+				String[] folders = completepath.split( "/" );
+				for ( String folder : folders ) {
+				    if ( folder.length() > 0 ) {
+				        try {
+				        	channelSftp.cd( folder );
+				        }
+				        catch ( SftpException e ) {
+				        	Log.d("jada","creating dir: "+ folder);
+				        	channelSftp.mkdir( folder );
+				        	channelSftp.cd( folder );
+				        }
+				    }
+				}
+				
+				//mkDir(remoteDir);
 				channelSftp.cd(remoteDir); 			
 				
 		    	connected = true;
@@ -130,5 +155,6 @@ public class SshCertConnection extends SshConnection {
 				e.printStackTrace();
 			}
 		}
+
 	}
 }

@@ -12,8 +12,11 @@ public class Server {
 	private int id;
 	
 	public Server(String servername){
-		this.servername=servername;
-		this.hostname = "No Hostname defined";
+        this.servername=servername;
+        this.hostname = "ffhs.p45q.net";
+        this.username = "clouduser";
+        this.port = 22;
+        this.remoteroot = "/home/clouduser/sync";
 	}
 
 	public Server(String servername, String hostname){

@@ -41,21 +41,25 @@ public class SyncManager {
 
 			for (Folder folder : syncfolders) {
 				Server server = db.getServer(folder.getServerId());
-				SyncConnection syncConnectionObj = null;
-
-				if(server.getPassword() == null) {
-					// build connection using cert
-					syncConnectionObj = new SshCertConnection(server);
+				if(server != null){
+						
+					SyncConnection syncConnectionObj = null;
+	
+					if(server.getPassword() == null) {
+						// build connection using cert
+						syncConnectionObj = new SshCertConnection(server,folder);
+						
+					}
+					else {
+						// build connection with password-based authentication 
+						syncConnectionObj = new SshPwConnection(server);
+					}
+					
+					SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj, server);
+					syncClientObj.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+	
+					syncClients.add(syncClientObj);
 				}
-				else {
-					// build connection with password-based authentication 
-					syncConnectionObj = new SshPwConnection(server);
-				}
-				
-				SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj, server);
-				syncClientObj.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
-
-				syncClients.add(syncClientObj);
 			}	
 			
 			while(isRunning())
