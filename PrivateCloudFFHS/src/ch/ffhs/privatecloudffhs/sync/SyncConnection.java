@@ -10,6 +10,6 @@ public interface SyncConnection {
 	public String getRemoteCheckSum(String filePath);
 	public void mkDir(String folderName);
 	public void initFolderSync(String directory);
-	public Boolean isReady();
+	public Boolean isConnected();
 
 }

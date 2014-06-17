@@ -21,12 +21,12 @@ public class SshConnection implements SyncConnection{
 	protected Session session =  null;
 	protected String remoteDir;
 	
-	protected Boolean connectionReady = false;
+	protected Boolean connected = false;
 	
 	@Override
-	public Boolean isReady()
+	public Boolean isConnected()
 	{
-		return connectionReady;
+		return connected;
 	}
 
 	private String sendCommand(String command)
@@ -121,9 +121,8 @@ public class SshConnection implements SyncConnection{
 			channelSftp.mkdir(directory);
 
 		} catch (SftpException e) {
-			// FOLDER exists
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
+			// folder exists on remote dir
+			//	e.printStackTrace();
 		}
 	}
 	
@@ -147,11 +146,9 @@ public class SshConnection implements SyncConnection{
 	@Override
 	public void initFolderSync(String directory)
 	{
-		Log.d("SYNC INIT FOLDER", directory);
 		try {
 			channelSftp.cd(directory);
 		} catch (SftpException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 	
 	}

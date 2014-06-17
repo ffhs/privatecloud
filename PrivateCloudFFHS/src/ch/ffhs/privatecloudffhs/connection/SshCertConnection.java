@@ -21,14 +21,9 @@ public class SshCertConnection extends SshConnection {
 		
 		this.server = server;
 		
-		new LongOperation().execute("");
+		new LongOperation().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 	}
-	
-
-	public void Connect()  {
-		new LongOperation().execute("");
-	}
-	
+		
 	private static byte[] getPrivateKeyAsByteStream(String pathk) {  
 	    // TODO Auto-generated method stub  
 	    final File privateKeyLocation = new File(pathk);  
@@ -121,16 +116,14 @@ public class SshCertConnection extends SshConnection {
 
 				channel = session.openChannel("sftp"); 
 				channel.connect(); 
-				
-				remoteDir = server.getRemoteroot();
-				
-				Log.d("SYNC CONNECT", "CONNECTION READY");
+								
 				channelSftp = (ChannelSftp)channel; 
-				
+
+				remoteDir = server.getRemoteroot();
 				mkDir(remoteDir);
 				channelSftp.cd(remoteDir); 			
 				
-		    	connectionReady = true;
+		    	connected = true;
 					
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

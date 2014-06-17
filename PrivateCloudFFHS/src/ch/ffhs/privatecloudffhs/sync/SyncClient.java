@@ -9,23 +9,25 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
 
-public class SyncClient  {
+public class SyncClient extends AsyncTask<String, Void, String>   {
 
-	private Context context;
 	private Folder folder;
 	private Server server;
+	private Boolean running;
 	private PrivateCloudDatabase db;
 	private SyncConnection syncConnectionObj;
 
 	public SyncClient(Context context, Folder folder, SyncConnection syncConnectionObj, Server server) {
+		super();
+		
 		this.folder = folder;
-		this.context = context;
 		this.syncConnectionObj = syncConnectionObj;
 		this.server = server;
 		
@@ -33,7 +35,7 @@ public class SyncClient  {
 	}
 	
 	
-	public void sync()
+	private void sync()
 	{
 		syncLocalDirectory(new File(folder.getPath()));
 		
@@ -41,6 +43,16 @@ public class SyncClient  {
 		db.updateFolder(folder);
 		
 		db.close();
+	}
+	
+	private void setRunning(Boolean running)
+	{
+		this.running = running;
+	}
+	
+	public boolean isRunning()
+	{
+		return running;
 	}
 
 
@@ -80,11 +92,10 @@ public class SyncClient  {
 					catch (IOException e) {
 					    //You'll need to add proper error handling here
 					}
-					Log.d("SYNC FILE DATA222", text.toString());
+	//				Log.d("SYNC FILE DATA222", text.toString());
 	
 				}
-				Log.d("SYNC LOOP", remoteCheckSum.toString());
-
+		
 				// first run
 				if(cachedFile == null)
 				{
@@ -202,6 +213,44 @@ public class SyncClient  {
 	private String getRemoteCheckSum(String filePath)
 	{
 		return syncConnectionObj.getRemoteCheckSum(filePath);
+	}
+
+
+	@Override
+	protected String doInBackground(String... params) {
+		// wait until connection is ready
+		for (int i = 0; i < 20; i++) {
+			if(!syncConnectionObj.isConnected())
+			{
+				Log.d("SYNC CLIENT", "SYNC SLEEP");
+
+				try {
+					Thread.sleep(1000);
+				} catch(InterruptedException e) {
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+		
+		if(syncConnectionObj.isConnected()) {
+			Log.d("SYNC CLIENT", "SYNC START DO IN BACKGROUND");
+
+			sync();				
+		}
+		
+		return "Executed";
+	}
+	
+
+	protected void onPreExecute() {
+		setRunning(true);
+	}
+	
+	protected void onPostExecute(String result) {
+		setRunning(false);
 	}
 }
 

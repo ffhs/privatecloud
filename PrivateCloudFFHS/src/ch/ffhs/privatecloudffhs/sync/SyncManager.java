@@ -1,6 +1,8 @@
 package ch.ffhs.privatecloudffhs.sync;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import ch.ffhs.privatecloudffhs.Main;
 import ch.ffhs.privatecloudffhs.R;
 import ch.ffhs.privatecloudffhs.connection.SshCertConnection;
@@ -14,69 +16,83 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
 public class SyncManager {
-	private Boolean running;
-	private static final String TAG = "TimeService";
+	private static final String TAG = "SyncManager";
 	private PrivateCloudDatabase db;
 	private Context context;
-
+	private ArrayList<SyncClient> syncClients;
+	
 	public SyncManager(Context context) {
 		this.context = context;
-		this.running = true;
 		
 		db = new PrivateCloudDatabase(context);
+		syncClients = new ArrayList<SyncClient>();
 	}
+	
+	
+	private class LongOperation extends AsyncTask<String, Void, String> {
+		@Override
+		protected String doInBackground(String... params) {			
+			List<Folder> syncfolders = db.getAllFolders();
 
-	public void syncAllFolders()
-	{
-		List<Folder> syncfolders = db.getAllFolders();
-		
-		for (Folder folder : syncfolders) {
-			Server server = db.getServer(folder.getServerId());
-			SyncConnection syncConnectionObj = null;
+			for (Folder folder : syncfolders) {
+				Server server = db.getServer(folder.getServerId());
+				SyncConnection syncConnectionObj = null;
 
-			if(server.getPassword() == null)
-			{
-				// build connection using cert
-				syncConnectionObj = new SshCertConnection(server);
-			}
-			else
-			{
-				// build connection with password-based authentication 
-				syncConnectionObj = new SshPwConnection(server);
-			}
-			
-			for (int i = 0; i < 3; i++) {
-				if(!syncConnectionObj.isReady())
-				{
-					try {
-						Thread.sleep(1000);
-					} catch(InterruptedException e) {
-					}
+				if(server.getPassword() == null) {
+					// build connection using cert
+					syncConnectionObj = new SshCertConnection(server);
 				}
-				else
-				{
-					break;
+				else {
+					// build connection with password-based authentication 
+					syncConnectionObj = new SshPwConnection(server);
 				}
-			}
-			
-			if(syncConnectionObj.isReady())
-			{
+				
 				SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj, server);
-				syncClientObj.sync();				
+				syncClientObj.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+
+				syncClients.add(syncClientObj);
+			}	
+			
+			while(isRunning())
+			{
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			
+			conflictnotification();
+			
+			Log.d(TAG, "DONE");
+
+			return "Executed";
 		}
-		
-		
-		conflictnotification();
+	}
+	
+	
+	public void sync()
+	{
+		Log.d(TAG, "SYNC CALLED");
+		if(!isRunning())
+		{
+			new LongOperation().execute("");
+		}
+		else
+		{
+			Log.d(TAG, "CLIENTS ARE RUNNING - NO EXECUTE");
+		}		
 	}
 	
 	
 	@SuppressLint("NewApi")
-	public void conflictnotification(){
+	private void conflictnotification(){
 		db = new PrivateCloudDatabase(context);
 		if(db.isanyconflict()){
 			Log.d("jada", "There is a conflict");
@@ -189,9 +205,15 @@ public class SyncManager {
 			*/
 	}
 	
-	public Boolean isRunning() {
-		Log.d(TAG, "RUNNING");
-		return running;
-	}	
-	
+	public boolean isRunning()
+	{
+		for(SyncClient syncClient : syncClients)
+		{
+			if(syncClient.isRunning()) return true;
+			
+			syncClients.remove(syncClient);
+		}
+		
+		return false;
+	}
 }

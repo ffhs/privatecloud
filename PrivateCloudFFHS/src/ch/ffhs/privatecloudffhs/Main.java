@@ -13,6 +13,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -131,12 +134,14 @@ public class Main extends Activity {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			Log.d(TAG, "onServiceConnected");
+
 			syncService = (SyncServiceBinder) service;
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			Log.d(TAG, "onServiceDisconnected");
+
 			syncService = null;
 		}
 

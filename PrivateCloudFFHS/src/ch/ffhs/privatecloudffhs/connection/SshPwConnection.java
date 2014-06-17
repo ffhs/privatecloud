@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class SshPwConnection extends SshConnection{
+
+	
 	private Server server;
 	
 	public SshPwConnection(Server server) {
@@ -13,7 +15,7 @@ public class SshPwConnection extends SshConnection{
 		
 		this.server = server;
 		
-		new LongOperation().execute("");
+		new LongOperation().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 	}
 	
 	
@@ -41,16 +43,13 @@ public class SshPwConnection extends SshConnection{
 				channel = session.openChannel("sftp"); 
 				channel.connect(); 
 				
-				remoteDir = server.getRemoteroot();
-				Log.d("SYNC CONNECT", remoteDir);
-
-				Log.d("SYNC CONNECT", "CONNECTION READY");
 				channelSftp = (ChannelSftp)channel; 
-				
+
+				remoteDir = server.getRemoteroot();
 				mkDir(remoteDir);
 				channelSftp.cd(remoteDir); 			
 				
-		    	connectionReady = true;
+		    	connected = true;
 			}
 			catch(Exception ex){
 				ex.printStackTrace(); 
