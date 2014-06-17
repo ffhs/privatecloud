@@ -76,7 +76,7 @@ public class SyncService extends Service {
 			// update timer interval
 			initTimer();
 		}
-	};
+	}
 
 	private void sync()
 	{		

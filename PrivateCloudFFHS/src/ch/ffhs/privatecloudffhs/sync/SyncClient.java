@@ -37,6 +37,7 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 	
 	private void sync()
 	{
+		Log.d("SyncClient", "syncing folder" + folder.getPath());
 		syncLocalDirectory(new File(folder.getPath()));
 		
 		folder.setLastsync("10-06-2014");
