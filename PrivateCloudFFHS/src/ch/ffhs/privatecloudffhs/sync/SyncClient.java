@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
+import java.util.Vector;
+
+import com.jcraft.jsch.ChannelSftp.LsEntry;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -37,9 +40,9 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 	
 	private void sync()
 	{
-		Log.d("SyncClient", "syncing folder" + folder.getPath());
 		syncLocalDirectory(new File(folder.getPath()));
 		
+		syncRemoteFile(server.getRemoteroot() + folder.getPath());
 		folder.setLastsync("10-06-2014");
 		db.updateFolder(folder);
 		
@@ -157,6 +160,39 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 					}
 				}
 			}			
+		}
+	}
+	
+	private void syncRemoteFile(String path)
+	{
+		Vector<LsEntry> remoteList = syncConnectionObj.listRemoteDir(path);
+		Log.e("SYNC CLIENT REMOTE PATH", path);
+		
+		for(LsEntry remoteObj : remoteList)
+		{
+			String fileName = remoteObj.getFilename();
+			
+			if(!fileName.equals(".") && !fileName.equals(".."))
+			{
+				if(remoteObj.getLongname().substring(0,1).equals("d"))
+				{
+					syncRemoteFile(path + "/" + remoteObj.getFilename());
+				}
+				else
+				{
+					String localPath = path.replace(server.getRemoteroot() + "/", "") + "/" + fileName;
+							
+					if(db.getFile(localPath, folder.getId()) == null)
+					{
+						File file = new File(localPath);
+						
+						SyncFile syncFile = new SyncFile(folder.getId(), localPath);
+						syncFile = downloadFile(file, syncFile);
+						
+						db.createFile(syncFile);
+					}
+				}
+			}
 		}
 	}
 

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Vector;
 
 import ch.ffhs.privatecloudffhs.database.SyncFile;
 import ch.ffhs.privatecloudffhs.sync.SyncConnection;
@@ -151,6 +152,18 @@ public class SshConnection implements SyncConnection{
 		} catch (SftpException e) {
 			e.printStackTrace();
 		} 	
+	}
+	
+	public Vector listRemoteDir(String path)
+	{
+		try {
+			return channelSftp.ls(path);
+		} catch (SftpException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }
 
