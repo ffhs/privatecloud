@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import ch.ffhs.privatecloudffhs.database.Folder;
+import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
 import ch.ffhs.privatecloudffhs.sync.SyncConnection;
 
@@ -20,9 +22,15 @@ public class SshConnection implements SyncConnection{
 	protected ChannelSftp channelSftp = null; 
 	protected Session session =  null;
 	protected String remoteDir;
-	
+	protected Server server;
+	protected Folder folder;
 	protected Boolean connected = false;
 	
+	public SshConnection(Server server, Folder folder) {
+		// TODO Auto-generated constructor stub
+		this.server = server;
+		this.folder = folder;
+	}
 	@Override
 	public Boolean isConnected()
 	{
@@ -151,6 +159,33 @@ public class SshConnection implements SyncConnection{
 		} catch (SftpException e) {
 			e.printStackTrace();
 		} 	
+	}
+	
+	protected void checkremotedir(){
+		try {
+			channelSftp.cd( "/" );
+			String completepath = server.getRemoteroot() + folder.getPath();
+			Log.d("jada","Complete path: "+ completepath);
+			String[] folders = completepath.split( "/" );
+			for ( String folder : folders ) {
+			    if ( folder.length() > 0 ) {
+			        try {
+			        	channelSftp.cd( folder );
+			        }
+			        catch ( SftpException e ) {
+			        	Log.d("jada","creating dir: "+ folder);
+			        	channelSftp.mkdir( folder );
+			        	channelSftp.cd( folder );
+			        }
+			    }
+			}
+		} catch (SftpException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		
 	}
 }
 

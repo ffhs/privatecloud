@@ -52,7 +52,7 @@ public class SyncManager {
 					}
 					else {
 						// build connection with password-based authentication 
-						syncConnectionObj = new SshPwConnection(server);
+						syncConnectionObj = new SshPwConnection(server,folder);
 					}
 					
 					SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj, server);

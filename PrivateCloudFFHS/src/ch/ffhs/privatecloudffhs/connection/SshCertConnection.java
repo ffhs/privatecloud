@@ -14,13 +14,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class SshCertConnection extends SshConnection {
-	private Server server;
-	private Folder folder;
 
 	public SshCertConnection(Server server, Folder folder) {
-		super();
-		this.folder = folder;
-		this.server = server;
+		super(server,folder);
 		
 		new LongOperation().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 	}
@@ -124,28 +120,9 @@ public class SshCertConnection extends SshConnection {
 
 				remoteDir = server.getRemoteroot();
 				
+				checkremotedir();
+
 				
-				SftpATTRS attrs=null;
-				channelSftp.cd( "/" );
-				
-				
-				String completepath = server.getRemoteroot() + folder.getPath();
-				Log.d("jada","Complete path: "+ completepath);
-				String[] folders = completepath.split( "/" );
-				for ( String folder : folders ) {
-				    if ( folder.length() > 0 ) {
-				        try {
-				        	channelSftp.cd( folder );
-				        }
-				        catch ( SftpException e ) {
-				        	Log.d("jada","creating dir: "+ folder);
-				        	channelSftp.mkdir( folder );
-				        	channelSftp.cd( folder );
-				        }
-				    }
-				}
-				
-				//mkDir(remoteDir);
 				channelSftp.cd(remoteDir); 			
 				
 		    	connected = true;
