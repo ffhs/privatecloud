@@ -86,7 +86,7 @@ public class ActivityMain extends Activity {
     protected void onResume() {
 	 	super.onResume();
 		Button buttonConflict = (Button) findViewById(R.id.Main_Button_Conflict);
-
+		mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
    		if(db.isanyconflict())
    		{
    			buttonConflict.setVisibility(View.VISIBLE);
@@ -185,14 +185,7 @@ public class ActivityMain extends Activity {
 
 	};
 	
-//	@Override
-//    public void onResume() {
-//        Log.d("MAIN", "onResume");
-//        super.onResume();
-//        // register the Session Manager Listener onResume
-//        mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
-//    }
-// 
+
     @Override
     public void onPause() {
     	Log.d("MAIN", "onPause");
