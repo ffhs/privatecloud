@@ -1,7 +1,10 @@
-package ch.ffhs.privatecloudffhs;
+package ch.ffhs.privatecloudffhs.gui;
 
 import java.util.Random;
 
+import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.R.id;
+import ch.ffhs.privatecloudffhs.R.layout;
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;

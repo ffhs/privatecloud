@@ -17,15 +17,16 @@ import android.content.Intent;
 
 public class ReadKey {
 	Context context;
+	String goodkey;
 	public ReadKey(Context context) {
 		super();
 		this.context = context;
 	}
 	public void ReadFile(String keypath){
 		StringBuilder text = new StringBuilder();
-
 		    String rsakeypath = keypath+".pub";
 			InputStream instream;
+			
 			try {
 				instream = new FileInputStream(rsakeypath);
 				if (instream != null) {
@@ -48,13 +49,16 @@ public class ReadKey {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				     
 				    // do something with the line 
 	
 				}
+				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			goodkey = text.toString();
 			new AlertDialog.Builder(context)
 		    .setTitle("RSA Key")
 		    .setMessage(text)
@@ -71,7 +75,7 @@ public class ReadKey {
 		        	intent.setType("text/html");
 		        	intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
 		        	intent.putExtra(Intent.EXTRA_SUBJECT, "RSA Public key");
-		        	intent.putExtra(Intent.EXTRA_TEXT, "text");
+		        	intent.putExtra(Intent.EXTRA_TEXT, goodkey);
 		        	context.startActivity(Intent.createChooser(intent, "Send Email"));
 		        }
 		     })

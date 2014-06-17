@@ -1,4 +1,4 @@
-package ch.ffhs.privatecloudffhs.util;
+package ch.ffhs.privatecloudffhs.gui.util;
 
 import android.app.Activity;
 import android.view.View;

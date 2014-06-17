@@ -67,8 +67,8 @@
 
     <string-array name="protocols">
         <item>SFTP (ssh)</item>
-        <item>FTP</item>
-        <item>FTPS</item>
+        <item>FTP (Premium only)</item>
+        <item>FTPS (Premium only)</item>
     </string-array>
 
     <string name="title_activity_conflict">ConflictActivity</string>

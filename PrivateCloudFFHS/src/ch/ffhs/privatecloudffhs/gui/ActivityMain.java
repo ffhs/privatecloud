@@ -1,11 +1,15 @@
-package ch.ffhs.privatecloudffhs;
+package ch.ffhs.privatecloudffhs.gui;
 
-import ch.ffhs.privatecloud.triggers.ShakeDetector;
-import ch.ffhs.privatecloud.triggers.ShakeDetector.OnShakeListener;
+import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.R.id;
+import ch.ffhs.privatecloudffhs.R.layout;
+import ch.ffhs.privatecloudffhs.R.string;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
+import ch.ffhs.privatecloudffhs.gui.util.SystemUiHider;
 import ch.ffhs.privatecloudffhs.sync.SyncService;
 import ch.ffhs.privatecloudffhs.sync.SyncService.SyncServiceBinder;
-import ch.ffhs.privatecloudffhs.util.SystemUiHider;
+import ch.ffhs.privatecloudffhs.triggers.ShakeDetector;
+import ch.ffhs.privatecloudffhs.triggers.ShakeDetector.OnShakeListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -32,7 +36,7 @@ import android.widget.Button;
  *
  * @see SystemUiHider 
  */
-public class Main extends Activity {
+public class ActivityMain extends Activity {
 	
 	
 	//The following are used for the shake detection
@@ -109,7 +113,7 @@ public class Main extends Activity {
     public void onButtonClicked(View v){
     	switch(v.getId()) {
     		case R.id.Main_Button_Settings:
-    			Intent settings = new Intent(this,Settings.class);
+    			Intent settings = new Intent(this,ActivitySettings.class);
     			startActivity(settings);
     		break;
     		
@@ -154,7 +158,7 @@ public class Main extends Activity {
     			}
     			else
     			{
-    				Intent folders = new Intent(this,Folders.class);
+    				Intent folders = new Intent(this,ActivityFolders.class);
         			startActivity(folders);
     			}
     		break;

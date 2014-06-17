@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#000"
     android:isScrollContainer="true"
-    tools:context="ch.ffhs.privatecloudffhs.Settings" >
+    tools:context="ch.ffhs.privatecloudffhs.gui.ActivitySettings" >
 <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">

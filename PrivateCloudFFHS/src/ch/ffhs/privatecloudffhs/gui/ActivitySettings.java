@@ -1,11 +1,14 @@
-package ch.ffhs.privatecloudffhs;
+package ch.ffhs.privatecloudffhs.gui;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ffhs.privatecloudffhs.adapter.ServerListAdapter;
+import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.R.id;
+import ch.ffhs.privatecloudffhs.R.layout;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
+import ch.ffhs.privatecloudffhs.gui.adapter.ServerListAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +22,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class Settings extends Activity {
+public class ActivitySettings extends Activity {
 
 
 
@@ -112,7 +115,7 @@ public class Settings extends Activity {
     			}
     			else
     			{
-    				Toast.makeText(Settings.this, "Invalid Sync interval", Toast.LENGTH_LONG).show();
+    				Toast.makeText(ActivitySettings.this, "Invalid Sync interval", Toast.LENGTH_LONG).show();
     			}
     		break;
     		

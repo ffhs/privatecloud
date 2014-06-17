@@ -1,4 +1,4 @@
-package ch.ffhs.privatecloud.triggers;
+package ch.ffhs.privatecloudffhs.triggers;
 
 
 import android.hardware.Sensor;

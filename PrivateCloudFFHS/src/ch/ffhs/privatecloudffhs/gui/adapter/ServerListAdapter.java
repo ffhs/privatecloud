@@ -1,4 +1,4 @@
-package ch.ffhs.privatecloudffhs.adapter;
+package ch.ffhs.privatecloudffhs.gui.adapter;
 
 import java.util.List;
 

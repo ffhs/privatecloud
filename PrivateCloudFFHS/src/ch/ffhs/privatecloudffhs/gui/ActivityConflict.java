@@ -1,9 +1,12 @@
-package ch.ffhs.privatecloudffhs;
+package ch.ffhs.privatecloudffhs.gui;
 
-import ch.ffhs.privatecloudffhs.adapter.ConflictListAdapter;
-import ch.ffhs.privatecloudffhs.adapter.FoldersListAdapter;
+import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.R.id;
+import ch.ffhs.privatecloudffhs.R.layout;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
+import ch.ffhs.privatecloudffhs.gui.adapter.ConflictListAdapter;
+import ch.ffhs.privatecloudffhs.gui.adapter.FoldersListAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
