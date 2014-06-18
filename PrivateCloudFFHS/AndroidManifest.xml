@@ -33,15 +33,16 @@
         </activity>
         <activity
             android:name="ch.ffhs.privatecloudffhs.gui.ActivitySettings"
-            android:windowSoftInputMode="stateHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/settings_label_title"
-            android:theme="@style/Theme.FullScreen" >
+            android:theme="@style/Theme.FullScreen"
+             >
         </activity>
         <activity
             android:name="ch.ffhs.privatecloudffhs.gui.ActivityFolders"
-            android:windowSoftInputMode="stateHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_folders"
@@ -49,7 +50,7 @@
         </activity>
         <activity
             android:name="ch.ffhs.privatecloudffhs.gui.ActivityEditFolder"
-            android:windowSoftInputMode="stateHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_activity_edit_folder"
@@ -57,7 +58,7 @@
         </activity>
         <activity
             android:name="ch.ffhs.privatecloudffhs.gui.ActivityServer"
-            android:windowSoftInputMode="stateHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_server"
@@ -66,7 +67,7 @@
 
         <activity
             android:name="ch.ffhs.privatecloudffhs.gui.ActivityConflict"
-            android:windowSoftInputMode="stateHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_conflict" 
