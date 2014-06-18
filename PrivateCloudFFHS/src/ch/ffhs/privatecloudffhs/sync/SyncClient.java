@@ -29,7 +29,6 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 
 	public SyncClient(Context context, Folder folder, SyncConnection syncConnectionObj, Server server) {
 		super();
-		
 		this.folder = folder;
 		this.syncConnectionObj = syncConnectionObj;
 		this.server = server;
@@ -164,6 +163,9 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 				}
 			}			
 		}
+	   //this.cancel(isRunning());
+	   //this.cancel(isCancelled());
+	   
 	}
 	
 	private void syncRemoteFile(String path)
@@ -174,7 +176,7 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 		for(LsEntry remoteObj : remoteList)
 		{
 			String fileName = remoteObj.getFilename();
-			
+			Log.d("jada","Processing remote File:"+fileName);
 			if(!fileName.equals(".") && !fileName.equals(".."))
 			{
 				if(remoteObj.getLongname().substring(0,1).equals("d"))
@@ -187,6 +189,7 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 							
 					if(db.getFile(localPath, folder.getId()) == null)
 					{
+						Log.d("jada","Remote file not held locally, Localpath:"+localPath);
 						File file = new File(localPath);
 						
 						SyncFile syncFile = new SyncFile(folder.getId(), localPath);

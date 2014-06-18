@@ -41,34 +41,43 @@ public class SshConnection implements SyncConnection{
 	private String sendCommand(String command)
 	  {
 	     StringBuilder outputBuffer = new StringBuilder();
-
-	     try
-	     {
-	        Channel channel = session.openChannel("exec");
-	        ((ChannelExec)channel).setCommand(command);
-	        channel.connect();
-	        InputStream commandOutput = channel.getInputStream();
-	        int readByte = commandOutput.read();
-
-	        while(readByte != 0xffffffff)
-	        {
-	           outputBuffer.append((char)readByte);
-	           readByte = commandOutput.read();
-	        }
-
-	        channel.disconnect();
+	     if(session.isConnected())
+	     { 
+		     try
+		     {
+		    	 
+		        Channel channel = session.openChannel("exec");
+		        ((ChannelExec)channel).setCommand(command);
+		        channel.connect();
+		        InputStream commandOutput = channel.getInputStream();
+		        int readByte = commandOutput.read();
+	
+		        while(readByte != 0xffffffff)
+		        {
+		           outputBuffer.append((char)readByte);
+		           readByte = commandOutput.read();
+		        }
+	
+		        channel.disconnect();
+		     }
+		     catch(IOException ioX)
+		     {
+		        Log.d("ERROR SYNCTEST2", ioX.getMessage());
+		        return null;
+		     }
+		     catch(JSchException jschX)
+		     {
+		    	 Log.d("ERROR SYNCTEST1", jschX.getMessage());
+		        return null;
+		     }
 	     }
-	     catch(IOException ioX)
+	     else
 	     {
-	        Log.d("ERROR SYNCTEST2", ioX.getMessage());
-	        return null;
+	    	 Log.d("jada","Connection down");
+	    	 return "Connection down.";
+	    	 
+	    	 
 	     }
-	     catch(JSchException jschX)
-	     {
-	    	 Log.d("ERROR SYNCTEST1", jschX.getMessage());
-	        return null;
-	     }
-
 	     return outputBuffer.toString();
 	 }
 	
@@ -141,14 +150,25 @@ public class SshConnection implements SyncConnection{
 	@Override
 	public String getRemoteCheckSum(String filePath)
 	{
+		String result = "";
+	
+		Log.d("jada","Getting remote checksum");
 		StringBuilder command = new StringBuilder();
 		command.append("md5sum").append(" ");
 		command.append("\"").append(remoteDir).append(filePath).append("\"");
 		
-		String result = sendCommand(command.toString());
 		
-		if(result.length() > 32) return result.substring(0, 32);
+		
+		
+		try{
+			result = sendCommand(command.toString());
+		}
+		catch(Exception e){
+			System.out.println(e);	
+		}
 
+		Log.d("jada","Got remote checksum");
+		if(result.length() > 32) return result.substring(0, 32);
 		return result;
 	}
 	

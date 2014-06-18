@@ -213,9 +213,12 @@ public class SyncManager {
 	{
 		for(SyncClient syncClient : syncClients)
 		{
-			if(syncClient.isRunning()) return true;
-			
-			syncClients.remove(syncClient);
+			if(syncClient.isRunning())
+			{
+				Log.d("threads","running");
+				return true;
+			}
+			//syncClients.remove(syncClient);
 		}
 		
 		return false;
