@@ -106,7 +106,7 @@ public class ActivityMain extends Activity {
 		
 		Folder lastSyncedFolder = db.getLastSyncedFolder();
 		TextView txtLastSync = (TextView) findViewById(R.id.Main_Text_LastSync);
-		if(lastSyncedFolder != null)
+		if(lastSyncedFolder != null && lastSyncedFolder.getLastsync() == "01.01.1970 00:00")
    		{
 			StringBuilder text = new StringBuilder();
 			text.append(getString(R.string.main_label_lastsync)).append(" ").append(lastSyncedFolder.getLastsync());
