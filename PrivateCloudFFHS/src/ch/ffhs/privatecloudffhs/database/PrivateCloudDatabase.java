@@ -179,8 +179,13 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_SERVER_ID, folder.getServerId());
         values.put(KEY_PATH, folder.getPath());
-        values.put(KEY_LASTSYNC, folder.getLastsync().toString());
-        
+        if(folder.getLastsync()== null){
+        	 values.put(KEY_LASTSYNC, "Sun Mar 06 11:28:16 IST 2011");
+        }
+        else
+        {
+        	values.put(KEY_LASTSYNC, folder.getLastsync().toString());
+        }
         // insert row
         long folderId = db.insert(TABLE_FOLDER, null, values);
      

@@ -22,7 +22,8 @@ public class Folder {
 	public Folder(String path, int server){
 		this.path = path;
 		this.serverId = server;
-		this.sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");		
+		this.sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+		this.lastsync = "01.01.1970 00:00";
 	}
 
 	
