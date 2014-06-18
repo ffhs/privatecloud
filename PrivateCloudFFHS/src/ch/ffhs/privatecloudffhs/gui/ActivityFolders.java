@@ -1,9 +1,13 @@
-package ch.ffhs.privatecloudffhs;
+package ch.ffhs.privatecloudffhs.gui;
 
-import ch.ffhs.privatecloudffhs.adapter.FoldersListAdapter;
+import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.R.id;
+import ch.ffhs.privatecloudffhs.R.layout;
+import ch.ffhs.privatecloudffhs.R.menu;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
-import ch.ffhs.privatecloudffhs.util.SystemUiHider;
+import ch.ffhs.privatecloudffhs.gui.adapter.FoldersListAdapter;
+import ch.ffhs.privatecloudffhs.gui.util.SystemUiHider;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.AbsListView;
@@ -27,7 +31,7 @@ import android.widget.AbsListView.MultiChoiceModeListener;
  */
 
 @SuppressLint("NewApi")
-public class Folders extends Activity  implements MultiChoiceModeListener{
+public class ActivityFolders extends Activity  implements MultiChoiceModeListener{
 
 	 private ListView listView = null;
 	 private Context context = null;

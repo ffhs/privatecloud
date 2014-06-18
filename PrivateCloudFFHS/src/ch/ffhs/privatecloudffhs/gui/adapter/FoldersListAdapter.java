@@ -1,9 +1,10 @@
-package ch.ffhs.privatecloudffhs.adapter;
+package ch.ffhs.privatecloudffhs.gui.adapter;
 
 import java.util.List;
 
 import ch.ffhs.privatecloudffhs.R;
-import ch.ffhs.privatecloudffhs.database.Server;
+import ch.ffhs.privatecloudffhs.database.Folder;
+import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.SparseBooleanArray;
@@ -14,18 +15,19 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
-public class ServerListAdapter extends ArrayAdapter<Server>{	
+public class FoldersListAdapter extends ArrayAdapter<Folder>{	
 	Context context;
 	LayoutInflater inflater;
-	List<Server> list;
+	List<Folder> list;
 	SparseBooleanArray mSelectedItemsIds;
+	PrivateCloudDatabase db;
 
-	public ServerListAdapter(Context context) {
+	public FoldersListAdapter(Context context) {
 		super(context, 0);
+		
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
 		inflater = LayoutInflater.from(context);
-		
 	}
 
 	@Override
@@ -33,10 +35,10 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 		final ViewHolder holder;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = inflater.inflate(R.layout.list_servers, null);
+			convertView = inflater.inflate(R.layout.list_folders, null);
 			
-			holder.servername = (TextView) convertView.findViewById(R.id.Servers_List_Name);
-			holder.hostname= (TextView) convertView.findViewById(R.id.Server_List_Hostname);
+			holder.path = (TextView) convertView.findViewById(R.id.Folders_List_Path);
+			holder.lastsync= (TextView) convertView.findViewById(R.id.Folders_List_LasySync);
 			
 			convertView.setTag(holder);
 		} 
@@ -44,8 +46,8 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		holder.servername.setText(list.get(position).getServername());
-		holder.hostname.setText(list.get(position).getHostname());
+		holder.path.setText(list.get(position).getPath());
+		holder.lastsync.setText(list.get(position).getLastsync().toString());
 
 		return convertView;
 	}
@@ -70,16 +72,27 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 	public SparseBooleanArray getSelectedIds() {
 		return mSelectedItemsIds;
 	}
-	public void refreshList(List<Server> list) {
-		this.list = list;
-		clear();
-		addAll(this.list);
+	
+	public void addFolder(Folder folder) {
+		this.list.add(folder);
+		add(folder);
+		
 		notifyDataSetChanged();
 	}
 	
+	
+	public void refreshList(List<Folder> list) {
+		this.list = list;
 
+		clear();
+		addAll(this.list);
+		
+		notifyDataSetChanged();
+	}
+
+	
 	private class ViewHolder {
-		TextView servername;
-		TextView hostname;
+		TextView path;
+		TextView lastsync;
 	}
 }

@@ -3,13 +3,13 @@ package ch.ffhs.privatecloudffhs.sync;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ffhs.privatecloudffhs.Main;
 import ch.ffhs.privatecloudffhs.R;
 import ch.ffhs.privatecloudffhs.connection.SshCertConnection;
 import ch.ffhs.privatecloudffhs.connection.SshPwConnection;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
+import ch.ffhs.privatecloudffhs.gui.ActivityMain;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -100,7 +100,35 @@ public class SyncManager {
 		db = new PrivateCloudDatabase(context);
 		if(db.isanyconflict()){
 			Log.d("jada", "There is a conflict");
-			
+			int icon = R.drawable.notification_icon;
+			long when = System.currentTimeMillis();
+			String ns = Context.NOTIFICATION_SERVICE;
+			NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
+			Intent intent=new Intent(context,ActivityMain.class);
+			PendingIntent  pending=PendingIntent.getActivity(context, 0, intent, 0);
+			Notification notification;
+	        if (Build.VERSION.SDK_INT < 11) {
+	            notification = new Notification(icon, "Title", when);
+	            notification.setLatestEventInfo(
+	                    context,
+	                    context.getResources().getString(R.string.notification_title),
+	                    context.getResources().getString(R.string.notification_text),
+	                    pending);
+	        } else {
+	            notification = new Notification.Builder(context)
+	                    .setContentTitle(context.getResources().getString(R.string.notification_title))
+	                    .setContentText(
+	                    context.getResources().getString(R.string.notification_text)).setSmallIcon(R.drawable.notification_icon)
+	                    .setContentIntent(pending).setWhen(when).setAutoCancel(true)
+	                    .build();
+	            	//notification.flags = Notification.FLAG_ONGOING_EVENT;
+	            	notification.setLatestEventInfo(
+		                    context,
+		                    context.getResources().getString(R.string.notification_title),
+		                    context.getResources().getString(R.string.notification_text),
+		                    pending);
+	        }
+			mNotificationManager.notify(1, notification);
 			
 			
 		}
@@ -161,35 +189,7 @@ public class SyncManager {
 		
 		
 		
-			int icon = R.drawable.notification_icon;
-			long when = System.currentTimeMillis();
-			String ns = Context.NOTIFICATION_SERVICE;
-			NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
-			Intent intent=new Intent(context,Main.class);
-			PendingIntent  pending=PendingIntent.getActivity(context, 0, intent, 0);
-			Notification notification;
-	        if (Build.VERSION.SDK_INT < 11) {
-	            notification = new Notification(icon, "Title", when);
-	            notification.setLatestEventInfo(
-	                    context,
-	                    context.getResources().getString(R.string.notification_title),
-	                    context.getResources().getString(R.string.notification_text),
-	                    pending);
-	        } else {
-	            notification = new Notification.Builder(context)
-	                    .setContentTitle(context.getResources().getString(R.string.notification_title))
-	                    .setContentText(
-	                    context.getResources().getString(R.string.notification_text)).setSmallIcon(R.drawable.notification_icon)
-	                    .setContentIntent(pending).setWhen(when).setAutoCancel(true)
-	                    .build();
-	            	//notification.flags = Notification.FLAG_ONGOING_EVENT;
-	            	notification.setLatestEventInfo(
-		                    context,
-		                    context.getResources().getString(R.string.notification_title),
-		                    context.getResources().getString(R.string.notification_text),
-		                    pending);
-	        }
-			mNotificationManager.notify(1, notification);
+
 			
 		
 		/*

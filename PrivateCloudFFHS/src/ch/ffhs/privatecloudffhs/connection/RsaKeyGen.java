@@ -54,7 +54,7 @@ public class RsaKeyGen {
           out.write(buffer, 0, read);
         }
     }
-	public void GenerateKey(String keysmallname){
+	public String GenerateKey(String keysmallname){
 	    JSch jsch=new JSch();
 	    String appRootDir = context.getApplicationInfo().dataDir;
 	    String rsakeypath = appRootDir + "/id_rsa"+keysmallname;
@@ -70,6 +70,6 @@ public class RsaKeyGen {
 	    catch(Exception e){
 	      System.out.println(e);
 	    }
-		
+		return rsakeypath;
 	}
 }

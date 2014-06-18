@@ -3,6 +3,8 @@
 
     <string name="app_name">PrivateCloud</string>
     <string name="main_label_title">EditSettings</string>
+    <string name="main_label_lastsync">Last sync on</string>
+    <string name="main_label_lastsync_none">No sync performed</string>
     <string name="main_button_settings">Settings</string>
     <string name="main_button_folders">Folders</string>
     <string name="main_button_syncnow">Sync Now</string>
@@ -70,8 +72,8 @@
 
     <string-array name="protocols">
         <item>SFTP (ssh)</item>
-        <item>FTP</item>
-        <item>FTPS</item>
+        <item>FTP (Premium only)</item>
+        <item>FTPS (Premium only)</item>
     </string-array>
 
     <string name="title_activity_conflict">ConflictActivity</string>

@@ -1,5 +1,5 @@
 // SimpleFileDialog.java
-package ch.ffhs.privatecloudffhs.util;
+package ch.ffhs.privatecloudffhs.gui.util;
 
 /*
 * 

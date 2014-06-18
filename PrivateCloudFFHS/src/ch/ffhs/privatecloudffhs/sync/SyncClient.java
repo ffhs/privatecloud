@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
+import java.util.Date;
 import java.util.Vector;
 
 import com.jcraft.jsch.ChannelSftp.LsEntry;
@@ -44,7 +45,8 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 		
 		syncRemoteFile(server.getRemoteroot() + folder.getPath());
 		
-		folder.setLastsync("10-06-2014");
+		folder.setLastsync(new Date());
+
 		db.updateFolder(folder);
 		
 		db.close();

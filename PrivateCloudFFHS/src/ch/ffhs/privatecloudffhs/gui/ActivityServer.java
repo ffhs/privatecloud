@@ -1,7 +1,10 @@
-package ch.ffhs.privatecloudffhs;
+package ch.ffhs.privatecloudffhs.gui;
 
 import java.util.Random;
 
+import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.R.id;
+import ch.ffhs.privatecloudffhs.R.layout;
 import ch.ffhs.privatecloudffhs.connection.ReadKey;
 import ch.ffhs.privatecloudffhs.connection.RsaKeyGen;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
@@ -126,8 +129,8 @@ public class ActivityServer extends Activity {
     			Random randomGenerator = new Random();
     			int randomInt = randomGenerator.nextInt(1000000);
     			RsaKeyGen rsakeygen = new RsaKeyGen(this);
-    			//server.setCertpath(rsakeygen.GenerateKey("id_rsa"+randomInt));;
-    			server.setCertpath(rsakeygen.GenerateMockKey("id_rsa"+randomInt));
+    			server.setCertpath(rsakeygen.GenerateKey("id_rsa"+randomInt));;
+    			//server.setCertpath(rsakeygen.GenerateMockKey("id_rsa"+randomInt));
     			
     			Log.d("jada","Setting certpath to :" + server.getCertpath());
     			Toast.makeText(ActivityServer.this, "New keypair calculated", Toast.LENGTH_LONG).show();

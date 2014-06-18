@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ch.ffhs.privatecloudffhs.Main"
+            android:name="ch.ffhs.privatecloudffhs.gui.ActivityMain"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/Theme.FullScreen" >
@@ -31,32 +31,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ch.ffhs.privatecloudffhs.Settings"
+            android:name="ch.ffhs.privatecloudffhs.gui.ActivitySettings"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/settings_label_title"
             android:theme="@style/Theme.FullScreen" >
         </activity>
         <activity
-            android:name="ch.ffhs.privatecloudffhs.Folders"
+            android:name="ch.ffhs.privatecloudffhs.gui.ActivityFolders"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_folders"
             android:theme="@style/Theme.FullScreen" >
         </activity>
         <activity
-            android:name="ch.ffhs.privatecloudffhs.ActivityEditFolder"
+            android:name="ch.ffhs.privatecloudffhs.gui.ActivityEditFolder"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_activity_edit_folder"
             android:theme="@style/Theme.FullScreen" >
         </activity>
         <activity
-            android:name="ch.ffhs.privatecloudffhs.ActivityServer"
+            android:name="ch.ffhs.privatecloudffhs.gui.ActivityServer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_server"
             android:theme="@style/Theme.FullScreen" >
         </activity>
 
         <activity
-            android:name="ch.ffhs.privatecloudffhs.ActivityConflict"
+            android:name="ch.ffhs.privatecloudffhs.gui.ActivityConflict"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_conflict" 
             android:theme="@style/Theme.FullScreen" >

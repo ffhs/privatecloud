@@ -1,11 +1,12 @@
-package ch.ffhs.privatecloudffhs;
+package ch.ffhs.privatecloudffhs.gui;
 
-import ch.ffhs.privatecloudffhs.adapter.EditFolderSpinServerAdapter;
+import ch.ffhs.privatecloudffhs.R;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
-import ch.ffhs.privatecloudffhs.util.SimpleFileDialog;
-import ch.ffhs.privatecloudffhs.util.SystemUiHider;
+import ch.ffhs.privatecloudffhs.gui.adapter.EditFolderSpinServerAdapter;
+import ch.ffhs.privatecloudffhs.gui.util.SimpleFileDialog;
+import ch.ffhs.privatecloudffhs.gui.util.SystemUiHider;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -50,7 +51,7 @@ public class ActivityEditFolder extends Activity {
 
 	        if(intentExtras != null)
 	        {
-	        	folderId = (int)intentExtras.getInt("folderid");
+	        	folderId = intentExtras.getInt("folderid");
 	        	if(folderId != 0)
 	        	{
 	        		//Load from DB

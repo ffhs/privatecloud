@@ -1,11 +1,20 @@
-package ch.ffhs.privatecloudffhs;
+package ch.ffhs.privatecloudffhs.gui;
 
-import ch.ffhs.privatecloud.triggers.ShakeDetector;
-import ch.ffhs.privatecloud.triggers.ShakeDetector.OnShakeListener;
+import java.util.Date;
+
+import org.w3c.dom.Text;
+
+import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.R.id;
+import ch.ffhs.privatecloudffhs.R.layout;
+import ch.ffhs.privatecloudffhs.R.string;
+import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
+import ch.ffhs.privatecloudffhs.gui.util.SystemUiHider;
 import ch.ffhs.privatecloudffhs.sync.SyncService;
 import ch.ffhs.privatecloudffhs.sync.SyncService.SyncServiceBinder;
-import ch.ffhs.privatecloudffhs.util.SystemUiHider;
+import ch.ffhs.privatecloudffhs.triggers.ShakeDetector;
+import ch.ffhs.privatecloudffhs.triggers.ShakeDetector.OnShakeListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -23,6 +32,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 
@@ -32,7 +42,7 @@ import android.widget.Button;
  *
  * @see SystemUiHider 
  */
-public class Main extends Activity {
+public class ActivityMain extends Activity {
 	
 	
 	//The following are used for the shake detection
@@ -81,9 +91,11 @@ public class Main extends Activity {
     
     protected void onResume() {
 	 	super.onResume();
+	 	
+	 	mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
+		
 		Button buttonConflict = (Button) findViewById(R.id.Main_Button_Conflict);
-
-   		if(db.isanyconflict())
+		if(db.isanyconflict())
    		{
    			buttonConflict.setVisibility(View.VISIBLE);
     	}
@@ -91,6 +103,20 @@ public class Main extends Activity {
     	{
     		buttonConflict.setVisibility(View.GONE);	    	
    		}
+		
+		Folder lastSyncedFolder = db.getLastSyncedFolder();
+		TextView txtLastSync = (TextView) findViewById(R.id.Main_Text_LastSync);
+		if(lastSyncedFolder != null)
+   		{
+			StringBuilder text = new StringBuilder();
+			text.append(getString(R.string.main_label_lastsync)).append(" ").append(lastSyncedFolder.getLastsync());
+			
+			txtLastSync.setText(text.toString());
+    	}
+    	else
+    	{
+			txtLastSync.setText(R.string.main_label_lastsync_none);
+        }
     }
    
     
@@ -109,7 +135,7 @@ public class Main extends Activity {
     public void onButtonClicked(View v){
     	switch(v.getId()) {
     		case R.id.Main_Button_Settings:
-    			Intent settings = new Intent(this,Settings.class);
+    			Intent settings = new Intent(this,ActivitySettings.class);
     			startActivity(settings);
     		break;
     		
@@ -154,7 +180,7 @@ public class Main extends Activity {
     			}
     			else
     			{
-    				Intent folders = new Intent(this,Folders.class);
+    				Intent folders = new Intent(this,ActivityFolders.class);
         			startActivity(folders);
     			}
     		break;
@@ -181,14 +207,7 @@ public class Main extends Activity {
 
 	};
 	
-//	@Override
-//    public void onResume() {
-//        Log.d("MAIN", "onResume");
-//        super.onResume();
-//        // register the Session Manager Listener onResume
-//        mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
-//    }
-// 
+
     @Override
     public void onPause() {
     	Log.d("MAIN", "onPause");
