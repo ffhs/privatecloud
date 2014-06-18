@@ -49,6 +49,9 @@
     <string name="title_activity_activity_edit_folder">Folder</string>
     
 
+    <string name="service_sync_start">Sync started</string>
+    <string name="service_sync_running">Sync already running</string>
+    
 	<string name="notification_title">Sync conflict</string>
 	<string name="notification_text">There was a problem synchronizing files, please resolve</string>
 	

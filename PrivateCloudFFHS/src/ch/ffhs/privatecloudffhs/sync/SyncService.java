@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ch.ffhs.privatecloudffhs.R;
+import ch.ffhs.privatecloudffhs.Settings;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -21,6 +23,7 @@ import android.os.Message;
 import android.os.Messenger;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class SyncService extends Service {
@@ -158,7 +161,15 @@ public class SyncService extends Service {
 	public class SyncServiceBinder extends Binder {		
 		public void syncNow()
 		{
-			sync();
-		}
+			if(!syncManagerObj.isRunning())
+			{
+				sync();
+				Toast.makeText(getApplicationContext(), R.string.service_sync_start, Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				Toast.makeText(getApplicationContext(), R.string.service_sync_running, Toast.LENGTH_LONG).show();
+			}
+		}	
 	}
 }
