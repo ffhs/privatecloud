@@ -47,7 +47,7 @@ public class FoldersListAdapter extends ArrayAdapter<Folder>{
 		}
 		
 		holder.path.setText(list.get(position).getPath());
-		holder.lastsync.setText(list.get(position).getLastsync());
+		holder.lastsync.setText(list.get(position).getLastsync().toString());
 
 		return convertView;
 	}

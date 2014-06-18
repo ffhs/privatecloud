@@ -30,12 +30,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/Main_Text_LastSync" 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:text="Last synced on 04.03.2014 17:03"
             android:textColor="#FFF"
             tools:ignore="HardcodedText" />
 

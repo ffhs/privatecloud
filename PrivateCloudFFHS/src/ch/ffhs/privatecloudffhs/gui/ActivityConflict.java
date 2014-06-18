@@ -7,8 +7,6 @@ import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.gui.adapter.ConflictListAdapter;
 import ch.ffhs.privatecloudffhs.gui.adapter.FoldersListAdapter;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.app.Activity;
 import android.content.Context;

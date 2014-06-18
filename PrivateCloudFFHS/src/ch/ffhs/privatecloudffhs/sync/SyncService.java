@@ -1,10 +1,9 @@
 package ch.ffhs.privatecloudffhs.sync;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
+import ch.ffhs.privatecloudffhs.R;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -15,12 +14,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.BatteryManager;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class SyncService extends Service {
@@ -49,7 +46,8 @@ public class SyncService extends Service {
 		
 		public void run() {	
 			Boolean syncPerm = true;
-			
+			Log.d(TAG, "TIMMER CALLED");
+
 			if(settings.getBoolean(KEY_ONWIFI, false)) {
 				ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -103,10 +101,13 @@ public class SyncService extends Service {
 			myTimer.cancel();
 			myTimer = null;
 		}
+		
 		int syncint = settings.getInt(KEY_SYNCINTERVAL, 0);
-		myTimer = new Timer();			
-		if(syncint != 0)
+		
+		if(syncint > 0)
 		{
+			myTimer = new Timer();			
+			
 			int syncInterval = syncint * 1000 *60;
 			myTimer.schedule( new TimeServiceTimerTask(this), syncInterval, syncInterval);		
 		}
@@ -160,7 +161,15 @@ public class SyncService extends Service {
 	public class SyncServiceBinder extends Binder {		
 		public void syncNow()
 		{
-			sync();
-		}
+			if(!syncManagerObj.isRunning())
+			{
+				sync();
+				Toast.makeText(getApplicationContext(), R.string.service_sync_start, Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				Toast.makeText(getApplicationContext(), R.string.service_sync_running, Toast.LENGTH_LONG).show();
+			}
+		}	
 	}
 }

@@ -144,6 +144,30 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         return null;
     }
     
+    /*
+     * get single Folder
+     */
+    public Folder getLastSyncedFolder() {
+        SQLiteDatabase db = this.getReadableDatabase();
+     
+        String selectQuery = "SELECT  * FROM " + TABLE_FOLDER + " ORDER BY " + KEY_LASTSYNC + " DESC LIMIT 1";
+     
+        Log.e(LOG, selectQuery);
+     
+        Cursor c = db.rawQuery(selectQuery, null);
+     
+        if(c!= null && c.moveToFirst()) {
+        	Folder folder = new Folder(c.getString((c.getColumnIndex(KEY_PATH))), c.getInt((c.getColumnIndex(KEY_SERVER_ID))));
+           
+        	folder.setLastsync(c.getString((c.getColumnIndex(KEY_LASTSYNC))));
+            folder.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+
+            return folder;
+        }
+                
+        return null;
+    }
+    
     
     
     /*
@@ -155,7 +179,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_SERVER_ID, folder.getServerId());
         values.put(KEY_PATH, folder.getPath());
-        values.put(KEY_LASTSYNC, folder.getLastsync());
+        values.put(KEY_LASTSYNC, folder.getLastsync().toString());
         
         // insert row
         long folderId = db.insert(TABLE_FOLDER, null, values);
@@ -173,7 +197,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_SERVER_ID, folder.getServerId());
         values.put(KEY_PATH, folder.getPath());
-        values.put(KEY_LASTSYNC, folder.getLastsync());
+        values.put(KEY_LASTSYNC, folder.getLastsync().toString());
         values.put(KEY_ID, folder.getId());
      
         // updating row
