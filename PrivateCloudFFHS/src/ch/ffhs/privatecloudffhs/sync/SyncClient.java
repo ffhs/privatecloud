@@ -13,26 +13,34 @@ import java.util.Vector;
 import com.jcraft.jsch.ChannelSftp.LsEntry;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
+import ch.ffhs.privatecloudffhs.gui.ActivityMain;
 
-public class SyncClient extends AsyncTask<String, Void, String>   {
+public class SyncClient extends AsyncTask<String, Integer, String>   {
 
 	private Folder folder;
 	private Server server;
 	private Boolean running;
 	private PrivateCloudDatabase db;
 	private SyncConnection syncConnectionObj;
+	public static final String ProgressBar_Intent = "ch.ffhs.privatecloudffhs.sync";
+	private Context context;
+	private int filecount;
+	private int maxfiles;
+	private int percent;
 
 	public SyncClient(Context context, Folder folder, SyncConnection syncConnectionObj, Server server) {
 		super();
 		this.folder = folder;
 		this.syncConnectionObj = syncConnectionObj;
 		this.server = server;
+		this.context = context;
 		
 		db = new PrivateCloudDatabase(context);
 	}
@@ -40,7 +48,13 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 	
 	private void sync()
 	{
-		syncLocalDirectory(new File(folder.getPath()));
+		File file = new File(folder.getPath());
+
+		//Reset values for Progressbar before Sync --> syncLocalDirectory() is recursive
+		maxfiles = getFilesCount(file);
+		percent = 0;
+		filecount = 0;
+		syncLocalDirectory(file);
 		
 		syncRemoteFile(server.getRemoteroot() + folder.getPath());
 		
@@ -75,6 +89,11 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 		   		syncLocalDirectory(file);
 			}
 			else{
+
+				filecount++;
+				percent = filecount * 100 / maxfiles;
+				Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
+				publishProgress(percent);
 		   		syncConnectionObj.initFolderSync(server.getRemoteroot() + dir.getPath());			
 
 				SyncFile cachedFile = db.getFile(file.getPath(), folder.getId());
@@ -172,9 +191,12 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 	
 	private void syncRemoteFile(String path)
 	{
+
 		Vector<LsEntry> remoteList = syncConnectionObj.listRemoteDir(path);
 		Log.e("SYNC CLIENT REMOTE PATH", path);
-		
+		filecount = 0;
+		percent = 0;
+		maxfiles = remoteList.size();
 		for(LsEntry remoteObj : remoteList)
 		{
 			String fileName = remoteObj.getFilename();
@@ -201,6 +223,11 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 					}
 				}
 			}
+			//updating Progressbar
+			filecount++;
+			percent = filecount * 100 / maxfiles;
+			Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
+			publishProgress(percent);
 		}
 	}
 
@@ -259,6 +286,19 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 	{
 		return syncConnectionObj.getRemoteCheckSum(filePath);
 	}
+	
+	
+	private static int getFilesCount(File file) {
+		  File[] files = file.listFiles();
+		  int count = 0;
+		  for (File f : files)
+		    if (f.isDirectory())
+		      count += getFilesCount(f);
+		    else
+		      count++;
+
+		  return count;
+		}
 
 
 	@Override
@@ -282,12 +322,19 @@ public class SyncClient extends AsyncTask<String, Void, String>   {
 		
 		if(syncConnectionObj.isConnected()) {
 			Log.d("SYNC CLIENT", "SYNC START DO IN BACKGROUND");
-
 			sync();				
 		}
 		
 		return "Executed";
 	}
+	
+	 protected void onProgressUpdate(Integer... progress) {
+	        Intent i = new Intent();
+	        i.setAction(ProgressBar_Intent);
+	        i.setFlags(progress[0]);
+	        Log.e("SyncClient", "Sending Broadcast: " + i);
+			context.sendBroadcast(i);
+	    }
 	
 
 	protected void onPreExecute() {

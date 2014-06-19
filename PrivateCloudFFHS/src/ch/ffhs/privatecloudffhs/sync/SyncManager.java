@@ -34,11 +34,14 @@ public class SyncManager {
 	}
 	
 	
-	private class LongOperation extends AsyncTask<String, Void, String> {
+	private class LongOperation extends AsyncTask<String, Integer, String> {
+		
+		public LongOperation(){
+			super();
+		}
 		@Override
 		protected String doInBackground(String... params) {			
 			List<Folder> syncfolders = db.getAllFolders();
-
 			for (Folder folder : syncfolders) {
 				Server server = db.getServer(folder.getServerId());
 				if(server != null){

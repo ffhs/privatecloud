@@ -28,6 +28,14 @@
                 tools:ignore="ContentDescription" />
 
         </LinearLayout>
+        
+        <ProgressBar
+	        android:id="@+id/Main_progressBar"
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent" 
+	        style="?android:attr/progressBarStyleHorizontal" 
+	        android:layout_margin="10dp"
+ 	   	/>
 
         <TextView
             android:id="@+id/Main_Text_LastSync" 

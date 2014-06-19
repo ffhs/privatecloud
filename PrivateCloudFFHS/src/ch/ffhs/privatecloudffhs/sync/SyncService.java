@@ -39,9 +39,10 @@ public class SyncService extends Service {
 	private class TimeServiceTimerTask extends TimerTask {	
 		private static final String TAG = "TimeServiceTimerTask";
 		private Context context;
-
+		
 		public TimeServiceTimerTask(Context context) {
 			this.context = context;
+			
 		}
 		
 		public void run() {	
@@ -78,6 +79,7 @@ public class SyncService extends Service {
 
 	private void sync()
 	{		
+			
 		syncManagerObj.sync();
 	}
 	
