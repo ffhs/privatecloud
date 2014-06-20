@@ -29,6 +29,14 @@
 
         </LinearLayout>
         
+        <TextView
+            android:id="@+id/Main_Text_SyncProgress" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:textColor="#FFF"
+            tools:ignore="HardcodedText" />
         <ProgressBar
 	        android:id="@+id/Main_progressBar"
 	        android:layout_height="wrap_content"

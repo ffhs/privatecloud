@@ -56,6 +56,7 @@ public class ActivityMain extends Activity {
 	private Sensor mAccelerometer;
 	private ShakeDetector mShakeDetector;
 	private ProgressBar progressbar;
+	private TextView Text_SyncProgress;
 	// Flag if receiver is registered 
     private boolean mReceiversRegistered = false;
     // Define a handler and a broadcast receiver
@@ -64,9 +65,22 @@ public class ActivityMain extends Activity {
     final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(SyncClient.ProgressBar_Intent)) {
-            	Log.e("MAIN", "Progressbar intent received: " + intent.getFlags());
-                progressbar.setProgress(intent.getFlags());
+            if(intent.getAction().equals(SyncClient.ProgressBar_Intent) && !intent.getStringExtra("TEXT").equals(null) && !intent.getStringExtra("PERCENT").equals(null)) {
+            	
+           // 	Bundle extras = getIntent().getExtras();
+      
+				try {
+					String TEXT = intent.getStringExtra("TEXT");
+					String percent = intent.getStringExtra("PERCENT");
+	            	Log.e("MAIN", "Progressbar intent received. TEXT:" + TEXT + " PERCENT:" + percent);
+	            	Text_SyncProgress.setText(TEXT);
+	                progressbar.setProgress(Integer.parseInt(percent));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	
+            	
             }
         }
     };
@@ -88,8 +102,7 @@ public class ActivityMain extends Activity {
 
 
 		progressbar = (ProgressBar)findViewById(R.id.Main_progressBar);
-		
-		
+		Text_SyncProgress = (TextView)findViewById(R.id.Main_Text_SyncProgress);
 		
 		
 		

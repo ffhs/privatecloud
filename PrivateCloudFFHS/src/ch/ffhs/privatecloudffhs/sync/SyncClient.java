@@ -15,6 +15,7 @@ import com.jcraft.jsch.ChannelSftp.LsEntry;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
@@ -22,7 +23,7 @@ import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
 import ch.ffhs.privatecloudffhs.gui.ActivityMain;
 
-public class SyncClient extends AsyncTask<String, Integer, String>   {
+public class SyncClient extends AsyncTask<String, String, String>   {
 
 	private Folder folder;
 	private Server server;
@@ -93,7 +94,7 @@ public class SyncClient extends AsyncTask<String, Integer, String>   {
 				filecount++;
 				percent = filecount * 100 / maxfiles;
 				Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
-				publishProgress(percent);
+				publishProgress(dir.getAbsolutePath(), Integer.toString(percent));
 		   		syncConnectionObj.initFolderSync(server.getRemoteroot() + dir.getPath());			
 
 				SyncFile cachedFile = db.getFile(file.getPath(), folder.getId());
@@ -227,7 +228,7 @@ public class SyncClient extends AsyncTask<String, Integer, String>   {
 			filecount++;
 			percent = filecount * 100 / maxfiles;
 			Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
-			publishProgress(percent);
+			publishProgress(path, Integer.toString(percent));
 		}
 	}
 
@@ -328,13 +329,21 @@ public class SyncClient extends AsyncTask<String, Integer, String>   {
 		return "Executed";
 	}
 	
-	 protected void onProgressUpdate(Integer... progress) {
-	        Intent i = new Intent();
-	        i.setAction(ProgressBar_Intent);
-	        i.setFlags(progress[0]);
-	        Log.e("SyncClient", "Sending Broadcast: " + i);
-			context.sendBroadcast(i);
-	    }
+	 protected void onProgressUpdate(String... progress) {
+		Intent i = new Intent();
+		Bundle extras = new Bundle();
+		Log.e("SyncClient", "Building Intent. TEXT:" + progress[0] + " PERCENT:" + progress[1]);
+		
+		extras.putString("TEXT",progress[0]);
+		extras.putString("PERCENT",progress[1]);
+		i.putExtras(extras);
+		Log.e("SyncClient", "Intent Extras: " + i.getExtras());
+		
+        i.setAction(ProgressBar_Intent);
+        //i.setFlags(progress[0]);
+        Log.e("SyncClient", "Sending Broadcast: " + i);
+		context.sendBroadcast(i);
+	 }
 	
 
 	protected void onPreExecute() {
