@@ -37,6 +37,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ public class ActivityMain extends Activity {
 	private ShakeDetector mShakeDetector;
 	private ProgressBar progressbar;
 	private TextView Text_SyncProgress;
+	private LinearLayout linearlayoutProgressbar;
 	// Flag if receiver is registered 
     private boolean mReceiversRegistered = false;
     // Define a handler and a broadcast receiver
@@ -75,6 +77,16 @@ public class ActivityMain extends Activity {
 	            	Log.e("MAIN", "Progressbar intent received. TEXT:" + TEXT + " PERCENT:" + percent);
 	            	Text_SyncProgress.setText(TEXT);
 	                progressbar.setProgress(Integer.parseInt(percent));
+	                
+	                if(Integer.parseInt(percent)>99){
+	                	linearlayoutProgressbar.setVisibility(View.GONE);
+//	           			progressbar.setVisibility(View.GONE);
+//	        			Text_SyncProgress.setVisibility(View.GONE);
+	                } else {
+	                	linearlayoutProgressbar.setVisibility(View.VISIBLE);
+//	           			progressbar.setVisibility(View.VISIBLE);
+//	        			Text_SyncProgress.setVisibility(View.VISIBLE);
+	                }
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -100,7 +112,7 @@ public class ActivityMain extends Activity {
 		
 //		//ProgressBar initialization
 
-
+		linearlayoutProgressbar = (LinearLayout)findViewById(R.id.Main_LinearLyout_Progress);
 		progressbar = (ProgressBar)findViewById(R.id.Main_progressBar);
 		Text_SyncProgress = (TextView)findViewById(R.id.Main_Text_SyncProgress);
 		
@@ -124,7 +136,10 @@ public class ActivityMain extends Activity {
                  * device has been shook.
                  */
             	Log.d("MAIN", "Device shake detected");
+            	
             	syncService.syncNow();
+            	Text_SyncProgress.setText("Starting");
+ 
                 //handleShakeEvent(count);
             }
         });
@@ -165,6 +180,7 @@ public class ActivityMain extends Activity {
 			text.append(getString(R.string.main_label_lastsync)).append(" ").append(lastSyncedFolder.getLastsync());
 			
 			txtLastSync.setText(text.toString());
+
     	}
     	else
     	{
@@ -194,7 +210,9 @@ public class ActivityMain extends Activity {
     		
     		case R.id.Main_Button_SyncNow:
     			Log.d("MAIN", "R.id.Main_Button_SyncNow clicked");
+    			Text_SyncProgress.setText("Starting");
     			syncService.syncNow();
+
     		break;
     		
     		case R.id.Main_Button_Conflict:

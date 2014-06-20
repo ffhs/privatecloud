@@ -28,23 +28,31 @@
                 tools:ignore="ContentDescription" />
 
         </LinearLayout>
-        
-        <TextView
-            android:id="@+id/Main_Text_SyncProgress" 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:textColor="#FFF"
-            tools:ignore="HardcodedText" />
-        <ProgressBar
-	        android:id="@+id/Main_progressBar"
-	        android:layout_height="wrap_content"
-	        android:layout_width="match_parent" 
-	        style="?android:attr/progressBarStyleHorizontal" 
-	        android:layout_margin="10dp"
- 	   	/>
 
+        <LinearLayout
+            android:id="@+id/Main_LinearLyout_Progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/default_gap"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+	        <TextView
+	            android:id="@+id/Main_Text_SyncProgress" 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_horizontal"
+	            android:layout_marginTop="30dp"
+	            android:textColor="#FFF"
+	            tools:ignore="HardcodedText" />
+	        <ProgressBar
+		        android:id="@+id/Main_progressBar"
+		        android:layout_height="wrap_content"
+		        android:layout_width="match_parent" 
+		        style="?android:attr/progressBarStyleHorizontal" 
+		        android:layout_margin="10dp"
+	 	   	/>
+		</LinearLayout>
         <TextView
             android:id="@+id/Main_Text_LastSync" 
             android:layout_width="wrap_content"
