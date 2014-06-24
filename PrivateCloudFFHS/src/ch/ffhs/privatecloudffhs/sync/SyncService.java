@@ -49,14 +49,17 @@ public class SyncService extends Service {
 			Boolean syncPerm = true;
 			Log.d(TAG, "TIMMER CALLED");
 
-			if(settings.getBoolean(KEY_ONWIFI, false)) {
+			if(settings.getInt(KEY_SYNCINTERVAL, 0) == 0){
+				syncPerm = false;
+			}
+
+			if(settings.getBoolean(KEY_ONWIFI, false) && syncPerm) {
 				ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
 				if (!mWifi.isConnected()) {
 					syncPerm = false;
 					Log.d(TAG, "NO WIFI");
-
 				}  
 			}
 			
@@ -79,7 +82,6 @@ public class SyncService extends Service {
 
 	private void sync()
 	{		
-			
 		syncManagerObj.sync();
 	}
 	
@@ -98,21 +100,18 @@ public class SyncService extends Service {
 
 	synchronized void initTimer()
 	{
-		if(myTimer != null)
-		{
+		if(myTimer != null) {
 			myTimer.cancel();
 			myTimer = null;
 		}
 		
 		int syncint = settings.getInt(KEY_SYNCINTERVAL, 0);
+		if(syncint == 0) syncint = 5;
 		
-		if(syncint > 0)
-		{
-			myTimer = new Timer();			
-			
-			int syncInterval = syncint * 1000 *60;
-			myTimer.schedule( new TimeServiceTimerTask(this), syncInterval, syncInterval);		
-		}
+		myTimer = new Timer();			
+		
+		int syncInterval = syncint * 1000 *60;
+		myTimer.schedule( new TimeServiceTimerTask(this), syncInterval, syncInterval);		
 	}
 		
 	@Override
