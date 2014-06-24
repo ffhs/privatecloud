@@ -12,11 +12,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-//import android.content.DialogInterface.OnKeyListener;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Gravity;
-//import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -25,6 +22,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * SimpleFileDialog
+ * 
+ * Wird verwendet um den zu synchronisierenden Ordner auszuwählen
+ *  
+ * @author         Thierry Baumann
+ */
 public class SimpleFileDialog 
 {
 	private String m_sdcardDirectory = "";
@@ -115,13 +119,8 @@ public class SimpleFileDialog
 				}
 				else
 				{
-				Log.d("SYNC TEST3", String.valueOf(sel.charAt(0)));
-				Log.d("SYNC TEST3 -1", m_dir);
-				
 					if(sel.charAt(1) != '/') m_dir += "/";
 					m_dir += sel;
-					Log.d("SYNC TEST3 -2", m_dir);
-					
 				}
 				
 				Selected_File_Name = Default_File_Name;
