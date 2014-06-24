@@ -128,6 +128,9 @@ public class SshCertConnection extends SshConnection {
 		    	connected = true;
 					
 			} catch (Exception e) {
+				setError(true);
+				setErrorMsa(e.getMessage());
+				
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

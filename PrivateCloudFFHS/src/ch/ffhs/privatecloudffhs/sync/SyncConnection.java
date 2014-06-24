@@ -14,5 +14,7 @@ public interface SyncConnection {
 	public void mkDir(String folderName);
 	public void initFolderSync(String directory);
 	public Boolean isConnected();
-	public Vector<LsEntry> listRemoteDir(String path);
+	public Boolean isError();
+	public String getErrorMsg();
+	public Vector<LsEntry> listRemoteDir(String path);	
 }

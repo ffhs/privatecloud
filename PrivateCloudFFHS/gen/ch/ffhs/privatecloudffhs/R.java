@@ -26,6 +26,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
+
+         Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
+    
          */
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
@@ -40,9 +45,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int Conflict_Button_Cancel=0x7f0a0002;
         public static final int Conflict_Button_Save=0x7f0a0001;
         public static final int Conflict_List=0x7f0a0000;
-        public static final int Conflict_List_Decision=0x7f0a0030;
-        public static final int Conflict_List_Path=0x7f0a002e;
-        public static final int Conflict_List_Server=0x7f0a002f;
+        public static final int Conflict_List_Decision=0x7f0a0033;
+        public static final int Conflict_List_Path=0x7f0a0031;
+        public static final int Conflict_List_Server=0x7f0a0032;
         public static final int EditFolder_Button_Cancel=0x7f0a0007;
         public static final int EditFolder_Button_Save=0x7f0a0006;
         public static final int EditFolder_Button_Select=0x7f0a0004;
@@ -51,46 +56,49 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int Folders_Button_Add=0x7f0a0009;
         public static final int Folders_Button_cancel=0x7f0a000a;
         public static final int Folders_List=0x7f0a0008;
-        public static final int Folders_List_LasySync=0x7f0a0032;
-        public static final int Folders_List_Path=0x7f0a0031;
-        public static final int Folders_Liste_Delete=0x7f0a0035;
-        public static final int Main_Button_Conflict=0x7f0a000e;
-        public static final int Main_Button_Folders=0x7f0a0010;
-        public static final int Main_Button_Settings=0x7f0a000f;
-        public static final int Main_Button_SyncNow=0x7f0a000d;
-        public static final int Main_Text_LastSync=0x7f0a000c;
-        public static final int Server_Button_cancel=0x7f0a0026;
-        public static final int Server_Button_delete=0x7f0a0025;
-        public static final int Server_Button_save=0x7f0a0024;
-        public static final int Server_EditText_Hostname=0x7f0a0016;
-        public static final int Server_EditText_Password=0x7f0a0021;
-        public static final int Server_EditText_Port=0x7f0a0018;
-        public static final int Server_EditText_Remotedir=0x7f0a001c;
-        public static final int Server_EditText_Servername=0x7f0a0012;
-        public static final int Server_EditText_Username=0x7f0a001a;
-        public static final int Server_List_Hostname=0x7f0a0034;
-        public static final int Server_Spinner_protocol=0x7f0a0014;
-        public static final int Servers_List=0x7f0a002a;
-        public static final int Servers_List_Name=0x7f0a0033;
-        public static final int Settings_Button_Add=0x7f0a002b;
-        public static final int Settings_Button_cancel=0x7f0a002d;
-        public static final int Settings_Button_save=0x7f0a002c;
-        public static final int Settings_Syncinterval=0x7f0a0027;
-        public static final int Settings_chkbx_onlyCharging=0x7f0a0029;
-        public static final int Settings_chkbx_onlyWifi=0x7f0a0028;
-        public static final int TextView02=0x7f0a001b;
-        public static final int TextView03=0x7f0a0019;
-        public static final int TextView05=0x7f0a0017;
-        public static final int TextView06=0x7f0a0011;
-        public static final int TextView09=0x7f0a0013;
-        public static final int TextView11=0x7f0a0015;
-        public static final int TextViewPW=0x7f0a0020;
+        public static final int Folders_List_LasySync=0x7f0a0035;
+        public static final int Folders_List_Path=0x7f0a0034;
+        public static final int Folders_Liste_Delete=0x7f0a0038;
+        public static final int Main_Button_Conflict=0x7f0a0011;
+        public static final int Main_Button_Folders=0x7f0a0013;
+        public static final int Main_Button_Settings=0x7f0a0012;
+        public static final int Main_Button_SyncNow=0x7f0a0010;
+        public static final int Main_LinearLyout_Progress=0x7f0a000c;
+        public static final int Main_Text_LastSync=0x7f0a000f;
+        public static final int Main_Text_SyncProgress=0x7f0a000d;
+        public static final int Main_progressBar=0x7f0a000e;
+        public static final int Server_Button_cancel=0x7f0a0029;
+        public static final int Server_Button_delete=0x7f0a0028;
+        public static final int Server_Button_save=0x7f0a0027;
+        public static final int Server_EditText_Hostname=0x7f0a0019;
+        public static final int Server_EditText_Password=0x7f0a0024;
+        public static final int Server_EditText_Port=0x7f0a001b;
+        public static final int Server_EditText_Remotedir=0x7f0a001f;
+        public static final int Server_EditText_Servername=0x7f0a0015;
+        public static final int Server_EditText_Username=0x7f0a001d;
+        public static final int Server_List_Hostname=0x7f0a0037;
+        public static final int Server_Spinner_protocol=0x7f0a0017;
+        public static final int Servers_List=0x7f0a002d;
+        public static final int Servers_List_Name=0x7f0a0036;
+        public static final int Settings_Button_Add=0x7f0a002e;
+        public static final int Settings_Button_cancel=0x7f0a0030;
+        public static final int Settings_Button_save=0x7f0a002f;
+        public static final int Settings_Syncinterval=0x7f0a002a;
+        public static final int Settings_chkbx_onlyCharging=0x7f0a002c;
+        public static final int Settings_chkbx_onlyWifi=0x7f0a002b;
+        public static final int TextView02=0x7f0a001e;
+        public static final int TextView03=0x7f0a001c;
+        public static final int TextView05=0x7f0a001a;
+        public static final int TextView06=0x7f0a0014;
+        public static final int TextView09=0x7f0a0016;
+        public static final int TextView11=0x7f0a0018;
+        public static final int TextViewPW=0x7f0a0023;
         public static final int imageView1=0x7f0a000b;
-        public static final int passwordlayout=0x7f0a001f;
-        public static final int server_Button_Genkey=0x7f0a0023;
-        public static final int server_Button_Showkey=0x7f0a0022;
-        public static final int server_radio_key=0x7f0a001d;
-        public static final int server_radio_pw=0x7f0a001e;
+        public static final int passwordlayout=0x7f0a0022;
+        public static final int server_Button_Genkey=0x7f0a0026;
+        public static final int server_Button_Showkey=0x7f0a0025;
+        public static final int server_radio_key=0x7f0a0020;
+        public static final int server_radio_pw=0x7f0a0021;
     }
     public static final class layout {
         public static final int activity_conflict=0x7f030000;
@@ -107,9 +115,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int folders=0x7f090000;
     }
     public static final class string {
-        public static final int action_settings=0x7f060040;
+        public static final int action_settings=0x7f060044;
         public static final int app_name=0x7f060000;
-        public static final int confirm_folder_added=0x7f060032;
+        public static final int confirm_folder_added=0x7f060036;
         public static final int conflict_button_cancel=0x7f060027;
         public static final int conflict_button_save=0x7f060026;
         public static final int conflict_switch_local=0x7f060024;
@@ -117,9 +125,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int dummy_button=0x7f06002a;
         public static final int dummy_content=0x7f06002b;
         public static final int editfolders_no_folder=0x7f06002c;
-        public static final int error=0x7f06003a;
-        public static final int error_folder_path=0x7f06003c;
-        public static final int error_server_first=0x7f06003b;
+        public static final int error=0x7f06003e;
+        public static final int error_folder_path=0x7f060040;
+        public static final int error_server_first=0x7f06003f;
         public static final int folders_button_add=0x7f06000c;
         public static final int folders_button_cancel=0x7f060010;
         public static final int folders_button_delete=0x7f06000e;
@@ -129,7 +137,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int folders_label_lastsync=0x7f06000a;
         public static final int folders_label_path=0x7f060009;
         public static final int folders_label_title=0x7f060008;
-        public static final int hello_world=0x7f06003f;
+        public static final int hello_world=0x7f060043;
         public static final int main_button_conflict=0x7f060007;
         public static final int main_button_folders=0x7f060005;
         public static final int main_button_settings=0x7f060004;
@@ -137,16 +145,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_label_lastsync=0x7f060002;
         public static final int main_label_lastsync_none=0x7f060003;
         public static final int main_label_title=0x7f060001;
-        public static final int notification_text=0x7f060031;
-        public static final int notification_title=0x7f060030;
-        public static final int perfname=0x7f060039;
-        public static final int perfs_hostname=0x7f060033;
-        public static final int perfs_keyorpw=0x7f060038;
-        public static final int perfs_password=0x7f060037;
-        public static final int perfs_port=0x7f060034;
-        public static final int perfs_remotedir=0x7f060036;
-        public static final int perfs_username=0x7f060035;
-        public static final int server_key_sendmail=0x7f06003d;
+        public static final int notification_text=0x7f060035;
+        public static final int notification_title=0x7f060034;
+        public static final int perfname=0x7f06003d;
+        public static final int perfs_hostname=0x7f060037;
+        public static final int perfs_keyorpw=0x7f06003c;
+        public static final int perfs_password=0x7f06003b;
+        public static final int perfs_port=0x7f060038;
+        public static final int perfs_remotedir=0x7f06003a;
+        public static final int perfs_username=0x7f060039;
+        public static final int progress_connection_error=0x7f060033;
+        public static final int progress_connection_local_start=0x7f060031;
+        public static final int progress_connection_remote_start=0x7f060032;
+        public static final int progress_sync_start=0x7f060030;
+        public static final int server_key_sendmail=0x7f060041;
         public static final int server_label_password=0x7f060022;
         public static final int server_label_protocol=0x7f06001f;
         public static final int server_label_servername=0x7f06001e;
@@ -169,7 +181,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int settings_label_title=0x7f060011;
         public static final int settings_label_username=0x7f060014;
         public static final int title_activity_activity_edit_folder=0x7f06002d;
-        public static final int title_activity_conflict=0x7f06003e;
+        public static final int title_activity_conflict=0x7f060042;
         public static final int title_activity_folders=0x7f060028;
         public static final int title_activity_server=0x7f060029;
     }
@@ -177,15 +189,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
         
 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
+
     
  API 11 theme customizations can go here. 
 

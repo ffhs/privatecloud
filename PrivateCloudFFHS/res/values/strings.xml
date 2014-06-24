@@ -54,6 +54,12 @@
     <string name="service_sync_start">Sync started</string>
     <string name="service_sync_running">Sync already running</string>
     
+	<string name="progress_sync_start">Starting</string>
+    <string name="progress_connection_local_start">Start sync local files...</string>
+    <string name="progress_connection_remote_start">Start sync remote files...</string>
+    <string name="progress_connection_error">Connection to server could not be established, please check your configuration...</string>
+    
+    	
 	<string name="notification_title">Sync conflict</string>
 	<string name="notification_text">There was a problem synchronizing files, please resolve</string>
 	

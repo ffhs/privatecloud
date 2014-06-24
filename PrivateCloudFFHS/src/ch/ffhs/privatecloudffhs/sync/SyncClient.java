@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import ch.ffhs.privatecloudffhs.R;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
@@ -53,6 +54,7 @@ public class SyncClient extends AsyncTask<String, String, String>   {
 
 		//Reset values for Progressbar before Sync --> syncLocalDirectory() is recursive
 		maxfiles = getFilesCount(file);
+		Log.d("SYNC TEST", maxfiles + "");
 		percent = 0;
 		filecount = 0;
 		syncLocalDirectory(file);
@@ -63,6 +65,9 @@ public class SyncClient extends AsyncTask<String, String, String>   {
 
 		db.updateFolder(folder);
 		
+		//mark as done
+		publishProgress("", "100", "1");
+
 		db.close();
 	}
 	
@@ -102,28 +107,6 @@ public class SyncClient extends AsyncTask<String, String, String>   {
 				String localCheckSum = getLocalCheckSum(file.getPath());
 				String remoteCheckSum = getRemoteCheckSum(file.getPath());
 
-				// ****************  DELETE NUR ZUM TESTEN ****************
-				if(file.getPath().contains("txt"))
-				{
-					//Read text from file
-					StringBuilder text = new StringBuilder();
-
-					try {
-					    BufferedReader br = new BufferedReader(new FileReader(file));
-					    String line;
-
-					    while ((line = br.readLine()) != null) {
-					        text.append(line);
-					        text.append('\n');
-					    }
-					}
-					catch (IOException e) {
-					    //You'll need to add proper error handling here
-					}
-	//				Log.d("SYNC FILE DATA222", text.toString());
-	
-				}
-		
 				// first run
 				if(cachedFile == null)
 				{
@@ -306,7 +289,7 @@ public class SyncClient extends AsyncTask<String, String, String>   {
 	protected String doInBackground(String... params) {
 		// wait until connection is ready
 		for (int i = 0; i < 20; i++) {
-			if(!syncConnectionObj.isConnected())
+			if(!syncConnectionObj.isConnected() && !syncConnectionObj.isError())
 			{
 				Log.d("SYNC CLIENT", "SYNC SLEEP");
 
@@ -321,6 +304,10 @@ public class SyncClient extends AsyncTask<String, String, String>   {
 			}
 		}
 		
+		if(syncConnectionObj.isError()) {
+			publishProgress(syncConnectionObj.getErrorMsg(), "0");
+		}
+		
 		if(syncConnectionObj.isConnected()) {
 			Log.d("SYNC CLIENT", "SYNC START DO IN BACKGROUND");
 			sync();				
@@ -333,7 +320,10 @@ public class SyncClient extends AsyncTask<String, String, String>   {
 		Intent i = new Intent();
 		Bundle extras = new Bundle();
 		Log.e("SyncClient", "Building Intent. TEXT:" + progress[0] + " PERCENT:" + progress[1]);
-		
+
+		if(Integer.parseInt(progress[1]) > 99) progress[1] = "99";
+		if(progress.length > 2 && progress[2] == "1") progress[1] = "100";
+
 		extras.putString("TEXT",progress[0]);
 		extras.putString("PERCENT",progress[1]);
 		i.putExtras(extras);

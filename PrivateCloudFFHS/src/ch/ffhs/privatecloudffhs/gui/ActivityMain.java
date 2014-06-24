@@ -80,6 +80,7 @@ public class ActivityMain extends Activity {
 	                
 	                if(Integer.parseInt(percent)>99){
 	                	linearlayoutProgressbar.setVisibility(View.GONE);
+	                	updateLastSync();
 //	           			progressbar.setVisibility(View.GONE);
 //	        			Text_SyncProgress.setVisibility(View.GONE);
 	                } else {
@@ -137,8 +138,9 @@ public class ActivityMain extends Activity {
                  */
             	Log.d("MAIN", "Device shake detected");
             	
+            	Text_SyncProgress.setText(getString(R.string.progress_sync_start));
+
             	syncService.syncNow();
-            	Text_SyncProgress.setText("Starting");
  
                 //handleShakeEvent(count);
             }
@@ -151,43 +153,45 @@ public class ActivityMain extends Activity {
    		bindService(syncServiceIntent, syncServiceConnection, Context.BIND_AUTO_CREATE);   		
     }
     
+    
     protected void onResume() {
 	 	super.onResume();
-	 // Register Sync Recievers
-	      IntentFilter intentToReceiveFilter = new IntentFilter();
-	      intentToReceiveFilter.addAction(SyncClient.ProgressBar_Intent);
-	      this.registerReceiver(mIntentReceiver, intentToReceiveFilter, null, mHandler);
-	      mReceiversRegistered = true;
+	 
+	 	// Register Sync Recievers
+	 	IntentFilter intentToReceiveFilter = new IntentFilter();
+	 	intentToReceiveFilter.addAction(SyncClient.ProgressBar_Intent);
+	 	this.registerReceiver(mIntentReceiver, intentToReceiveFilter, null, mHandler);
+	 	mReceiversRegistered = true;
 	      
-	      
-	 	mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
+	    mSensorManager.registerListener(mShakeDetector, mAccelerometer,    SensorManager.SENSOR_DELAY_UI);
 		
 		Button buttonConflict = (Button) findViewById(R.id.Main_Button_Conflict);
-		if(db.isanyconflict())
-   		{
+		if(db.isanyconflict()) {
    			buttonConflict.setVisibility(View.VISIBLE);
     	}
-    	else
-    	{
+    	else {
     		buttonConflict.setVisibility(View.GONE);	    	
-   		}
+   		}	
 		
-		Folder lastSyncedFolder = db.getLastSyncedFolder();
+		updateLastSync();
+    }
+    
+   
+    private void updateLastSync() {
+    	Folder lastSyncedFolder = db.getLastSyncedFolder();
 		TextView txtLastSync = (TextView) findViewById(R.id.Main_Text_LastSync);
-		if(lastSyncedFolder != null && lastSyncedFolder.getLastsync() != "01.01.1970 00:00")
-   		{
+		
+		if(lastSyncedFolder != null && lastSyncedFolder.getLastsync() != "01.01.1970 00:00") {
 			StringBuilder text = new StringBuilder();
 			text.append(getString(R.string.main_label_lastsync)).append(" ").append(lastSyncedFolder.getLastsync());
 			
 			txtLastSync.setText(text.toString());
 
     	}
-    	else
-    	{
+		else {
 			txtLastSync.setText(R.string.main_label_lastsync_none);
         }
     }
-   
     
     @Override
 	protected void onDestroy() {
@@ -210,7 +214,7 @@ public class ActivityMain extends Activity {
     		
     		case R.id.Main_Button_SyncNow:
     			Log.d("MAIN", "R.id.Main_Button_SyncNow clicked");
-    			Text_SyncProgress.setText("Starting");
+    			Text_SyncProgress.setText(getString(R.string.progress_sync_start));
     			syncService.syncNow();
 
     		break;

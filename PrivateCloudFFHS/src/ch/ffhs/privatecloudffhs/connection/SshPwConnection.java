@@ -46,8 +46,11 @@ public class SshPwConnection extends SshConnection{
 				
 		    	connected = true;
 			}
-			catch(Exception ex){
-				ex.printStackTrace(); 
+			catch(Exception e){
+				setError(true);
+				setErrorMsa(e.getMessage());
+				
+				e.printStackTrace(); 
 			}  
 		}
 	}

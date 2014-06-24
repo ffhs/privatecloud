@@ -27,6 +27,10 @@ public class SshConnection implements SyncConnection{
 	protected Folder folder;
 	protected Boolean connected = false;
 	
+	protected Boolean error = false;
+	protected String errorMsg;
+	
+	
 	public SshConnection(Server server, Folder folder) {
 		// TODO Auto-generated constructor stub
 		this.server = server;
@@ -216,10 +220,29 @@ public class SshConnection implements SyncConnection{
 		} catch (SftpException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}	
+	}
+	
+	protected void setError(boolean error){
+		this.error = error;
+	}
+	
+	public Boolean isError(){
+		return error;
+	}
+	
+	protected void setErrorMsa(String errorMsg){
+		String needle = "Exception: ";
+		int subIn = errorMsg.indexOf(needle);
 		
+		if(subIn > 0) {
+			errorMsg = errorMsg.substring(subIn + needle.length());
+		}
+			
+		this.errorMsg = errorMsg;
+	}
+	
+	public String getErrorMsg(){
+		return errorMsg;
 	}
 }
-
-
-
