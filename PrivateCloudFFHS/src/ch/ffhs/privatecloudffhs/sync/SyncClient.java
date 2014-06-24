@@ -119,9 +119,14 @@ public class SyncClient extends AsyncTask<String, String, String> {
 					{
 						cachedFile = new SyncFile(folder.getId(), file.getPath());
 						cachedFile = uploadFile(file, cachedFile);
-						
-						db.createFile(cachedFile);
-						Log.d("SYNC SSHPW", "NEW FILE SYNC ...");
+						if(cachedFile==null)
+						{
+							syncerror=true;
+						}
+						{
+							db.createFile(cachedFile);
+							Log.d("SYNC SSHPW", "NEW FILE SYNC ...");
+						}
 					}
 					else
 					{
