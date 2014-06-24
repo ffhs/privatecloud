@@ -61,7 +61,8 @@ public class KeyPairRSA extends KeyPair{
     }
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 void generate(int key_size) throws JSchException{
     this.key_size=key_size;
     try{
@@ -127,7 +128,8 @@ byte[] getPrivateKey(){
     return plain;
   }
 
-  @Override
+  @SuppressWarnings("unused")
+@Override
 boolean parse(byte [] plain){
 
     try{
@@ -325,7 +327,8 @@ public int getKeySize(){
     return key_size;
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public byte[] getSignature(byte[] data){
     try{      
       Class c=Class.forName(JSch.getConfig("signature.rsa"));
@@ -345,7 +348,8 @@ public byte[] getSignature(byte[] data){
     return null;
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public Signature getVerifier(){
     try{      
       Class c=Class.forName(JSch.getConfig("signature.rsa"));

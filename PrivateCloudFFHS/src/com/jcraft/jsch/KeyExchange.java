@@ -152,7 +152,8 @@ public abstract class KeyExchange{
     return guess;
   }
 
-  public String getFingerPrint(){
+  @SuppressWarnings("rawtypes")
+public String getFingerPrint(){
     HASH hash=null;
     try{
       Class c=Class.forName(session.getConfig("md5"));

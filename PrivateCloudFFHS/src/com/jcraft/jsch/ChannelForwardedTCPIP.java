@@ -35,7 +35,8 @@ import java.util.Vector;
 
 public class ChannelForwardedTCPIP extends Channel{
 
-  private static Vector pool = new Vector();
+  @SuppressWarnings("rawtypes")
+private static Vector pool = new Vector();
 
   static private final int LOCAL_WINDOW_SIZE_MAX=0x20000;
 //static private final int LOCAL_WINDOW_SIZE_MAX=0x100000;
@@ -56,7 +57,8 @@ public class ChannelForwardedTCPIP extends Channel{
     connected=true;
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public void run(){
     try{ 
       if(config instanceof ConfigDaemon){
@@ -129,7 +131,8 @@ public void run(){
     disconnect();
   }
 
-  @Override
+  @SuppressWarnings("unused")
+@Override
 void getData(Buffer buf){
     setRecipient(buf.getInt());
     setRemoteWindowSize(buf.getUInt());
@@ -183,7 +186,8 @@ void getData(Buffer buf){
     }
   }
 
-  static String[] getPortForwarding(Session session){
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+static String[] getPortForwarding(Session session){
     Vector foo = new Vector();
     synchronized(pool){
       for(int i=0; i<pool.size(); i++){
@@ -207,7 +211,8 @@ void getData(Buffer buf){
     else{ return address; }
   }
 
-  static void addPort(Session session, String _address_to_bind,
+  @SuppressWarnings("unchecked")
+static void addPort(Session session, String _address_to_bind,
                       int port, int allocated_port, String target, int lport, SocketFactory factory) throws JSchException{
     String address_to_bind=normalize(_address_to_bind);
     synchronized(pool){
@@ -225,7 +230,8 @@ void getData(Buffer buf){
       pool.addElement(config);
     }
   }
-  static void addPort(Session session, String _address_to_bind,
+  @SuppressWarnings("unchecked")
+static void addPort(Session session, String _address_to_bind,
                       int port, int allocated_port, String daemon, Object[] arg) throws JSchException{
     String address_to_bind=normalize(_address_to_bind);
     synchronized(pool){
@@ -310,7 +316,8 @@ void getData(Buffer buf){
   }
 
   public int getRemotePort(){return (config!=null ? config.rport: 0);}
-  private void setSocketFactory(SocketFactory factory){
+  @SuppressWarnings("unused")
+private void setSocketFactory(SocketFactory factory){
     if(config!=null && (config instanceof ConfigLHost) )
       ((ConfigLHost)config).factory = factory;
   }

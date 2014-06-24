@@ -114,19 +114,15 @@ final class Deflate implements Cloneable {
 
   static final private int Z_NO_FLUSH=0;
   static final private int Z_PARTIAL_FLUSH=1;
-  static final private int Z_SYNC_FLUSH=2;
   static final private int Z_FULL_FLUSH=3;
   static final private int Z_FINISH=4;
 
   static final private int Z_OK=0;
   static final private int Z_STREAM_END=1;
   static final private int Z_NEED_DICT=2;
-  static final private int Z_ERRNO=-1;
   static final private int Z_STREAM_ERROR=-2;
   static final private int Z_DATA_ERROR=-3;
-  static final private int Z_MEM_ERROR=-4;
   static final private int Z_BUF_ERROR=-5;
-  static final private int Z_VERSION_ERROR=-6;
 
   static final private int INIT_STATE=42;
   static final private int BUSY_STATE=113;
@@ -169,7 +165,8 @@ final class Deflate implements Cloneable {
 
   static final private int END_BLOCK=256;
 
-  ZStream strm;        // pointer back to this zlib stream
+  @SuppressWarnings("deprecation")
+ZStream strm;        // pointer back to this zlib stream
   int status;           // as the name implies
   byte[] pending_buf;   // output still pending
   int pending_buf_size; // size of pending_buf
@@ -321,7 +318,8 @@ final class Deflate implements Cloneable {
 
   GZIPHeader gheader = null;
 
-  Deflate(ZStream strm){
+  @SuppressWarnings("deprecation")
+Deflate(ZStream strm){
     this.strm=strm;
     dyn_ltree=new short[HEAP_SIZE*2];
     dyn_dtree=new short[(2*D_CODES+1)*2]; // distance tree
@@ -753,7 +751,8 @@ final class Deflate implements Cloneable {
 
   // Copy a stored block, storing first the length and its
   // one's complement if requested.
-  void copy_block(int buf,         // the input data
+  @SuppressWarnings("unused")
+void copy_block(int buf,         // the input data
 		  int len,         // its length
 		  boolean header   // true if block header must be written
 		  ){
@@ -773,7 +772,8 @@ final class Deflate implements Cloneable {
     put_byte(window, buf, len);
   }
 
-  void flush_block_only(boolean eof){
+  @SuppressWarnings("deprecation")
+void flush_block_only(boolean eof){
     _tr_flush_block(block_start>=0 ? block_start : -1,
 		    strstart-block_start,
 		    eof);
@@ -788,7 +788,8 @@ final class Deflate implements Cloneable {
   // only for the level=0 compression option.
   // NOTE: this function should be optimized to avoid extra copying from
   // window to pending_buf.
-  int deflate_stored(int flush){
+  @SuppressWarnings("deprecation")
+int deflate_stored(int flush){
     // Stored blocks are limited to 0xffff bytes, pending_buf is limited
     // to pending_buf_size, and each stored block has a 5 byte header:
 
@@ -920,7 +921,8 @@ final class Deflate implements Cloneable {
   //    At least one byte has been read, or avail_in == 0; reads are
   //    performed for at least two bytes (required for the zip translate_eol
   //    option -- not supported here).
-  void fill_window(){
+  @SuppressWarnings("deprecation")
+void fill_window(){
     int n, m;
     int p;
     int more;    // Amount of free space at the end of the window.
@@ -1004,7 +1006,8 @@ final class Deflate implements Cloneable {
   // This function does not perform lazy evaluation of matches and inserts
   // new strings in the dictionary only for unmatched strings or for short
   // matches. It is used only for the fast compression options.
-  int deflate_fast(int flush){
+  @SuppressWarnings("deprecation")
+int deflate_fast(int flush){
 //    short hash_head = 0; // head of the hash chain
     int hash_head = 0; // head of the hash chain
     boolean bflush;      // set if current block must be flushed
@@ -1109,7 +1112,8 @@ final class Deflate implements Cloneable {
   // Same as above, but achieves better compression. We use a lazy
   // evaluation for matches: a match is finally adopted only if there is
   // no better match at the next window position.
-  int deflate_slow(int flush){
+  @SuppressWarnings("deprecation")
+int deflate_slow(int flush){
 //    short hash_head = 0;    // head of hash chain
     int hash_head = 0;    // head of hash chain
     boolean bflush;         // set if current block must be flushed
@@ -1329,7 +1333,8 @@ final class Deflate implements Cloneable {
   int deflateInit(int level){
     return deflateInit(level, MAX_WBITS);
   }
-  private int deflateInit(int level, int method,  int windowBits,
+  @SuppressWarnings("deprecation")
+private int deflateInit(int level, int method,  int windowBits,
 			  int memLevel, int strategy){
     int wrap = 1;
     //    byte[] my_version=ZLIB_VERSION;
@@ -1395,7 +1400,8 @@ final class Deflate implements Cloneable {
     return deflateReset();
   }
 
-  int deflateReset(){
+  @SuppressWarnings("deprecation")
+int deflateReset(){
     strm.total_in = strm.total_out = 0;
     strm.msg = null; //
     strm.data_type = Z_UNKNOWN;
@@ -1431,7 +1437,8 @@ final class Deflate implements Cloneable {
     return status == BUSY_STATE ? Z_DATA_ERROR : Z_OK;
   }
 
-  int deflateParams(int _level, int _strategy){
+  @SuppressWarnings("deprecation")
+int deflateParams(int _level, int _strategy){
     int err=Z_OK;
 
     if(_level == Z_DEFAULT_COMPRESSION){
@@ -1459,7 +1466,8 @@ final class Deflate implements Cloneable {
     return err;
   }
 
-  int deflateSetDictionary (byte[] dictionary, int dictLength){
+  @SuppressWarnings("deprecation")
+int deflateSetDictionary (byte[] dictionary, int dictLength){
     int length = dictLength;
     int index=0;
 
@@ -1492,7 +1500,8 @@ final class Deflate implements Cloneable {
     return Z_OK;
   }
 
-  int deflate(int flush){
+  @SuppressWarnings("deprecation")
+int deflate(int flush){
     int old_flush;
 
     if(flush>Z_FINISH || flush<0){
@@ -1659,7 +1668,8 @@ final class Deflate implements Cloneable {
     return pending != 0 ? Z_OK : Z_STREAM_END;
   }
 
-  static int deflateCopy(ZStream dest, ZStream src){
+  @SuppressWarnings("deprecation")
+static int deflateCopy(ZStream dest, ZStream src){
 
     if(src.dstate == null){
       return Z_STREAM_ERROR;

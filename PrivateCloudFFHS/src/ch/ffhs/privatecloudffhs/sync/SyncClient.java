@@ -6,9 +6,7 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.Date;
 import java.util.Vector;
-
 import com.jcraft.jsch.ChannelSftp.LsEntry;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;

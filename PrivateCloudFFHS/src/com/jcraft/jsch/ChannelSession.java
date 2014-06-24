@@ -36,7 +36,8 @@ class ChannelSession extends Channel{
 
   protected boolean agent_forwarding=false;
   protected boolean xforwading=false;
-  protected Hashtable env=null;
+  @SuppressWarnings("rawtypes")
+protected Hashtable env=null;
 
   protected boolean pty=false;
 
@@ -78,7 +79,8 @@ public void setXForwarding(boolean enable){
    * @see #setEnv(String, String)
    * @see #setEnv(byte[], byte[])
    */
-  @Deprecated
+  @SuppressWarnings("rawtypes")
+@Deprecated
 public void setEnv(Hashtable env){ 
     synchronized(this){
       this.env=env; 
@@ -107,13 +109,15 @@ public void setEnv(Hashtable env){
    * @param value A value of environment variable.
    * @see #setEnv(String, String)
    */
-  public void setEnv(byte[] name, byte[] value){
+  @SuppressWarnings("unchecked")
+public void setEnv(byte[] name, byte[] value){
     synchronized(this){
       getEnv().put(name, value);
     }
   }
 
-  private Hashtable getEnv(){
+  @SuppressWarnings("rawtypes")
+private Hashtable getEnv(){
     if(env==null)
       env=new Hashtable();
     return env;
@@ -191,7 +195,8 @@ public void setEnv(Hashtable env){
     this.thp=hp;
   }
 
-  protected void sendRequests() throws Exception{
+  @SuppressWarnings("rawtypes")
+protected void sendRequests() throws Exception{
     Session _session=getSession();
     Request request;
     if(agent_forwarding){

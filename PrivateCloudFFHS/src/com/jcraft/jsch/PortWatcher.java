@@ -33,7 +33,8 @@ import java.net.*;
 import java.io.*;
 
 class PortWatcher implements Runnable{
-  private static java.util.Vector pool=new java.util.Vector();
+  @SuppressWarnings("rawtypes")
+private static java.util.Vector pool=new java.util.Vector();
   private static InetAddress anyLocalAddress=null;
   static{
     // 0.0.0.0
@@ -56,7 +57,8 @@ class PortWatcher implements Runnable{
   ServerSocket ss;
   int connectTimeout=0;
 
-  static String[] getPortForwarding(Session session){
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+static String[] getPortForwarding(Session session){
     java.util.Vector foo=new java.util.Vector();
     synchronized(pool){
       for(int i=0; i<pool.size(); i++){
@@ -102,7 +104,8 @@ class PortWatcher implements Runnable{
     }
     return address;
   }
-  static PortWatcher addPort(Session session, String address, int lport, String host, int rport, ServerSocketFactory ssf) throws JSchException{
+  @SuppressWarnings("unchecked")
+static PortWatcher addPort(Session session, String address, int lport, String host, int rport, ServerSocketFactory ssf) throws JSchException{
     address = normalize(address);
     if(getPort(session, address, lport)!=null){
       throw new JSchException("PortForwardingL: local port "+ address+":"+lport+" is already registered.");

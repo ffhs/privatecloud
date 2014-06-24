@@ -86,7 +86,8 @@ public void write(int b) throws IOException {
     write(buf1, 0, 1);
   }
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
 public void write(byte[] b, int off, int len) throws IOException {
     if (deflater.finished()) {
       throw new IOException("finished");
@@ -127,7 +128,8 @@ public void close() throws IOException {
     }
   }
 
-  protected int deflate(int flush) throws IOException {
+  @SuppressWarnings("deprecation")
+protected int deflate(int flush) throws IOException {
     deflater.setOutput(buffer, 0, buffer.length);
     int err = deflater.deflate(flush);
     switch(err) {
@@ -149,7 +151,8 @@ public void close() throws IOException {
     return err;
   }
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
 public void flush() throws IOException {
     if (syncFlush && !deflater.finished()) {
       while (true) {
@@ -163,11 +166,13 @@ public void flush() throws IOException {
     out.flush();
   }
 
-  public long getTotalIn() {
+  @SuppressWarnings("deprecation")
+public long getTotalIn() {
     return deflater.getTotalIn();
   }
 
-  public long getTotalOut() {
+  @SuppressWarnings("deprecation")
+public long getTotalOut() {
     return deflater.getTotalOut();
   }
 

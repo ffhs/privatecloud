@@ -1,18 +1,11 @@
 package ch.ffhs.privatecloudffhs.gui;
 
-import java.util.Date;
 
-import org.w3c.dom.Text;
 
 import ch.ffhs.privatecloudffhs.R;
-import ch.ffhs.privatecloudffhs.R.id;
-import ch.ffhs.privatecloudffhs.R.layout;
-import ch.ffhs.privatecloudffhs.R.string;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
-import ch.ffhs.privatecloudffhs.gui.util.SystemUiHider;
 import ch.ffhs.privatecloudffhs.sync.SyncClient;
-import ch.ffhs.privatecloudffhs.sync.SyncManager;
 import ch.ffhs.privatecloudffhs.sync.SyncService;
 import ch.ffhs.privatecloudffhs.sync.SyncService.SyncServiceBinder;
 import ch.ffhs.privatecloudffhs.triggers.ShakeDetector;
@@ -31,9 +24,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;

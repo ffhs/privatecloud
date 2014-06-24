@@ -30,7 +30,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.jcraft.jsch;
 
 import java.io.*;
-
 import java.util.Vector;
 
 public class ChannelSftp extends ChannelSession{
@@ -39,7 +38,6 @@ public class ChannelSftp extends ChannelSession{
   static private final int LOCAL_WINDOW_SIZE_MAX=(64*LOCAL_MAXIMUM_PACKET_SIZE);
 
   private static final byte SSH_FXP_INIT=               1;
-  private static final byte SSH_FXP_VERSION=            2;
   private static final byte SSH_FXP_OPEN=               3;
   private static final byte SSH_FXP_CLOSE=              4;
   private static final byte SSH_FXP_READ=               5;
@@ -47,7 +45,6 @@ public class ChannelSftp extends ChannelSession{
   private static final byte SSH_FXP_LSTAT=              7;
   private static final byte SSH_FXP_FSTAT=              8;
   private static final byte SSH_FXP_SETSTAT=            9;
-  private static final byte SSH_FXP_FSETSTAT=          10;
   private static final byte SSH_FXP_OPENDIR=           11;
   private static final byte SSH_FXP_READDIR=           12;
   private static final byte SSH_FXP_REMOVE=            13;
@@ -69,17 +66,8 @@ public class ChannelSftp extends ChannelSession{
   // pflags
   private static final int SSH_FXF_READ=           0x00000001;
   private static final int SSH_FXF_WRITE=          0x00000002;
-  private static final int SSH_FXF_APPEND=         0x00000004;
   private static final int SSH_FXF_CREAT=          0x00000008;
   private static final int SSH_FXF_TRUNC=          0x00000010;
-  private static final int SSH_FXF_EXCL=           0x00000020;
-
-  private static final int SSH_FILEXFER_ATTR_SIZE=         0x00000001;
-  private static final int SSH_FILEXFER_ATTR_UIDGID=       0x00000002;
-  private static final int SSH_FILEXFER_ATTR_PERMISSIONS=  0x00000004;
-  private static final int SSH_FILEXFER_ATTR_ACMODTIME=    0x00000008;
-  private static final int SSH_FILEXFER_ATTR_EXTENDED=     0x80000000;
-
   public static final int SSH_FX_OK=                            0;
   public static final int SSH_FX_EOF=                           1;
   public static final int SSH_FX_NO_SUCH_FILE=                  2;
@@ -131,7 +119,8 @@ public class ChannelSftp extends ChannelSession{
   public static final int RESUME=1;
   public static final int APPEND=2;
 
-  private boolean interactive=false;
+  @SuppressWarnings("unused")
+private boolean interactive=false;
   private int seq=1;
   private int[] ackid=new int[1];
 
@@ -146,7 +135,8 @@ public class ChannelSftp extends ChannelSession{
   private int server_version=3;
   private String version=String.valueOf(client_version);
 
-  private java.util.Hashtable extensions=null;
+  @SuppressWarnings("rawtypes")
+private java.util.Hashtable extensions=null;
   private InputStream io_in=null;
 
   private boolean extension_posix_rename = false;
@@ -220,7 +210,8 @@ public class ChannelSftp extends ChannelSession{
 void init(){
   }
 
-  @Override
+  @SuppressWarnings({ "unused", "rawtypes", "unchecked" })
+@Override
 public void start() throws JSchException{
     try{
 
@@ -384,7 +375,8 @@ public void start() throws JSchException{
    * @param monitor progress monitor
    * @param mode how data should be added to dst
    */
-  public void put(String src, String dst, 
+  @SuppressWarnings("rawtypes")
+public void put(String src, String dst, 
 		  SftpProgressMonitor monitor, int mode) throws SftpException{
 
     try{
@@ -511,7 +503,8 @@ public void start() throws JSchException{
    * @param monitor progress monitor
    * @param mode how data should be added to dst
    */
-  public void put(InputStream src, String dst, 
+  @SuppressWarnings("rawtypes")
+public void put(InputStream src, String dst, 
 		  SftpProgressMonitor monitor, int mode) throws SftpException{
     try{
       ((MyPipedInputStream)io_in).updateReadSide();
@@ -883,7 +876,8 @@ public void start() throws JSchException{
 		  SftpProgressMonitor monitor) throws SftpException{
     get(src, dst, monitor, OVERWRITE);
   }
-  public void get(String src, String dst,
+  @SuppressWarnings("rawtypes")
+public void get(String src, String dst,
 		  SftpProgressMonitor monitor, int mode) throws SftpException{
     // System.out.println("get: "+src+" "+dst);
 
@@ -1171,7 +1165,8 @@ public void start() throws JSchException{
 
 
   private class RequestQueue {
-    class OutOfOrderException extends Exception {
+    @SuppressWarnings("serial")
+	class OutOfOrderException extends Exception {
       long offset;
       OutOfOrderException(long offset){
         this.offset=offset;
@@ -1350,7 +1345,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
              if(closed)return -1;
              return read(d, 0, d.length);
            }
-           @Override
+           @SuppressWarnings("unused")
+		@Override
 		public int read(byte[] d, int s, int len) throws java.io.IOException{
              if(closed)return -1;
              if(d==null){throw new NullPointerException();}
@@ -1528,10 +1524,12 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
      }
    }
 
-   public java.util.Vector ls(String path) throws SftpException{
+   @SuppressWarnings("rawtypes")
+public java.util.Vector ls(String path) throws SftpException{
      final java.util.Vector v = new Vector();
      LsEntrySelector selector = new LsEntrySelector(){
-       @Override
+       @SuppressWarnings("unchecked")
+	@Override
 	public int select(LsEntry entry){
          v.addElement(entry);
          return CONTINUE;
@@ -1551,7 +1549,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
    * @see ChannelSftp.LsEntrySelector
    * @since 0.1.47
    */
-   public void ls(String path, LsEntrySelector selector) throws SftpException{
+   @SuppressWarnings({ "rawtypes", "unused" })
+public void ls(String path, LsEntrySelector selector) throws SftpException{
      //System.out.println("ls: "+path);
      try{
        ((MyPipedInputStream)io_in).updateReadSide();
@@ -1736,7 +1735,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
      }
    }
 
-   public String readlink(String path) throws SftpException{
+   @SuppressWarnings("unused")
+public String readlink(String path) throws SftpException{
      try{
        if(server_version<3){
          throw new SftpException(SSH_FX_OP_UNSUPPORTED, 
@@ -1890,7 +1890,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
      }
    }
 
-   public void rename(String oldpath, String newpath) throws SftpException{
+   @SuppressWarnings("rawtypes")
+public void rename(String oldpath, String newpath) throws SftpException{
      if(server_version<2){
        throw new SftpException(SSH_FX_OP_UNSUPPORTED, 
                                "The remote sshd is too old to support rename operation.");
@@ -1943,7 +1944,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
       throw new SftpException(SSH_FX_FAILURE, "");
     }
   }
-  public void rm(String path) throws SftpException{
+  @SuppressWarnings("rawtypes")
+public void rm(String path) throws SftpException{
     try{
       ((MyPipedInputStream)io_in).updateReadSide();
 
@@ -2002,7 +2004,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     return false;
   }
 
-  public void chgrp(int gid, String path) throws SftpException{
+  @SuppressWarnings("rawtypes")
+public void chgrp(int gid, String path) throws SftpException{
     try{
       ((MyPipedInputStream)io_in).updateReadSide();
 
@@ -2028,7 +2031,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     }
   }
 
-  public void chown(int uid, String path) throws SftpException{
+  @SuppressWarnings("rawtypes")
+public void chown(int uid, String path) throws SftpException{
     try{
       ((MyPipedInputStream)io_in).updateReadSide();
 
@@ -2054,7 +2058,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     }
   }
 
-  public void chmod(int permissions, String path) throws SftpException{
+  @SuppressWarnings("rawtypes")
+public void chmod(int permissions, String path) throws SftpException{
     try{
       ((MyPipedInputStream)io_in).updateReadSide();
 
@@ -2080,7 +2085,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     }
   }
 
-  public void setMtime(String path, int mtime) throws SftpException{
+  @SuppressWarnings("rawtypes")
+public void setMtime(String path, int mtime) throws SftpException{
     try{
       ((MyPipedInputStream)io_in).updateReadSide();
 
@@ -2106,7 +2112,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     }
   }
 
-  public void rmdir(String path) throws SftpException{
+  @SuppressWarnings("rawtypes")
+public void rmdir(String path) throws SftpException{
     try{
       ((MyPipedInputStream)io_in).updateReadSide();
 
@@ -2335,7 +2342,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     }
   }
 
-  private byte[] _realpath(String path) throws SftpException, IOException, Exception{
+  @SuppressWarnings("unused")
+private byte[] _realpath(String path) throws SftpException, IOException, Exception{
     sendREALPATH(Util.str2byte(path, fEncoding));
 
     Header header=new Header();
@@ -2366,7 +2374,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     return str;
   }
 
-  public void setStat(String path, SftpATTRS attr) throws SftpException{
+  @SuppressWarnings("rawtypes")
+public void setStat(String path, SftpATTRS attr) throws SftpException{
     try{
       ((MyPipedInputStream)io_in).updateReadSide();
 
@@ -2444,7 +2453,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     this.cwd=cwd;
   }
 
-  private void read(byte[] buf, int s, int l) throws IOException, SftpException{
+  @SuppressWarnings("unused")
+private void read(byte[] buf, int s, int l) throws IOException, SftpException{
     int i=0;
     while(l>0){
       i=io_in.read(buf, s, l);
@@ -2503,7 +2513,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
   private void sendLSTAT(byte[] path) throws Exception{
     sendPacketPath(SSH_FXP_LSTAT, path);
   }
-  private void sendFSTAT(byte[] handle) throws Exception{
+  @SuppressWarnings("unused")
+private void sendFSTAT(byte[] handle) throws Exception{
     sendPacketPath(SSH_FXP_FSTAT, handle);
   }
   private void sendSETSTAT(byte[] path, SftpATTRS attr) throws Exception{
@@ -2633,7 +2644,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     getSession().write(opacket, this, 21+handle.length+_length+4);
     return _length;
   }
-  private void sendREAD(byte[] handle, long offset, int length) throws Exception{
+  @SuppressWarnings("unused")
+private void sendREAD(byte[] handle, long offset, int length) throws Exception{
     sendREAD(handle, offset, length, null);
   }
   private void sendREAD(byte[] handle, long offset, int length,
@@ -2662,7 +2674,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     putHEAD(buf, type, length);
   }
 
-  private Vector glob_remote(String _path) throws Exception{
+  @SuppressWarnings({ "unused", "rawtypes", "unchecked" })
+private Vector glob_remote(String _path) throws Exception{
     Vector v=new Vector();
     int i=0;
 
@@ -2792,7 +2805,8 @@ public InputStream get(String src, final SftpProgressMonitor monitor, final int 
     return false;
   }
 
-  private Vector glob_local(String _path) throws Exception{
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+private Vector glob_local(String _path) throws Exception{
 //System.err.println("glob_local: "+_path);
     Vector v=new Vector();
     byte[] path=Util.str2byte(_path, UTF8);
@@ -2918,7 +2932,8 @@ public void disconnect(){
     int type;
     int rid;
   }
-  private Header header(Buffer buf, Header header) throws IOException{
+  @SuppressWarnings("unused")
+private Header header(Buffer buf, Header header) throws IOException{
     buf.rewind();
     int i=fill(buf.buffer, 0, 9);
     header.length=buf.getInt()-5;
@@ -2947,7 +2962,8 @@ public void disconnect(){
    * will be thrown.
    * @return the returned string is unquoted.
    */
-  private String isUnique(String path) throws SftpException, Exception{
+  @SuppressWarnings("rawtypes")
+private String isUnique(String path) throws SftpException, Exception{
     Vector v=glob_remote(path);
     if(v.size()!=1){
       throw new SftpException(SSH_FX_FAILURE, path+" is not unique: "+v.toString());
@@ -2995,7 +3011,8 @@ public void disconnect(){
     }
   }
 
-  public class LsEntry implements Comparable{
+  @SuppressWarnings("rawtypes")
+public class LsEntry implements Comparable{
     private  String filename;
     private  String longname;
     private  SftpATTRS attrs;

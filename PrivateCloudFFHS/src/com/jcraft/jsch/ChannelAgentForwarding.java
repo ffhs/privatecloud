@@ -38,12 +38,8 @@ class ChannelAgentForwarding extends Channel{
 
   private final byte SSH_AGENTC_REQUEST_RSA_IDENTITIES = 1;
   private final byte SSH_AGENT_RSA_IDENTITIES_ANSWER = 2;
-  private final byte SSH_AGENTC_RSA_CHALLENGE = 3;
-  private final byte SSH_AGENT_RSA_RESPONSE = 4;
   private final byte SSH_AGENT_FAILURE = 5;
   private final byte SSH_AGENT_SUCCESS = 6;
-  private final byte SSH_AGENTC_ADD_RSA_IDENTITY	= 7;
-  private final byte SSH_AGENTC_REMOVE_RSA_IDENTITY = 8;
   private final byte SSH_AGENTC_REMOVE_ALL_RSA_IDENTITIES = 9;
 
   private final byte SSH2_AGENTC_REQUEST_IDENTITIES=11;
@@ -129,7 +125,8 @@ void write(byte[] foo, int s, int l) throws java.io.IOException {
 
     if(typ==SSH2_AGENTC_REQUEST_IDENTITIES){ 
       mbuf.putByte(SSH2_AGENT_IDENTITIES_ANSWER);
-      Vector identities = irepo.getIdentities();
+      @SuppressWarnings("rawtypes")
+	Vector identities = irepo.getIdentities();
       synchronized(identities){
         int count=0;
         for(int i=0; i<identities.size(); i++){
@@ -155,13 +152,15 @@ void write(byte[] foo, int s, int l) throws java.io.IOException {
     else if(typ==SSH2_AGENTC_SIGN_REQUEST){
       byte[] blob=rbuf.getString();
       byte[] data=rbuf.getString();
-      int flags=rbuf.getInt();
+      @SuppressWarnings("unused")
+	int flags=rbuf.getInt();
 
 //      if((flags & 1)!=0){ //SSH_AGENT_OLD_SIGNATURE // old OpenSSH 2.0, 2.1
 //        datafellows = SSH_BUG_SIGBLOB;
 //      }
 
-      Vector identities = irepo.getIdentities();
+      @SuppressWarnings("rawtypes")
+	Vector identities = irepo.getIdentities();
       Identity identity = null;
       synchronized(identities){
         for(int i=0; i<identities.size(); i++){

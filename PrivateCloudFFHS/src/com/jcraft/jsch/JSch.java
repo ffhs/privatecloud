@@ -32,13 +32,15 @@ package com.jcraft.jsch;
 import java.io.InputStream;
 import java.util.Vector;
 
+@SuppressWarnings("unchecked")
 public class JSch{
   /**
    * The version number.
    */
   public static final String VERSION  = "0.1.51";
 
-  static java.util.Hashtable config=new java.util.Hashtable();
+  @SuppressWarnings("rawtypes")
+static java.util.Hashtable config=new java.util.Hashtable();
   static{
     config.put("kex", "diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1");
     config.put("server_host_key", "ssh-rsa,ssh-dss");
@@ -125,7 +127,8 @@ public class JSch{
     config.put("ClearAllForwardings", "no");
   }
 
-  private java.util.Vector sessionPool = new java.util.Vector();
+  @SuppressWarnings("rawtypes")
+private java.util.Vector sessionPool = new java.util.Vector();
 
   private IdentityRepository defaultIdentityRepository =
     new LocalIdentityRepository(this);
@@ -474,7 +477,8 @@ public class JSch{
   /**
    * @deprecated use #removeIdentity(Identity identity)
    */
-  @Deprecated
+  @SuppressWarnings("rawtypes")
+@Deprecated
 public void removeIdentity(String name) throws JSchException{
     Vector identities = identityRepository.getIdentities();
     for(int i=0; i<identities.size(); i++){
@@ -507,7 +511,8 @@ public void removeIdentity(String name) throws JSchException{
    *
    * @throws JSchException if identityReposory has problems.
    */
-  public Vector getIdentityNames() throws JSchException{
+  @SuppressWarnings("rawtypes")
+public Vector getIdentityNames() throws JSchException{
     Vector foo=new Vector();
     Vector identities = identityRepository.getIdentities();
     for(int i=0; i<identities.size(); i++){
@@ -543,7 +548,8 @@ public void removeIdentity(String name) throws JSchException{
    *
    * @param newconf configurations
    */
-  public static void setConfig(java.util.Hashtable newconf){
+  @SuppressWarnings("rawtypes")
+public static void setConfig(java.util.Hashtable newconf){
     synchronized(config){
       for(java.util.Enumeration e=newconf.keys() ; e.hasMoreElements() ;) {
 	String key=(String)(e.nextElement());

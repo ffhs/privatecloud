@@ -31,6 +31,7 @@ package com.jcraft.jsch.jce;
 
 import java.math.BigInteger;
 import java.security.*;
+
 import javax.crypto.*;
 import javax.crypto.spec.*;
 
@@ -52,7 +53,8 @@ public void init() throws Exception{
     myKeyAgree=KeyAgreement.getInstance("DH");
 //    myKeyAgree=KeyAgreement.getInstance("DiffieHellman");
   }
-  @Override
+  @SuppressWarnings("unused")
+@Override
 public byte[] getE() throws Exception{
     if(e==null){
       DHParameterSpec dhSkipParamSpec=new DHParameterSpec(p, g);

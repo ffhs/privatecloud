@@ -79,7 +79,8 @@ public class DHG1 extends KeyExchange{
   private Buffer buf;
   private Packet packet;
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public void init(Session session,
 		   byte[] V_S, byte[] V_C, byte[] I_S, byte[] I_C) throws Exception{
     this.session=session;
@@ -137,7 +138,8 @@ public void init(Session session,
     state=SSH_MSG_KEXDH_REPLY;
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public boolean next(Buffer _buf) throws Exception{
     int i,j;
 

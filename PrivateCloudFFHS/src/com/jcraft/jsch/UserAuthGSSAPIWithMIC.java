@@ -32,7 +32,7 @@ package com.jcraft.jsch;
 public class UserAuthGSSAPIWithMIC extends UserAuth {
   private static final int SSH_MSG_USERAUTH_GSSAPI_RESPONSE=         60;
   private static final int SSH_MSG_USERAUTH_GSSAPI_TOKEN=            61;
-  private static final int SSH_MSG_USERAUTH_GSSAPI_EXCHANGE_COMPLETE=63;
+ 
   private static final int SSH_MSG_USERAUTH_GSSAPI_ERROR=            64;
   private static final int SSH_MSG_USERAUTH_GSSAPI_ERRTOK=           65;
   private static final int SSH_MSG_USERAUTH_GSSAPI_MIC=              66;
@@ -48,7 +48,8 @@ public class UserAuthGSSAPIWithMIC extends UserAuth {
     "gssapi-with-mic.krb5"
   };
 
-  @Override
+  @SuppressWarnings({ "unused", "rawtypes" })
+@Override
 public boolean start(Session session)throws Exception{
     super.start(session);
 

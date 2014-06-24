@@ -29,6 +29,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.jcraft.jsch;
 
+import android.annotation.SuppressLint;
+
 import java.io.*;
 import java.net.*;
 import java.util.Vector;
@@ -72,8 +74,6 @@ public class Session implements Runnable{
 
   private byte[] I_C; // the payload of the client's SSH_MSG_KEXINIT
   private byte[] I_S; // the payload of the server's SSH_MSG_KEXINIT
-  private byte[] K_S; // the host key
-
   private byte[] session_id;
 
   private byte[] IVc2s;
@@ -126,7 +126,8 @@ public class Session implements Runnable{
                                    20 + // maximum mac length
                                    32;  // margin for deflater; deflater may inflate data
 
-  private java.util.Hashtable config=null;
+  @SuppressWarnings("rawtypes")
+private java.util.Hashtable config=null;
 
   private Proxy proxy=null;
   private UserInfo userinfo;
@@ -183,7 +184,9 @@ public class Session implements Runnable{
     connect(timeout);
   }
 
-  public void connect(int connectTimeout) throws JSchException{
+  @SuppressLint("DefaultLocale")
+@SuppressWarnings("rawtypes")
+public void connect(int connectTimeout) throws JSchException{
     if(isConnected){
       throw new JSchException("session is already connected");
     }
@@ -563,7 +566,8 @@ public class Session implements Runnable{
     }
   }
 
-  private KeyExchange receive_kexinit(Buffer buf) throws Exception {
+  @SuppressWarnings("rawtypes")
+private KeyExchange receive_kexinit(Buffer buf) throws Exception {
     int j=buf.getInt();
     if(j!=buf.getLength()){    // packet was compressed and
       buf.getByte();           // j is the size of deflated packet.
@@ -1081,7 +1085,8 @@ key_type+" key fingerprint is "+key_fprint+".\n"+
     updateKeys(kex);
     in_kex=false;
   }
-  private void updateKeys(KeyExchange kex) throws Exception{
+  @SuppressWarnings("rawtypes")
+private void updateKeys(KeyExchange kex) throws Exception{
     byte[] K=kex.getK();
     byte[] H=kex.getH();
     HASH hash=kex.getHash();
@@ -2010,7 +2015,8 @@ break;
    * "[bind_address:]port host:hostport", which is from LocalForward command of
    * ~/.ssh/config .
    */
-  private Forwarding parseForwarding(String conf) throws JSchException {
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+private Forwarding parseForwarding(String conf) throws JSchException {
     String[] tmp = conf.split(" ");
     if(tmp.length>1){   // "[bind_address:]port host:hostport"
       Vector foo = new Vector();
@@ -2197,7 +2203,8 @@ break;
     ChannelForwardedTCPIP.delPort(this, bind_address, rport);
   }
 
-  private void initDeflater(String method) throws JSchException{
+  @SuppressWarnings("rawtypes")
+private void initDeflater(String method) throws JSchException{
     if(method.equals("none")){
       deflater=null;
       return;
@@ -2224,7 +2231,8 @@ break;
       }
     }
   }
-  private void initInflater(String method) throws JSchException{
+  @SuppressWarnings("rawtypes")
+private void initInflater(String method) throws JSchException{
     if(method.equals("none")){
       inflater=null;
       return;
@@ -2272,11 +2280,13 @@ break;
     }
   }
 
-  public void setConfig(java.util.Properties newconf){
+  @SuppressWarnings("rawtypes")
+public void setConfig(java.util.Properties newconf){
     setConfig((java.util.Hashtable)newconf);
   }
  
-  public void setConfig(java.util.Hashtable newconf){
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+public void setConfig(java.util.Hashtable newconf){
     synchronized(lock){
       if(config==null) 
         config=new java.util.Hashtable();
@@ -2287,7 +2297,8 @@ break;
     }
   }
 
-  public void setConfig(String key, String value){
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+public void setConfig(String key, String value){
     synchronized(lock){ 
       if(config==null){
         config=new java.util.Hashtable();
@@ -2430,7 +2441,8 @@ break;
     this.daemon_thread=enable;
   }
 
-  private String[] checkCiphers(String ciphers){
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+private String[] checkCiphers(String ciphers){
     if(ciphers==null || ciphers.length()==0)
       return null;
 
@@ -2467,7 +2479,8 @@ break;
     return foo;
   }
 
-  static boolean checkCipher(String cipher){
+  @SuppressWarnings("rawtypes")
+static boolean checkCipher(String cipher){
     try{
       Class c=Class.forName(cipher);
       Cipher _c=(Cipher)(c.newInstance());
@@ -2481,7 +2494,8 @@ break;
     }
   }
 
-  private String[] checkKexes(String kexes){
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+private String[] checkKexes(String kexes){
     if(kexes==null || kexes.length()==0)
       return null;
 
@@ -2512,7 +2526,8 @@ break;
     return foo;
   }
 
-  static boolean checkKex(Session s, String kex){
+  @SuppressWarnings("rawtypes")
+static boolean checkKex(Session s, String kex){
     try{
       Class c=Class.forName(kex);
       KeyExchange _c=(KeyExchange)(c.newInstance());
