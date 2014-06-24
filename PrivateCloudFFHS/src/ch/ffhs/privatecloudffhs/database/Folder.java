@@ -4,8 +4,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.util.Log;
-
+/**
+ * Folder
+ * 
+ * Diese Klasse wird für ein Folder in der Datenbank verwendet. 
+ * Als Folder werden, die vom Benutzer ausgewählten und zu synchronisierenden Order bezeichnet. 
+ *  
+ * @author         Thierry Baumann
+ */
 public class Folder {
 	private String path;
 	private int serverId;
@@ -14,19 +20,17 @@ public class Folder {
 
 	private SimpleDateFormat sdf;
 
-	public Folder(){
+	public Folder() {
 		this(null, 0);
 	}
 
-	
-	public Folder(String path, int server){
+	public Folder(String path, int server) {
 		this.path = path;
 		this.serverId = server;
 		this.sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		this.lastsync = "01.01.1970 00:00";
 	}
 
-	
 	public String getPath() {
 		return path;
 	}
@@ -38,11 +42,11 @@ public class Folder {
 	public String getLastsync() {
 		return lastsync;
 	}
-	
+
 	public void setLastsync(Date date) {
 		this.lastsync = sdf.format(date);
 	}
-	
+
 	public void setLastsync(String lastsync) {
 		try {
 			setLastsync(sdf.parse(lastsync));
@@ -50,25 +54,20 @@ public class Folder {
 			e.printStackTrace();
 		}
 	}
-	
-	public int getServerId()
-	{
+
+	public int getServerId() {
 		return serverId;
 	}
-	
-	public void setServerId(int serverId)
-	{
+
+	public void setServerId(int serverId) {
 		this.serverId = serverId;
 	}
-	
 
-	public int getId()
-	{
+	public int getId() {
 		return id;
 	}
-	
-	public void setId(int id)
-	{
-		this.id= id;
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

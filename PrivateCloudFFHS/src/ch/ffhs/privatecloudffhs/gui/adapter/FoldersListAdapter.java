@@ -14,8 +14,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * FoldersListAdapter
+ * 
+ * Listen Adapter für zu synchronisierenden Ordner
+ *  
+ * @author         Thierry Baumann
+ */
 @SuppressLint("NewApi")
-public class FoldersListAdapter extends ArrayAdapter<Folder>{	
+public class FoldersListAdapter extends ArrayAdapter<Folder> {
 	Context context;
 	LayoutInflater inflater;
 	List<Folder> list;
@@ -24,7 +31,7 @@ public class FoldersListAdapter extends ArrayAdapter<Folder>{
 
 	public FoldersListAdapter(Context context) {
 		super(context, 0);
-		
+
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
 		inflater = LayoutInflater.from(context);
@@ -36,22 +43,23 @@ public class FoldersListAdapter extends ArrayAdapter<Folder>{
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_folders, null);
-			
-			holder.path = (TextView) convertView.findViewById(R.id.Folders_List_Path);
-			holder.lastsync= (TextView) convertView.findViewById(R.id.Folders_List_LasySync);
-			
+
+			holder.path = (TextView) convertView
+					.findViewById(R.id.Folders_List_Path);
+			holder.lastsync = (TextView) convertView
+					.findViewById(R.id.Folders_List_LasySync);
+
 			convertView.setTag(holder);
-		} 
-		else {
+		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
+
 		holder.path.setText(list.get(position).getPath());
 		holder.lastsync.setText(list.get(position).getLastsync().toString());
 
 		return convertView;
 	}
-	
+
 	public void toggleSelection(int position) {
 		selectView(position, !mSelectedItemsIds.get(position));
 	}
@@ -63,34 +71,32 @@ public class FoldersListAdapter extends ArrayAdapter<Folder>{
 			mSelectedItemsIds.delete(position);
 		notifyDataSetChanged();
 	}
-	
+
 	public void removeSelection() {
 		mSelectedItemsIds = new SparseBooleanArray();
 		notifyDataSetChanged();
 	}
-	
+
 	public SparseBooleanArray getSelectedIds() {
 		return mSelectedItemsIds;
 	}
-	
+
 	public void addFolder(Folder folder) {
 		this.list.add(folder);
 		add(folder);
-		
+
 		notifyDataSetChanged();
 	}
-	
-	
+
 	public void refreshList(List<Folder> list) {
 		this.list = list;
 
 		clear();
 		addAll(this.list);
-		
+
 		notifyDataSetChanged();
 	}
 
-	
 	private class ViewHolder {
 		TextView path;
 		TextView lastsync;

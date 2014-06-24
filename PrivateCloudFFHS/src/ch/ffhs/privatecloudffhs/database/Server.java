@@ -1,5 +1,12 @@
 package ch.ffhs.privatecloudffhs.database;
 
+/**
+ * Server
+ * 
+ * Diese Klasse wird für ein Server in der Datenbank verwendet. 
+ *  
+ * @author         Thierry Baumann
+ */
 public class Server {
 	private String servername;
 	private String hostname;
@@ -10,20 +17,20 @@ public class Server {
 	private int port;
 	private int proto;
 	private int id;
-	
-	public Server(String servername){
-        this.servername=servername;
-        this.hostname = "ffhs.p45q.net";
-        this.username = "clouduser";
-        this.port = 22;
-        this.remoteroot = "/home/clouduser/sync";
+
+	public Server(String servername) {
+		this.servername = servername;
+		this.hostname = "ffhs.p45q.net";
+		this.username = "clouduser";
+		this.port = 22;
+		this.remoteroot = "/home/clouduser/sync";
 	}
 
-	public Server(String servername, String hostname){
+	public Server(String servername, String hostname) {
 		this.servername = servername;
 		this.hostname = hostname;
 	}
-	
+
 	public String getServername() {
 		return servername;
 	}
@@ -87,11 +94,11 @@ public class Server {
 	public void setProto(int proto) {
 		this.proto = proto;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

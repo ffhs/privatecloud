@@ -13,8 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * ServerListAdapter
+ * 
+ * Listen Adapter für hinzugefügte Server in Settings Activity.
+ *  
+ * @author         Pascal Bieri
+ */
 @SuppressLint("NewApi")
-public class ServerListAdapter extends ArrayAdapter<Server>{	
+public class ServerListAdapter extends ArrayAdapter<Server> {
 	Context context;
 	LayoutInflater inflater;
 	List<Server> list;
@@ -25,7 +32,7 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
 		inflater = LayoutInflater.from(context);
-		
+
 	}
 
 	@Override
@@ -34,22 +41,23 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = inflater.inflate(R.layout.list_servers, null);
-			
-			holder.servername = (TextView) convertView.findViewById(R.id.Servers_List_Name);
-			holder.hostname= (TextView) convertView.findViewById(R.id.Server_List_Hostname);
-			
+
+			holder.servername = (TextView) convertView
+					.findViewById(R.id.Servers_List_Name);
+			holder.hostname = (TextView) convertView
+					.findViewById(R.id.Server_List_Hostname);
+
 			convertView.setTag(holder);
-		} 
-		else {
+		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
+
 		holder.servername.setText(list.get(position).getServername());
 		holder.hostname.setText(list.get(position).getHostname());
 
 		return convertView;
 	}
-	
+
 	public void toggleSelection(int position) {
 		selectView(position, !mSelectedItemsIds.get(position));
 	}
@@ -61,22 +69,22 @@ public class ServerListAdapter extends ArrayAdapter<Server>{
 			mSelectedItemsIds.delete(position);
 		notifyDataSetChanged();
 	}
-	
+
 	public void removeSelection() {
 		mSelectedItemsIds = new SparseBooleanArray();
 		notifyDataSetChanged();
 	}
-	
+
 	public SparseBooleanArray getSelectedIds() {
 		return mSelectedItemsIds;
 	}
+
 	public void refreshList(List<Server> list) {
 		this.list = list;
 		clear();
 		addAll(this.list);
 		notifyDataSetChanged();
 	}
-	
 
 	private class ViewHolder {
 		TextView servername;

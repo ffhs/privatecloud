@@ -1,11 +1,6 @@
 package ch.ffhs.privatecloudffhs.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.ffhs.privatecloudffhs.R;
-import ch.ffhs.privatecloudffhs.R.id;
-import ch.ffhs.privatecloudffhs.R.layout;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.gui.adapter.ServerListAdapter;
@@ -22,9 +17,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * ActivitySettings
+ * 
+ * Diese Activity wird verwendet um grundlegende Synchronisations-Einstellungen vorzunehmen und Server zu verwalten. 
+ *  
+ * @author         Pascal Bieri
+ */
 public class ActivitySettings extends Activity {
-
-
 
 	private static final String NAME_MYPREF = "cloudsettings";
 	private static final String KEY_SYNCINTERVAL = "syncinterval";
@@ -41,92 +41,93 @@ public class ActivitySettings extends Activity {
 	CheckBox onwifiCheckBox;
 	CheckBox onchargeCheckBox;
 	SharedPreferences settings;
-	private List<Server> list=new ArrayList<Server>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_settings);
-		context=this;
+		context = this;
 		listView = (ListView) findViewById(R.id.Servers_List);
 		syncintervalEditText = (EditText) findViewById(R.id.Settings_Syncinterval);
 		onwifiCheckBox = (CheckBox) findViewById(R.id.Settings_chkbx_onlyWifi);
 		onchargeCheckBox = (CheckBox) findViewById(R.id.Settings_chkbx_onlyCharging);
-		settings = getSharedPreferences(NAME_MYPREF,MODE_PRIVATE);
+		settings = getSharedPreferences(NAME_MYPREF, MODE_PRIVATE);
 		db = new PrivateCloudDatabase(getApplicationContext());
 
-		adapter	= new ServerListAdapter(context);
-        listView.setAdapter(adapter);
-		
-        listView.setClickable(true);
-        loadValues();
-        refreshFolderList();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        
-          @Override
-          public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-            Object o = listView.getItemAtPosition(position);
-            int serverid = ((Server) o).getId();
-            Log.d("jada","clicked"+serverid);
-            Intent activityserver = new Intent(context,ActivityServer.class);
+		adapter = new ServerListAdapter(context);
+		listView.setAdapter(adapter);
+
+		listView.setClickable(true);
+		loadValues();
+		refreshFolderList();
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				Object o = listView.getItemAtPosition(position);
+				int serverid = ((Server) o).getId();
+				Log.d("jada", "clicked" + serverid);
+				Intent activityserver = new Intent(context,
+						ActivityServer.class);
+				activityserver.putExtra("serverid", serverid);
+				startActivity(activityserver);
+			}
+		});
+		// SharedPreferences settings =
+		// getSharedPreferences(R.string.perfname,MODE_PRIVATE);
+		// String hostname = settings.getString(R.string.perfs_hostname);
+
+	}
+
+	private void refreshFolderList() {
+		adapter.refreshList(db.getAllServers());
+		db.closeDB();
+	}
+
+	private void loadValues() {
+		syncinterval = settings.getInt(KEY_SYNCINTERVAL, 0);
+		onwifi = settings.getBoolean(KEY_ONWIFI, false);
+		oncharge = settings.getBoolean(KEY_ONCHARGE, false);
+		syncintervalEditText.setText("" + syncinterval);
+		onwifiCheckBox.setChecked(onwifi);
+		onchargeCheckBox.setChecked(oncharge);
+	}
+
+	public void onButtonClicked(View v) {
+		switch (v.getId()) {
+		case R.id.Settings_Button_cancel:
+			this.finish();
+			break;
+		case R.id.Settings_Button_Add:
+			int serverid = 0;
+			Intent activityserver = new Intent(this, ActivityServer.class);
 			activityserver.putExtra("serverid", serverid);
 			startActivity(activityserver);
-          }
-        });
-//		SharedPreferences settings = getSharedPreferences(R.string.perfname,MODE_PRIVATE);
-//       String hostname = settings.getString(R.string.perfs_hostname);
-        
+			break;
+		case R.id.Settings_Button_save:
+			if (!syncintervalEditText.getText().toString().matches("")) {
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putInt(KEY_SYNCINTERVAL, Integer
+						.parseInt(syncintervalEditText.getText().toString()));
+				editor.putBoolean(KEY_ONWIFI, onwifiCheckBox.isChecked());
+				editor.putBoolean(KEY_ONCHARGE, onchargeCheckBox.isChecked());
+				editor.commit();
+				this.finish();
+			} else {
+				Toast.makeText(ActivitySettings.this, "Invalid Sync interval",
+						Toast.LENGTH_LONG).show();
+			}
+			break;
+
+		}
 	}
 
-	private void refreshFolderList()
-	{
-        adapter.refreshList(db.getAllServers());
-        db.closeDB();
-	}
-	
-	private void loadValues(){
-        syncinterval = settings.getInt(KEY_SYNCINTERVAL, 0);
-        onwifi = settings.getBoolean(KEY_ONWIFI, false);
-        oncharge = settings.getBoolean(KEY_ONCHARGE, false);
-        syncintervalEditText.setText(""+syncinterval);
-        onwifiCheckBox.setChecked(onwifi);
-        onchargeCheckBox.setChecked(oncharge);
-	}
-    public void onButtonClicked(View v){
-    	switch(v.getId()) {
-    		case R.id.Settings_Button_cancel:
-    			this.finish();
-    		break;
-    		case R.id.Settings_Button_Add:
-    			int serverid = 0;
-    			Intent activityserver = new Intent(this,ActivityServer.class);
-    			activityserver.putExtra("serverid", serverid);
-    			startActivity(activityserver);
-    		break;
-    		case R.id.Settings_Button_save:
-    			if (!syncintervalEditText.getText().toString().matches(""))
-    			{
-	    			SharedPreferences.Editor editor = settings.edit();
-	    			editor.putInt(KEY_SYNCINTERVAL, Integer.parseInt(syncintervalEditText.getText().toString()));
-	    			editor.putBoolean(KEY_ONWIFI, onwifiCheckBox.isChecked());
-	    			editor.putBoolean(KEY_ONCHARGE, onchargeCheckBox.isChecked());
-	    			editor.commit();
-	    			this.finish();
-    			}
-    			else
-    			{
-    				Toast.makeText(ActivitySettings.this, "Invalid Sync interval", Toast.LENGTH_LONG).show();
-    			}
-    		break;
-    		
-    		
-    		
-    	}
-    }
-    @Override
+	@Override
 	public void onResume() {
-        super.onResume();
+		super.onResume();
 
-        refreshFolderList();
-    }
+		refreshFolderList();
+	}
 }

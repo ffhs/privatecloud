@@ -1,13 +1,9 @@
 package ch.ffhs.privatecloudffhs.gui;
 
 import ch.ffhs.privatecloudffhs.R;
-import ch.ffhs.privatecloudffhs.R.id;
-import ch.ffhs.privatecloudffhs.R.layout;
-import ch.ffhs.privatecloudffhs.R.menu;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.gui.adapter.FoldersListAdapter;
-import ch.ffhs.privatecloudffhs.gui.util.SystemUiHider;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.AbsListView;
@@ -24,19 +20,20 @@ import android.view.View;
 import android.widget.AbsListView.MultiChoiceModeListener;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
+ * ActivityFolders
  * 
- * @see SystemUiHider
+ * Diese Activity wird verwendet um alle zu synchronisierenden aufzulisten. Ebenso können Order hinzugefügt und gelöscht werden.
+ 
+ * @author         Thierry Baumann
  */
 
 @SuppressLint("NewApi")
-public class ActivityFolders extends Activity  implements MultiChoiceModeListener{
+public class ActivityFolders extends Activity implements MultiChoiceModeListener {
 
-	 private ListView listView = null;
-	 private Context context = null;
-	 private FoldersListAdapter adapter = null;
-	 private PrivateCloudDatabase db;
+	private ListView listView = null;
+	private Context context = null;
+	private FoldersListAdapter adapter = null;
+	private PrivateCloudDatabase db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,101 +42,104 @@ public class ActivityFolders extends Activity  implements MultiChoiceModeListene
 
 		context = this;
 		listView = (ListView) findViewById(R.id.Folders_List);
-		
-		db = new PrivateCloudDatabase(getApplicationContext());
-		
-		adapter	= new FoldersListAdapter(context);
-        refreshFolderList();
-        
-        listView.setAdapter(adapter);
-        listView.setMultiChoiceModeListener(this);
-        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-            	Folder selecteditem = adapter.getItem(position);
 
-            	Intent editFolders = new Intent(context, ActivityEditFolder.class);
-                
-            	editFolders.putExtra("folderid", selecteditem.getId());
-  				startActivity(editFolders);
-            }
-        });
-        
-        db.closeDB();
+		db = new PrivateCloudDatabase(getApplicationContext());
+
+		adapter = new FoldersListAdapter(context);
+		refreshFolderList();
+
+		listView.setAdapter(adapter);
+		listView.setMultiChoiceModeListener(this);
+		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				Folder selecteditem = adapter.getItem(position);
+
+				Intent editFolders = new Intent(context,
+						ActivityEditFolder.class);
+
+				editFolders.putExtra("folderid", selecteditem.getId());
+				startActivity(editFolders);
+			}
+		});
+
+		db.closeDB();
 	}
-	
-	private void refreshFolderList()
-	{
-        adapter.refreshList(db.getAllFolders());
-        db.closeDB();
+
+	private void refreshFolderList() {
+		adapter.refreshList(db.getAllFolders());
+		db.closeDB();
 	}
 
 	@Override
 	public boolean onActionItemClicked(ActionMode arg0, MenuItem arg1) {
 		switch (arg1.getItemId()) {
-			case R.id.Folders_Liste_Delete:
-				SparseBooleanArray selected = adapter.getSelectedIds();
-				for (int i = (selected.size() - 1); i >= 0; i--) {
-					if (selected.valueAt(i)) {
-						Folder selecteditem = adapter.getItem(selected.keyAt(i));
-						adapter.remove(selecteditem);
-						db.deleteFolder(selecteditem.getId());
-					}
+		case R.id.Folders_Liste_Delete:
+			SparseBooleanArray selected = adapter.getSelectedIds();
+			for (int i = (selected.size() - 1); i >= 0; i--) {
+				if (selected.valueAt(i)) {
+					Folder selecteditem = adapter.getItem(selected.keyAt(i));
+					adapter.remove(selecteditem);
+					db.deleteFolder(selecteditem.getId());
 				}
-				
-		        db.closeDB();
-				// Close CAB
-				arg0.finish();
+			}
+
+			db.closeDB();
+			// Close CAB
+			arg0.finish();
 			return true;
-			
-			default:
-				
+
+		default:
+
 			return false;
-		}	
-	  }
+		}
+	}
+
 	@Override
 	public boolean onCreateActionMode(ActionMode arg0, Menu arg1) {
 		arg0.getMenuInflater().inflate(R.menu.folders, arg1);
 		return true;
-		
+
 	}
+
 	@Override
 	public void onDestroyActionMode(ActionMode arg0) {
 		adapter.removeSelection();
 	}
-	
+
 	@Override
 	public boolean onPrepareActionMode(ActionMode arg0, Menu arg1) {
 		return false;
 	}
-	
+
 	@Override
-	public void onItemCheckedStateChanged(ActionMode arg0, int arg1, long arg2, boolean arg3) {
+	public void onItemCheckedStateChanged(ActionMode arg0, int arg1, long arg2,
+			boolean arg3) {
 		final int checkedCount = listView.getCheckedItemCount();
 		arg0.setTitle(checkedCount + " Selected");
 		adapter.toggleSelection(arg1);
 	}
 
-    public void onButtonClicked(View v){
-    	switch(v.getId()) {
-    		case R.id.Folders_Button_Add:
-    			Intent editFolders = new Intent(this,ActivityEditFolder.class);
-        		startActivity(editFolders);    				
-    		break;
-    		
-    		case R.id.Folders_Button_cancel:
-    			this.finish();
-    		break;
-    	}
-    }
-    
-    @Override
+	public void onButtonClicked(View v) {
+		switch (v.getId()) {
+		case R.id.Folders_Button_Add:
+			Intent editFolders = new Intent(this, ActivityEditFolder.class);
+			startActivity(editFolders);
+			break;
+
+		case R.id.Folders_Button_cancel:
+			this.finish();
+			break;
+		}
+	}
+
+	@Override
 	public void onResume() {
-        super.onResume();
+		super.onResume();
 
-        refreshFolderList();
-    }
+		refreshFolderList();
+	}
 }
-
