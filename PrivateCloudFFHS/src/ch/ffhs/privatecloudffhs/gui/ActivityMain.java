@@ -36,7 +36,7 @@ import android.widget.TextView;
  * 
  * 
  * 
- * @author         Martin MŸller, Pascal Bieri, Thierry Baumann
+ * @author         Martin Mï¿½ller, Pascal Bieri, Thierry Baumann
  */
 public class ActivityMain extends Activity {
 
@@ -70,7 +70,7 @@ public class ActivityMain extends Activity {
 					progressbar.setProgress(Integer.parseInt(percent));
 
 					if (Integer.parseInt(percent) > 99) {
-						linearlayoutProgressbar.setVisibility(View.GONE);
+						linearlayoutProgressbar.setVisibility(View.INVISIBLE);
 						updateLastSync();
 						// progressbar.setVisibility(View.GONE);
 						// Text_SyncProgress.setVisibility(View.GONE);

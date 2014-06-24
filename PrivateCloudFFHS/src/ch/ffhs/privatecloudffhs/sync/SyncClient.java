@@ -315,15 +315,13 @@ public class SyncClient extends AsyncTask<String, String, String> {
 	
 	private String getRemoteCheckSum(String filePath)
 	{
-		String remoteChecksum = "wsjdio";
-		try {
-			remoteChecksum = syncConnectionObj.getRemoteCheckSum(filePath);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		String remoteChecksum;
+
+		remoteChecksum = syncConnectionObj.getRemoteCheckSum(filePath);
+		if(remoteChecksum==null)
+		{
 			syncerror = true;
-			e.printStackTrace();
 			return null;
-			
 		}
 		return remoteChecksum;
 	}
