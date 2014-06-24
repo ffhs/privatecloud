@@ -34,7 +34,8 @@ import java.util.Vector;
 class LocalIdentityRepository implements IdentityRepository {
   private static final String name = "Local Identity Repository";
 
-  private Vector identities = new Vector();
+  @SuppressWarnings("rawtypes")
+private Vector identities = new Vector();
   private JSch jsch;
 
   LocalIdentityRepository(JSch jsch){
@@ -51,7 +52,8 @@ public int getStatus(){
     return RUNNING;
   }
 
-  @Override
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+@Override
 public synchronized Vector getIdentities() {
     Vector v = new Vector();
     for(int i=0; i<identities.size(); i++){
@@ -60,13 +62,15 @@ public synchronized Vector getIdentities() {
     return v;
   }
 
-  public synchronized void add(Identity identity) {
+  @SuppressWarnings("unchecked")
+public synchronized void add(Identity identity) {
     if(!identities.contains(identity)) {
       identities.addElement(identity);
     }
   }
 
-  @Override
+  @SuppressWarnings("unchecked")
+@Override
 public synchronized boolean add(byte[] identity) {
     try{
       Identity _identity =

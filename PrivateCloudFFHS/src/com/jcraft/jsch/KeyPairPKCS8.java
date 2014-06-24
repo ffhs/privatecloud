@@ -48,7 +48,8 @@ public class KeyPairPKCS8 extends KeyPair {
     (byte)0x0d, (byte)0x01, (byte)0x05, (byte)0x0d 
   };
 
-  private static final byte[] pbkdf2 = {
+  @SuppressWarnings("unused")
+private static final byte[] pbkdf2 = {
     (byte)0x2a, (byte)0x86, (byte)0x48, (byte)0x86, (byte)0xf7,
     (byte)0x0d, (byte)0x01, (byte)0x05, (byte)0x0c 
   };
@@ -96,7 +97,8 @@ byte[] getPrivateKey(){
     return null;
   }
 
-  @Override
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+@Override
 boolean parse(byte[] plain){
 
     /* from RFC5208
@@ -230,7 +232,8 @@ public byte[] forSSHAgent() throws JSchException {
     return kpair.forSSHAgent();
   }
 
-  @Override
+  @SuppressWarnings({ "unused", "rawtypes" })
+@Override
 public boolean decrypt(byte[] _passphrase){
     if(!isEncrypted()){
       return true;
@@ -343,7 +346,8 @@ or
     return false;
   }
 
-  Cipher getCipher(byte[] id){
+  @SuppressWarnings("rawtypes")
+Cipher getCipher(byte[] id){
     Cipher cipher=null;
     String name = null;
     try{

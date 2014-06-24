@@ -1,10 +1,8 @@
 package ch.ffhs.privatecloudffhs.sync;
 
-import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.Date;
@@ -17,12 +15,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import ch.ffhs.privatecloudffhs.R;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
-import ch.ffhs.privatecloudffhs.gui.ActivityMain;
 
 public class SyncClient extends AsyncTask<String, String, String>   {
 

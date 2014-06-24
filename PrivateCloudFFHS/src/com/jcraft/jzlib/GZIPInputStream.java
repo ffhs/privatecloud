@@ -50,29 +50,35 @@ public class GZIPInputStream extends InflaterInputStream {
     super(in, inflater, size, close_in);
   }
 
-  public long getModifiedtime() {
+  @SuppressWarnings("deprecation")
+public long getModifiedtime() {
     return inflater.istate.getGZIPHeader().getModifiedTime();
   }
 
-  public int getOS() {
+  @SuppressWarnings("deprecation")
+public int getOS() {
     return inflater.istate.getGZIPHeader().getOS();
   }
 
-  public String getName() {
+  @SuppressWarnings("deprecation")
+public String getName() {
     return inflater.istate.getGZIPHeader().getName();
   }
 
-  public String getComment() {
+  @SuppressWarnings("deprecation")
+public String getComment() {
     return inflater.istate.getGZIPHeader().getComment();
   }
 
-  public long getCRC() throws GZIPException {
+  @SuppressWarnings("deprecation")
+public long getCRC() throws GZIPException {
     if(inflater.istate.mode != 12 /*DONE*/)
       throw new GZIPException("checksum is not calculated yet.");
     return inflater.istate.getGZIPHeader().getCRC();
   }
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
 public void readHeader() throws IOException {
 
     byte[] empty = "".getBytes();

@@ -33,7 +33,8 @@ import java.io.*;
 
 public
 class KnownHosts implements HostKeyRepository{
-  private static final String _known_hosts="known_hosts";
+  @SuppressWarnings("unused")
+private static final String _known_hosts="known_hosts";
 
   /*
   static final int SSHDSS=0;
@@ -41,13 +42,16 @@ class KnownHosts implements HostKeyRepository{
   static final int UNKNOWN=2;
   */
 
-  private JSch jsch=null;
+  @SuppressWarnings("unused")
+private JSch jsch=null;
   private String known_hosts=null;
-  private java.util.Vector pool=null;
+  @SuppressWarnings("rawtypes")
+private java.util.Vector pool=null;
 
   private MAC hmacsha1=null;
 
-  KnownHosts(JSch jsch){
+  @SuppressWarnings("rawtypes")
+KnownHosts(JSch jsch){
     super();
     this.jsch=jsch;
     pool=new java.util.Vector();
@@ -63,7 +67,8 @@ class KnownHosts implements HostKeyRepository{
       throw new JSchException(e.toString(), e);
     } 
   }
-  void setKnownHosts(InputStream input) throws JSchException{
+  @SuppressWarnings("unchecked")
+void setKnownHosts(InputStream input) throws JSchException{
     pool.removeAllElements();
     StringBuffer sb=new StringBuffer();
     byte i;
@@ -242,7 +247,8 @@ loop:
       }
     }
   }
-  private void addInvalidLine(String line) throws JSchException {
+  @SuppressWarnings("unchecked")
+private void addInvalidLine(String line) throws JSchException {
     HostKey hk = new HostKey(line, HostKey.UNKNOWN, null);
     pool.addElement(hk);
   }
@@ -284,7 +290,8 @@ public int check(String host, byte[] key){
     return result;
   }
 
-  @Override
+  @SuppressWarnings({ "unused", "unchecked" })
+@Override
 public void add(HostKey hostkey, UserInfo userinfo){
     int type=hostkey.type;
     String host=hostkey.getHost();
@@ -355,7 +362,8 @@ public void add(HostKey hostkey, UserInfo userinfo){
 public HostKey[] getHostKey(){
     return getHostKey(null, (String)null);
   }
-  @Override
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+@Override
 public HostKey[] getHostKey(String host, String type){
     synchronized(pool){
       java.util.ArrayList v = new java.util.ArrayList();
@@ -492,7 +500,8 @@ public void remove(String host, String type, byte[] key){
     return hosts;
   }
 
-  private synchronized MAC getHMACSHA1(){
+  @SuppressWarnings("rawtypes")
+private synchronized MAC getHMACSHA1(){
     if(hmacsha1==null){
       try{
         Class c=Class.forName(JSch.getConfig("hmac-sha1"));

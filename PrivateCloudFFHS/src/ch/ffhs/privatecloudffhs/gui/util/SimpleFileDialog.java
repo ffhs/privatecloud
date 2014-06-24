@@ -32,7 +32,9 @@ public class SimpleFileDialog
 	private TextView m_titleView1;
 	private TextView m_titleView;
 	public String Default_File_Name = "default.txt";
+	@SuppressWarnings("unused")
 	private String Selected_File_Name = Default_File_Name;
+	@SuppressWarnings("unused")
 	private EditText input_text;
 	
 	private String m_dir = "";
@@ -160,6 +162,7 @@ public class SimpleFileDialog
 		dirsDialog.show();
 	}
 
+	@SuppressWarnings("unused")
 	private boolean createSubDir(String newDir)
 	{
 		File newDirFile = new File(newDir);

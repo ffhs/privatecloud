@@ -30,6 +30,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.jcraft.jsch.jce;
 
 import com.jcraft.jsch.Cipher;
+
 import javax.crypto.spec.*;
 
 public class ARCFOUR implements Cipher{
@@ -40,7 +41,8 @@ public class ARCFOUR implements Cipher{
 public int getIVSize(){return ivsize;} 
   @Override
 public int getBlockSize(){return bsize;}
-  @Override
+  @SuppressWarnings("unused")
+@Override
 public void init(int mode, byte[] key, byte[] iv) throws Exception{
     String pad="NoPadding";      
     byte[] tmp;

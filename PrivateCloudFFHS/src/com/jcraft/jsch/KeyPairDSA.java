@@ -59,7 +59,8 @@ public class KeyPairDSA extends KeyPair{
       key_size = (new java.math.BigInteger(P_array)).bitLength();
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 void generate(int key_size) throws JSchException{
     this.key_size=key_size;
     try{
@@ -256,7 +257,8 @@ public int getKeySize(){
     return key_size;
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public byte[] getSignature(byte[] data){
     try{      
       Class c=Class.forName(JSch.getConfig("signature.dss"));
@@ -277,7 +279,8 @@ public byte[] getSignature(byte[] data){
     return null;
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public Signature getVerifier(){
     try{      
       Class c=Class.forName(JSch.getConfig("signature.dss"));

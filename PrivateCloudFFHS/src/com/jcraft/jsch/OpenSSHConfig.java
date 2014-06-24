@@ -67,6 +67,7 @@ import java.util.Vector;
  *
  * @see ConfigRepository
  */
+@SuppressWarnings("unchecked")
 public class OpenSSHConfig implements ConfigRepository {
 
   /**
@@ -105,10 +106,13 @@ public class OpenSSHConfig implements ConfigRepository {
     _parse(r);
   }
 
-  private final Hashtable config = new Hashtable();
-  private final Vector hosts = new Vector();
+  @SuppressWarnings("rawtypes")
+private final Hashtable config = new Hashtable();
+  @SuppressWarnings("rawtypes")
+private final Vector hosts = new Vector();
 
-  private void _parse(Reader r) throws IOException {
+  @SuppressWarnings("rawtypes")
+private void _parse(Reader r) throws IOException {
     BufferedReader br = new BufferedReader(r);
 
     String host = "";
@@ -146,7 +150,8 @@ public Config getConfig(String host) {
     return new MyConfig(host);
   }
 
-  private static final Hashtable keymap = new Hashtable();
+  @SuppressWarnings("rawtypes")
+private static final Hashtable keymap = new Hashtable();
   static {
     keymap.put("kex", "KexAlgorithms");
     keymap.put("server_host_key", "HostKeyAlgorithms");
@@ -162,8 +167,10 @@ public Config getConfig(String host) {
 
   class MyConfig implements Config {
 
-    private String host;
-    private Vector _configs = new Vector();
+    @SuppressWarnings("unused")
+	private String host;
+    @SuppressWarnings("rawtypes")
+	private Vector _configs = new Vector();
 
     MyConfig(String host){
       this.host = host;
@@ -194,7 +201,8 @@ public Config getConfig(String host) {
       }
     }
 
-    private String find(String key) {
+    @SuppressWarnings("rawtypes")
+	private String find(String key) {
       if(keymap.get(key)!=null) {
         key = (String)keymap.get(key);
       }
@@ -214,7 +222,8 @@ public Config getConfig(String host) {
       return value;
     }
 
-    private String[] multiFind(String key) {
+    @SuppressWarnings("rawtypes")
+	private String[] multiFind(String key) {
       Vector value = new Vector();
       for(int i = 0; i < _configs.size(); i++) {
         Vector v = (Vector)_configs.elementAt(i);

@@ -85,7 +85,8 @@ public int read() throws IOException {
     return read(byte1, 0, 1) == -1 ? -1 : byte1[0] & 0xff;
   }
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
 public int read(byte[] b, int off, int len) throws IOException {
     if (closed) { throw new IOException("Stream closed"); }
     if (b == null) {
@@ -175,7 +176,8 @@ public void close() throws IOException {
     }
   }
 
-  protected void fill() throws IOException {
+  @SuppressWarnings("deprecation")
+protected void fill() throws IOException {
     if (closed) { throw new IOException("Stream closed"); }
     int len = in.read(buf, 0, buf.length);
     if (len == -1) {
@@ -208,15 +210,18 @@ public synchronized void reset() throws IOException {
     throw new IOException("mark/reset not supported");
   }
 
-  public long getTotalIn() {
+  @SuppressWarnings("deprecation")
+public long getTotalIn() {
     return inflater.getTotalIn();
   }
 
-  public long getTotalOut() {
+  @SuppressWarnings("deprecation")
+public long getTotalOut() {
     return inflater.getTotalOut();
   }
 
-  public byte[] getAvailIn() {
+  @SuppressWarnings("deprecation")
+public byte[] getAvailIn() {
     if(inflater.avail_in<=0)
       return null;
     byte[] tmp = new byte[inflater.avail_in];
@@ -225,7 +230,8 @@ public synchronized void reset() throws IOException {
     return tmp;
   }
 
-  public void readHeader() throws IOException {
+  @SuppressWarnings("deprecation")
+public void readHeader() throws IOException {
 
     byte[] empty = "".getBytes();
     inflater.setInput(empty, 0, 0, false);

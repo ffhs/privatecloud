@@ -45,13 +45,18 @@ final class InfCodes{
 
   static final private int Z_OK=0;
   static final private int Z_STREAM_END=1;
-  static final private int Z_NEED_DICT=2;
-  static final private int Z_ERRNO=-1;
+  @SuppressWarnings("unused")
+static final private int Z_NEED_DICT=2;
+  @SuppressWarnings("unused")
+static final private int Z_ERRNO=-1;
   static final private int Z_STREAM_ERROR=-2;
   static final private int Z_DATA_ERROR=-3;
-  static final private int Z_MEM_ERROR=-4;
-  static final private int Z_BUF_ERROR=-5;
-  static final private int Z_VERSION_ERROR=-6;
+  @SuppressWarnings("unused")
+static final private int Z_MEM_ERROR=-4;
+  @SuppressWarnings("unused")
+static final private int Z_BUF_ERROR=-5;
+  @SuppressWarnings("unused")
+static final private int Z_VERSION_ERROR=-6;
 
   // waiting for "i:"=input,
   //             "o:"=output,
@@ -89,9 +94,11 @@ final class InfCodes{
   int[] dtree;          // distance tree
   int dtree_index;      // distance tree
 
-  private final ZStream z;
+  @SuppressWarnings("deprecation")
+private final ZStream z;
   private final InfBlocks s;
-  InfCodes(ZStream z, InfBlocks s){
+  @SuppressWarnings("deprecation")
+InfCodes(ZStream z, InfBlocks s){
     this.z=z; 
     this.s=s; 
   }
@@ -109,7 +116,8 @@ final class InfCodes{
     tree=null;
   }
 
-  int proc(int r){ 
+  @SuppressWarnings({ "deprecation", "unused" })
+int proc(int r){ 
     int j;              // temporary storage
     int[] t;            // temporary pointer
     int tindex;         // temporary pointer
@@ -394,7 +402,8 @@ final class InfCodes{
     }
   }
 
-  void free(ZStream z){
+  @SuppressWarnings("deprecation")
+void free(ZStream z){
     //  ZFREE(z, c);
   }
 
@@ -403,7 +412,8 @@ final class InfCodes{
   // at least ten.  The ten bytes are six bytes for the longest length/
   // distance pair plus four bytes for overloading the bit buffer.
 
-  int inflate_fast(int bl, int bd, 
+  @SuppressWarnings("deprecation")
+int inflate_fast(int bl, int bd, 
 		   int[] tl, int tl_index,
 		   int[] td, int td_index,
 		   InfBlocks s, ZStream z){

@@ -106,7 +106,8 @@ class Util{
 //    return sun.misc.BASE64Encoder().encode(buf);
   }
 
-  static String[] split(String foo, String split){
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+static String[] split(String foo, String split){
     if(foo==null)
       return null;
     byte[] buf=Util.str2byte(foo);

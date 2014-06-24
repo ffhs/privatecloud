@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import android.content.res.AssetManager;
 import android.content.Context;
 import android.util.Log;
@@ -65,6 +66,7 @@ public class RsaKeyGen {
 			out.write(buffer, 0, read);
 		}
 	}
+
 
 	public String GenerateKey(String keysmallname) {
 		JSch jsch = new JSch();

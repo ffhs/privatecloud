@@ -107,7 +107,8 @@ public void write(byte b[], int off, int len) throws IOException {
     this.flush=flush;
   }
 
-  public void finish() throws IOException {
+  @SuppressWarnings("unused")
+public void finish() throws IOException {
     int err;
     if(compress){
       int tmp = flush;

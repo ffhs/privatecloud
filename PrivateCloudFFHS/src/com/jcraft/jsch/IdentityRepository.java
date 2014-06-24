@@ -37,7 +37,8 @@ public interface IdentityRepository {
   public static final int RUNNING=2;
   public String getName();
   public int getStatus();
-  public Vector getIdentities();
+  @SuppressWarnings("rawtypes")
+public Vector getIdentities();
   public boolean add(byte[] identity);
   public boolean remove(byte[] blob);
   public void removeAll();
@@ -51,7 +52,8 @@ public interface IdentityRepository {
    */
   static class Wrapper implements IdentityRepository {
     private IdentityRepository ir;
-    private Vector cache = new Vector();
+    @SuppressWarnings("rawtypes")
+	private Vector cache = new Vector();
     private boolean keep_in_cache = false;
     Wrapper(IdentityRepository ir){
       this(ir, false);
@@ -81,7 +83,8 @@ public interface IdentityRepository {
       cache.removeAllElements();
       ir.removeAll();
     }
-    @Override
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	public Vector getIdentities() {
       Vector result = new Vector();
       for(int i = 0; i< cache.size(); i++){
@@ -94,7 +97,8 @@ public interface IdentityRepository {
       }
       return result;
     }
-    void add(Identity identity) {
+    @SuppressWarnings("unchecked")
+	void add(Identity identity) {
       if(!keep_in_cache && 
          !identity.isEncrypted() && (identity instanceof IdentityFile)) {
         try {

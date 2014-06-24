@@ -36,7 +36,8 @@ package com.jcraft.jzlib;
 
 final class Inflate{
   
-  static final private int MAX_WBITS=15; // 32K LZ77 window
+  @SuppressWarnings("unused")
+static final private int MAX_WBITS=15; // 32K LZ77 window
 
   // preset dictionary flag in zlib header
   static final private int PRESET_DICT=0x20;
@@ -52,15 +53,20 @@ final class Inflate{
   static final private int Z_OK=0;
   static final private int Z_STREAM_END=1;
   static final private int Z_NEED_DICT=2;
-  static final private int Z_ERRNO=-1;
+  @SuppressWarnings("unused")
+static final private int Z_ERRNO=-1;
   static final private int Z_STREAM_ERROR=-2;
   static final private int Z_DATA_ERROR=-3;
-  static final private int Z_MEM_ERROR=-4;
+  @SuppressWarnings("unused")
+static final private int Z_MEM_ERROR=-4;
   static final private int Z_BUF_ERROR=-5;
-  static final private int Z_VERSION_ERROR=-6;
+  @SuppressWarnings("unused")
+static final private int Z_VERSION_ERROR=-6;
 
-  static final private int METHOD=0;   // waiting for method byte
-  static final private int FLAG=1;     // waiting for flag byte
+  @SuppressWarnings("unused")
+static final private int METHOD=0;   // waiting for method byte
+  @SuppressWarnings("unused")
+static final private int FLAG=1;     // waiting for flag byte
   static final private int DICT4=2;    // four dictionary check bytes to go
   static final private int DICT3=3;    // three dictionary check bytes to go
   static final private int DICT2=4;    // two dictionary check bytes to go
@@ -110,7 +116,8 @@ final class Inflate{
 
   InfBlocks blocks;     // current inflate_blocks state
 
-  private final ZStream z;
+  @SuppressWarnings("deprecation")
+private final ZStream z;
 
   private int flags; 
 
@@ -119,7 +126,8 @@ final class Inflate{
 
   GZIPHeader gheader = null;
 
-  int inflateReset(){
+  @SuppressWarnings("deprecation")
+int inflateReset(){
     if(z == null) return Z_STREAM_ERROR;
     
     z.total_in = z.total_out = 0;
@@ -137,11 +145,13 @@ final class Inflate{
     return Z_OK;
   }
 
-  Inflate(ZStream z){
+  @SuppressWarnings("deprecation")
+Inflate(ZStream z){
     this.z=z;
   }
 
-  int inflateInit(int w){
+  @SuppressWarnings("deprecation")
+int inflateInit(int w){
     z.msg = null;
     blocks = null;
 
@@ -186,7 +196,8 @@ final class Inflate{
     return Z_OK;
   }
 
-  int inflate(int f){
+  @SuppressWarnings({ "deprecation", "unused" })
+int inflate(int f){
     int hold = 0;
 
     int r;
@@ -564,7 +575,8 @@ final class Inflate{
     }
   }
 
-  int inflateSetDictionary(byte[] dictionary, int dictLength){
+  @SuppressWarnings("deprecation")
+int inflateSetDictionary(byte[] dictionary, int dictLength){
     if(z==null || (this.mode != DICT0 && this.wrap != 0)){
       return Z_STREAM_ERROR;
     }
@@ -594,7 +606,8 @@ final class Inflate{
 
   static private byte[] mark = {(byte)0, (byte)0, (byte)0xff, (byte)0xff};
 
-  int inflateSync(){
+  @SuppressWarnings("deprecation")
+int inflateSync(){
     int n;       // number of bytes to look at
     int p;       // pointer to bytes
     int m;       // number of marker bytes found in a row
@@ -656,7 +669,8 @@ final class Inflate{
     return this.blocks.sync_point();
   }
 
-  private int readBytes(int n, int r, int f) throws Return{
+  @SuppressWarnings("deprecation")
+private int readBytes(int n, int r, int f) throws Return{
     if(need_bytes == -1){
       need_bytes=n;
       this.need=0;
@@ -677,13 +691,15 @@ final class Inflate{
     need_bytes=-1;
     return r;
   }
-  class Return extends Exception{
+  @SuppressWarnings("serial")
+class Return extends Exception{
     int r;
     Return(int r){this.r=r; }
   }
 
   private java.io.ByteArrayOutputStream tmp_string = null;
-  private int readString(int r, int f) throws Return{
+  @SuppressWarnings("deprecation")
+private int readString(int r, int f) throws Return{
     if(tmp_string == null){
       tmp_string=new java.io.ByteArrayOutputStream();
     }
@@ -699,7 +715,8 @@ final class Inflate{
     return r;
   }
 
-  private int readBytes(int r, int f) throws Return{
+  @SuppressWarnings({ "unused", "deprecation" })
+private int readBytes(int r, int f) throws Return{
     if(tmp_string == null){
       tmp_string=new java.io.ByteArrayOutputStream();
     }
@@ -716,7 +733,8 @@ final class Inflate{
     return r;
   }
 
-  private void checksum(int n, long v){
+  @SuppressWarnings("deprecation")
+private void checksum(int n, long v){
     for(int i=0; i<n; i++){
       crcbuf[i]=(byte)(v&0xff);
       v>>=8;
