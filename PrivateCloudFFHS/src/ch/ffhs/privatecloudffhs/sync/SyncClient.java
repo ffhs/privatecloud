@@ -34,14 +34,11 @@ public class SyncClient extends AsyncTask<String, String, String> {
 
 	private boolean syncerror = false;
 	public SyncClient(Context context, Folder folder, SyncConnection syncConnectionObj, Server server) {
-
-
 		super();
 		this.folder = folder;
 		this.syncConnectionObj = syncConnectionObj;
 		this.server = server;
 		this.context = context;
-
 		db = new PrivateCloudDatabase(context);
 	}
 
@@ -55,21 +52,19 @@ public class SyncClient extends AsyncTask<String, String, String> {
 		percent = 0;
 		filecount = 0;
 		syncLocalDirectory(file);
-
-		syncRemoteFile(server.getRemoteroot() + folder.getPath());
-
-		folder.setLastsync(new Date());
-
-		db.updateFolder(folder);
-
+		if(!syncerror)
+		{
+			syncRemoteFile(server.getRemoteroot() + folder.getPath());
+		}
 		if(syncerror)
 		{
 			connectionError();
-		}
-		else
+		}else
 		{
-		//mark as done
-		publishProgress("", "100", "1");
+			folder.setLastsync(new Date());
+			db.updateFolder(folder);
+			//mark as done
+			publishProgress("", "100", "1");
 		}
 		db.close();
 	}
@@ -84,25 +79,20 @@ public class SyncClient extends AsyncTask<String, String, String> {
 
 	private void syncLocalDirectory(File dir) {
 		File[] localFiles = dir.listFiles();
-
-   		
-		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());	
-		
+		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());
 		Log.d("jada","Dir"+dir.getAbsolutePath());
 		Log.d("jada","files:"+localFiles);
 	   for (File file : localFiles) {
 		   	if(syncerror){
 		   		connectionError();
-		   		
-		   	}else
+		   	}
+		   	else
 		   	{
-			   	
 			   	if(file.isDirectory())
 				{
 			   		syncLocalDirectory(file);
 				}
 				else{
-	
 					filecount++;
 					percent = filecount * 100 / maxfiles;
 					Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
@@ -122,7 +112,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 						if(cachedFile==null)
 						{
 							syncerror=true;
-						}
+						}else
 						{
 							db.createFile(cachedFile);
 							Log.d("SYNC SSHPW", "NEW FILE SYNC ...");
@@ -267,24 +257,18 @@ public class SyncClient extends AsyncTask<String, String, String> {
 			syncFile.setLocalCheckSum(getLocalCheckSum(file.getPath())); 	
 			return syncFile;
 		}
-
-			
-
-		
 	}
 
 
 
 	private SyncFile downloadFile(File file, SyncFile syncFile) {
 		syncFile = syncConnectionObj.downloadFile(file, syncFile);
-
 		try {
 			syncFile.setLocalCheckSum(getLocalCheckSum(file.getPath()));
 		} catch (Exception e) {
 			syncerror = true;
 			e.printStackTrace();
 		} 	
-
 		return syncFile;
 	}
 	private void connectionError(){
@@ -331,9 +315,9 @@ public class SyncClient extends AsyncTask<String, String, String> {
 	
 	private String getRemoteCheckSum(String filePath)
 	{
+		String remoteChecksum = "wsjdio";
 		try {
-			String remoteChecksum = syncConnectionObj.getRemoteCheckSum(filePath);
-			return remoteChecksum;
+			remoteChecksum = syncConnectionObj.getRemoteCheckSum(filePath);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			syncerror = true;
@@ -341,6 +325,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 			return null;
 			
 		}
+		return remoteChecksum;
 	}
 		
 
