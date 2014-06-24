@@ -33,30 +33,31 @@ import com.jcraft.jzlib.*;
 public class Compression implements com.jcraft.jsch.Compression {
   static private final int BUF_SIZE=4096;
   private final int buffer_margin=32+20; // AES256 + HMACSHA1
-  private int type;
-  private ZStream stream;
+  @SuppressWarnings("deprecation")
+private ZStream stream;
   private byte[] tmpbuf=new byte[BUF_SIZE];
 
-  public Compression(){
+  @SuppressWarnings("deprecation")
+public Compression(){
     stream=new ZStream();
   }
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
 public void init(int type, int level){
     if(type==DEFLATER){
       stream.deflateInit(level);
-      this.type=DEFLATER;
     }
     else if(type==INFLATER){
       stream.inflateInit();
       inflated_buf=new byte[BUF_SIZE];
-      this.type=INFLATER;
     }
   }
 
   private byte[] inflated_buf;
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
 public byte[] compress(byte[] buf, int start, int[] len){
     stream.next_in=buf;
     stream.next_in_index=start;
@@ -92,7 +93,8 @@ public byte[] compress(byte[] buf, int start, int[] len){
     return outputbuf;
   }
 
-  @Override
+  @SuppressWarnings("deprecation")
+@Override
 public byte[] uncompress(byte[] buffer, int start, int[] length){
     int inflated_end=0;
 

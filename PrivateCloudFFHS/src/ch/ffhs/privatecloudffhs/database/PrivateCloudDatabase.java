@@ -484,15 +484,14 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 
 	public int updateServer(Server server) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		String password = "";
-		String certPath = "";
 
-		if (server.getPassword() != null) {
-			password = server.getPassword();
-		}
-		if (server.getCertpath() != null) {
-			certPath = server.getCertpath();
-		}
+
+//		if (server.getPassword() != null) {
+//			String password = server.getPassword();
+//		}
+//		if (server.getCertpath() != null) {
+//			String certPath = server.getCertpath();
+//		}
 
 		ContentValues values = new ContentValues();
 		values.put(KEY_SERVERNAME, server.getServername());

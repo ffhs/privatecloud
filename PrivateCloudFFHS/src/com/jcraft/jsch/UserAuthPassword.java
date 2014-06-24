@@ -32,7 +32,8 @@ package com.jcraft.jsch;
 class UserAuthPassword extends UserAuth{
   private final int SSH_MSG_USERAUTH_PASSWD_CHANGEREQ=60;
 
-  @Override
+  @SuppressWarnings("unused")
+@Override
 public boolean start(Session session) throws Exception{
     super.start(session);
 

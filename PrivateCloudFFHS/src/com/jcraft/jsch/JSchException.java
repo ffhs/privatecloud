@@ -29,6 +29,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.jcraft.jsch;
 
+@SuppressWarnings("serial")
 public class JSchException extends Exception{
   //private static final long serialVersionUID=-1319309923966731989L;
   private Throwable cause=null;

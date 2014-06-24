@@ -67,7 +67,8 @@ public class DHGEX extends KeyExchange{
   private byte[] e;
   //private byte[] f;
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public void init(Session session,
 		   byte[] V_S, byte[] V_C, byte[] I_S, byte[] I_C) throws Exception{
     this.session=session;
@@ -115,7 +116,8 @@ public void init(Session session,
     state=SSH_MSG_KEX_DH_GEX_GROUP;
   }
 
-  @Override
+  @SuppressWarnings("rawtypes")
+@Override
 public boolean next(Buffer _buf) throws Exception{
     int i,j;
     switch(state){

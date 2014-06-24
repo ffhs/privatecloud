@@ -46,7 +46,8 @@ public class ProxySOCKS4 implements Proxy{
   private OutputStream out;
   private Socket socket;
   private String user;
-  private String passwd;
+  @SuppressWarnings("unused")
+private String passwd;
 
   public ProxySOCKS4(String proxy_host){
     int port=DEFAULTPORT;

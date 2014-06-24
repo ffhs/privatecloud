@@ -12,11 +12,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-//import android.content.DialogInterface.OnKeyListener;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Gravity;
-//import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -25,6 +22,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * SimpleFileDialog
+ * 
+ * Wird verwendet um den zu synchronisierenden Ordner auszuwählen
+ *  
+ * @author         Thierry Baumann
+ */
 public class SimpleFileDialog 
 {
 	private String m_sdcardDirectory = "";
@@ -32,7 +36,9 @@ public class SimpleFileDialog
 	private TextView m_titleView1;
 	private TextView m_titleView;
 	public String Default_File_Name = "default.txt";
+	@SuppressWarnings("unused")
 	private String Selected_File_Name = Default_File_Name;
+	@SuppressWarnings("unused")
 	private EditText input_text;
 	
 	private String m_dir = "";
@@ -115,13 +121,8 @@ public class SimpleFileDialog
 				}
 				else
 				{
-				Log.d("SYNC TEST3", String.valueOf(sel.charAt(0)));
-				Log.d("SYNC TEST3 -1", m_dir);
-				
 					if(sel.charAt(1) != '/') m_dir += "/";
 					m_dir += sel;
-					Log.d("SYNC TEST3 -2", m_dir);
-					
 				}
 				
 				Selected_File_Name = Default_File_Name;
@@ -160,6 +161,7 @@ public class SimpleFileDialog
 		dirsDialog.show();
 	}
 
+	@SuppressWarnings("unused")
 	private boolean createSubDir(String newDir)
 	{
 		File newDirFile = new File(newDir);

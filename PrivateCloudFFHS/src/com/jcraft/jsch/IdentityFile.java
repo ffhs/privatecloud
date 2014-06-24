@@ -30,7 +30,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.jcraft.jsch;
 
 class IdentityFile implements Identity{
-  private JSch jsch;
+  @SuppressWarnings("unused")
+private JSch jsch;
   private KeyPair kpair;
   private String identity;
 

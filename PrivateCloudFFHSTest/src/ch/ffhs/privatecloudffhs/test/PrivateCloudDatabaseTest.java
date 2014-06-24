@@ -1,12 +1,9 @@
 package ch.ffhs.privatecloudffhs.test;
 
-import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 
-import android.content.Context;
 import android.test.AndroidTestCase;
-import android.util.Log;
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
@@ -126,18 +123,5 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 			}
 		}
 		privateCloudDatabase.close();
-	}
-	private Context getTestContext()
-	{
-	    try
-	    {
-	        Method getTestContext = PrivateCloudDatabase.class.getMethod("getTestContext");
-	        return (Context) getTestContext.invoke(this);
-	    }
-	    catch (final Exception exception)
-	    {
-	        exception.printStackTrace();
-	        return null;
-	    }
 	}
 }

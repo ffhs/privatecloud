@@ -364,7 +364,8 @@ public abstract class KeyPair{
     return j;
   }
 
-  private Random genRandom(){
+  @SuppressWarnings("rawtypes")
+private Random genRandom(){
     if(random==null){
       try{
 	Class c=Class.forName(JSch.getConfig("random"));
@@ -375,7 +376,8 @@ public abstract class KeyPair{
     return random;
   }
 
-  private HASH genHash(){
+  @SuppressWarnings("rawtypes")
+private HASH genHash(){
     try{
       Class c=Class.forName(JSch.getConfig("md5"));
       hash=(HASH)(c.newInstance());
@@ -385,7 +387,8 @@ public abstract class KeyPair{
     }
     return hash;
   }
-  private Cipher genCipher(){
+  @SuppressWarnings("rawtypes")
+private Cipher genCipher(){
     try{
       Class c;
       c=Class.forName(JSch.getConfig("3des-cbc"));
@@ -402,7 +405,8 @@ public abstract class KeyPair{
     h(n) <- hash(h(n-1), passphrase, iv);
     key <- (h(0),...,h(n))[0,..,key.length];
   */
-  synchronized byte[] genKey(byte[] passphrase, byte[] iv){
+  @SuppressWarnings("rawtypes")
+synchronized byte[] genKey(byte[] passphrase, byte[] iv){
     if(cipher==null) cipher=genCipher();
     if(hash==null) hash=genHash();
 
@@ -548,7 +552,8 @@ public void setPassphrase(byte[] passphrase){
     }
   }
 
-  public static KeyPair load(JSch jsch, byte[] prvkey, byte[] pubkey) throws JSchException{
+  @SuppressWarnings({ "rawtypes", "unused" })
+public static KeyPair load(JSch jsch, byte[] prvkey, byte[] pubkey) throws JSchException{
 
     byte[] iv=new byte[8];       // 8
     boolean encrypted=true;
@@ -926,22 +931,26 @@ public void finalize (){
     dispose();
   }
 
-  private static final String[] header1 = {
+  @SuppressWarnings("unused")
+private static final String[] header1 = {
     "PuTTY-User-Key-File-2: ",
     "Encryption: ",
     "Comment: ",
     "Public-Lines: "
   };
 
-  private static final String[] header2 = {
+  @SuppressWarnings("unused")
+private static final String[] header2 = {
     "Private-Lines: "
   };
 
-  private static final String[] header3 = {
+  @SuppressWarnings("unused")
+private static final String[] header3 = {
     "Private-MAC: "
   };
 
-  static KeyPair loadPPK(JSch jsch, byte[] buf) throws JSchException {
+  @SuppressWarnings({ "rawtypes", "unused" })
+static KeyPair loadPPK(JSch jsch, byte[] buf) throws JSchException {
     byte[] pubkey = null;
     byte[] prvkey = null;
     int lines = 0;
@@ -1079,7 +1088,8 @@ public void finalize (){
     return data;
   }
 
-  private static boolean parseHeader(Buffer buffer, java.util.Hashtable v){
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+private static boolean parseHeader(Buffer buffer, java.util.Hashtable v){
     byte[] buf = buffer.buffer;
     int index = buffer.index;
     String key = null;
@@ -1129,7 +1139,8 @@ public void finalize (){
     this.cipher=kpair.cipher;
   }
 
-  class ASN1Exception extends Exception {
+  @SuppressWarnings("serial")
+class ASN1Exception extends Exception {
   }
 
   class ASN1 {
@@ -1180,7 +1191,8 @@ public void finalize (){
       System.arraycopy(buf, index, tmp, 0, tmp.length);
       return tmp;
     }
-    ASN1[] getContents() throws ASN1Exception {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	ASN1[] getContents() throws ASN1Exception {
       int typ = buf[start];
       int[] indexp=new int[1];
       indexp[0]=start+1;

@@ -33,7 +33,8 @@ import java.util.Vector;
 
 class UserAuthPublicKey extends UserAuth{
 
-  @Override
+  @SuppressWarnings({ "rawtypes", "unused" })
+@Override
 public boolean start(Session session) throws Exception{
     super.start(session);
 

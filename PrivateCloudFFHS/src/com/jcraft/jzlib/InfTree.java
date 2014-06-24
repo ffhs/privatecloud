@@ -39,14 +39,9 @@ final class InfTree{
   static final private int MANY=1440;
 
   static final private int Z_OK=0;
-  static final private int Z_STREAM_END=1;
-  static final private int Z_NEED_DICT=2;
-  static final private int Z_ERRNO=-1;
-  static final private int Z_STREAM_ERROR=-2;
   static final private int Z_DATA_ERROR=-3;
   static final private int Z_MEM_ERROR=-4;
   static final private int Z_BUF_ERROR=-5;
-  static final private int Z_VERSION_ERROR=-6;
 
   static final int fixed_bl = 9;
   static final int fixed_bd = 5;
@@ -416,7 +411,8 @@ final class InfTree{
     return y != 0 && g != 1 ? Z_BUF_ERROR : Z_OK;
   }
 
-  int inflate_trees_bits(int[] c,  // 19 code lengths
+  @SuppressWarnings("deprecation")
+int inflate_trees_bits(int[] c,  // 19 code lengths
                          int[] bb, // bits tree desired/actual depth
                          int[] tb, // bits tree result
                          int[] hp, // space for trees
@@ -437,7 +433,8 @@ final class InfTree{
     return result;
   }
 
-  int inflate_trees_dynamic(int nl,   // number of literal/length codes
+  @SuppressWarnings("deprecation")
+int inflate_trees_dynamic(int nl,   // number of literal/length codes
                             int nd,   // number of distance codes
                             int[] c,  // that many (total) code lengths
                             int[] bl, // literal desired/actual bit depth
@@ -486,7 +483,8 @@ final class InfTree{
     return Z_OK;
   }
 
-  static int inflate_trees_fixed(int[] bl,  //literal desired/actual bit depth
+  @SuppressWarnings("deprecation")
+static int inflate_trees_fixed(int[] bl,  //literal desired/actual bit depth
                                  int[] bd,  //distance desired/actual bit depth
                                  int[][] tl,//literal/length tree result
                                  int[][] td,//distance tree result 

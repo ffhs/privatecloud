@@ -46,8 +46,10 @@ class ChannelX11 extends Channel{
   static byte[] cookie=null;
   private static byte[] cookie_hex=null;
 
-  private static java.util.Hashtable faked_cookie_pool=new java.util.Hashtable();
-  private static java.util.Hashtable faked_cookie_hex_pool=new java.util.Hashtable();
+  @SuppressWarnings("rawtypes")
+private static java.util.Hashtable faked_cookie_pool=new java.util.Hashtable();
+  @SuppressWarnings("rawtypes")
+private static java.util.Hashtable faked_cookie_hex_pool=new java.util.Hashtable();
 
   private static byte[] table={0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,
                                0x61,0x62,0x63,0x64,0x65,0x66};
@@ -70,7 +72,8 @@ class ChannelX11 extends Channel{
   }
   static void setHost(String foo){ host=foo; }
   static void setPort(int foo){ port=foo; }
-  static byte[] getFakedCookie(Session session){
+  @SuppressWarnings("unchecked")
+static byte[] getFakedCookie(Session session){
     synchronized(faked_cookie_hex_pool){
       byte[] foo=(byte[])faked_cookie_hex_pool.get(session);
       if(foo==null){

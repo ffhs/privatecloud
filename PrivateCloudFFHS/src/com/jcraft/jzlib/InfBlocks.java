@@ -52,13 +52,17 @@ final class InfBlocks{
 
   static final private int Z_OK=0;
   static final private int Z_STREAM_END=1;
-  static final private int Z_NEED_DICT=2;
-  static final private int Z_ERRNO=-1;
+  @SuppressWarnings("unused")
+static final private int Z_NEED_DICT=2;
+  @SuppressWarnings("unused")
+static final private int Z_ERRNO=-1;
   static final private int Z_STREAM_ERROR=-2;
   static final private int Z_DATA_ERROR=-3;
-  static final private int Z_MEM_ERROR=-4;
+  @SuppressWarnings("unused")
+static final private int Z_MEM_ERROR=-4;
   static final private int Z_BUF_ERROR=-5;
-  static final private int Z_VERSION_ERROR=-6;
+  @SuppressWarnings("unused")
+static final private int Z_VERSION_ERROR=-6;
 
   static final private int TYPE=0;  // get type bits (3, including end bit)
   static final private int LENS=1;  // get lengths for stored
@@ -105,9 +109,11 @@ final class InfBlocks{
 
   private final InfTree inftree=new InfTree();
 
-  private final ZStream z; 
+  @SuppressWarnings("deprecation")
+private final ZStream z; 
 
-  InfBlocks(ZStream z, int w){
+  @SuppressWarnings("deprecation")
+InfBlocks(ZStream z, int w){
     this.z=z;
     this.codes=new InfCodes(this.z, this);
     hufts=new int[MANY*3];
@@ -118,7 +124,8 @@ final class InfBlocks{
     reset();
   }
 
-  void reset(){
+  @SuppressWarnings("deprecation")
+void reset(){
     if(mode==BTREE || mode==DTREE){
     }
     if(mode==CODES){
@@ -133,7 +140,8 @@ final class InfBlocks{
     }
   }
 
-  int proc(int r){
+  @SuppressWarnings({ "deprecation", "unused" })
+int proc(int r){
     int t;              // temporary storage
     int b;              // bit buffer
     int k;              // bits in bit buffer
@@ -549,7 +557,8 @@ final class InfBlocks{
   }
 
   // copy as much as possible from the sliding window to the output area
-  int inflate_flush(int r){
+  @SuppressWarnings("deprecation")
+int inflate_flush(int r){
     int n;
     int p;
     int q;

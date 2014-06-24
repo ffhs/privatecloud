@@ -57,32 +57,38 @@ public class GZIPOutputStream extends DeflaterOutputStream {
   }
 
 
-  private void check() throws GZIPException {
+  @SuppressWarnings("deprecation")
+private void check() throws GZIPException {
     if(deflater.dstate.status != 42 /*INIT_STATUS*/)
       throw new GZIPException("header is already written.");
   }
 
-  public void setModifiedTime(long mtime) throws GZIPException {
+  @SuppressWarnings("deprecation")
+public void setModifiedTime(long mtime) throws GZIPException {
     check();
     deflater.dstate.getGZIPHeader().setModifiedTime(mtime);
   }
 
-  public void setOS(int os) throws GZIPException {
+  @SuppressWarnings("deprecation")
+public void setOS(int os) throws GZIPException {
     check();
     deflater.dstate.getGZIPHeader().setOS(os);
   }
 
-  public void setName(String name) throws GZIPException {
+  @SuppressWarnings("deprecation")
+public void setName(String name) throws GZIPException {
     check();
     deflater.dstate.getGZIPHeader().setName(name);
   }
 
-  public void setComment(String comment) throws GZIPException {
+  @SuppressWarnings("deprecation")
+public void setComment(String comment) throws GZIPException {
     check();
     deflater.dstate.getGZIPHeader().setComment(comment);
   }
 
-  public long getCRC() throws GZIPException {
+  @SuppressWarnings("deprecation")
+public long getCRC() throws GZIPException {
     if(deflater.dstate.status != 666 /*FINISH_STATE*/)
       throw new GZIPException("checksum is not calculated yet.");
     return deflater.dstate.getGZIPHeader().getCRC();
