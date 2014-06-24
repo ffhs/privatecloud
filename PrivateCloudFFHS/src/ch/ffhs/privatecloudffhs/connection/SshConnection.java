@@ -143,21 +143,23 @@ public class SshConnection implements SyncConnection {
 	public String getRemoteCheckSum(String filePath) {
 		String result = "";
 
-		Log.d("jada", "Getting remote checksum");
+		Log.d("sshconnection", "Getting remote checksum");
 		StringBuilder command = new StringBuilder();
 		command.append("md5sum").append(" ");
 		command.append("\"").append(remoteDir).append(filePath).append("\"");
 
 		try {
 			result = sendCommand(command.toString());
+			Log.d("sshconnection", "Got remote checksum");
+			if (result.length() > 32) return result.substring(0, 32);
+			return result; 
 		} catch (Exception e) {
+			
 			System.out.println(e);
 		}
-
-		Log.d("jada", "Got remote checksum");
-		if (result.length() > 32)
-			return result.substring(0, 32);
-		return result;
+		return null;
+		
+		
 	}
 
 	@Override

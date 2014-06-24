@@ -2,6 +2,7 @@ package ch.ffhs.privatecloudffhs.sync;
 
 import java.io.File;
 import java.io.FileInputStream;
+
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.Date;
@@ -12,13 +13,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+
 import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
 
 public class SyncClient extends AsyncTask<String, String, String> {
-
+ 
 	private Folder folder;
 	private Server server;
 	private Boolean running;
@@ -30,8 +32,10 @@ public class SyncClient extends AsyncTask<String, String, String> {
 	private int maxfiles;
 	private int percent;
 
-	public SyncClient(Context context, Folder folder,
-			SyncConnection syncConnectionObj, Server server) {
+	private boolean syncerror = false;
+	public SyncClient(Context context, Folder folder, SyncConnection syncConnectionObj, Server server) {
+
+
 		super();
 		this.folder = folder;
 		this.syncConnectionObj = syncConnectionObj;
@@ -58,9 +62,15 @@ public class SyncClient extends AsyncTask<String, String, String> {
 
 		db.updateFolder(folder);
 
-		// mark as done
+		if(syncerror)
+		{
+			connectionError();
+		}
+		else
+		{
+		//mark as done
 		publishProgress("", "100", "1");
-
+		}
 		db.close();
 	}
 
@@ -75,71 +85,110 @@ public class SyncClient extends AsyncTask<String, String, String> {
 	private void syncLocalDirectory(File dir) {
 		File[] localFiles = dir.listFiles();
 
-		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());
-
-		for (File file : localFiles) {
-			if (file.isDirectory()) {
-				syncLocalDirectory(file);
-			} else {
-
-				filecount++;
-				percent = filecount * 100 / maxfiles;
-				Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:"  + filecount + " result:" + percent);
-				publishProgress(dir.getAbsolutePath(), Integer.toString(percent));
-				
-				syncConnectionObj.initFolderSync(server.getRemoteroot() + dir.getPath());
-
-				SyncFile cachedFile = db.getFile(file.getPath(), folder.getId());
-
-				String localCheckSum = getLocalCheckSum(file.getPath());
-				String remoteCheckSum = getRemoteCheckSum(file.getPath());
-
-				// first run
-				if (cachedFile == null) {
-					cachedFile = new SyncFile(folder.getId(), file.getPath());
-					cachedFile = uploadFile(file, cachedFile);
-
-					db.createFile(cachedFile);
-					Log.d("SYNC SSHPW", "NEW FILE SYNC ...");
-				} else {
-					if (!cachedFile.isConflict()) {
-						if (cachedFile.getRemoteCheckSum() == null || remoteCheckSum.isEmpty()) {
-							Log.d("SYNC SSHPW", "REMOTE NULL UPLOAD...");
-
-							cachedFile = uploadFile(file, cachedFile);
-						} else if (cachedFile.getLocalCheckSum() == null) {
-							Log.d("SYNC SSHPW", "LOCAL NULL DOWNLOAD...");
-
-							cachedFile = downloadFile(file, cachedFile);
-						}
-						// check if remote has been changed since last sync
-						else if (cachedFile.getRemoteCheckSum().equals(remoteCheckSum)) {
-							if (!cachedFile.getLocalCheckSum().equals(localCheckSum)) {
-								Log.d("SYNC SSHPW", "LOCAL CHANGED UPLOAD...");
-								
-								cachedFile = uploadFile(file, cachedFile);
-							}
-						}
-						// file has been changed on remote srv
-						else {
-							// check if file has been changed on the mobile device
-							if (cachedFile.getLocalCheckSum().equals(localCheckSum)) {
-								cachedFile = downloadFile(file, cachedFile);
-								Log.d("SYNC SSHPW", "FILE DOWNLOADED...");
-							} else {
-								// !conflict! file has been changed on remote srv and local device
-								cachedFile.setConflict(true);
-								Log.d("SYNC SSHPW", "FILE CHANGED REMOTE AND LOCAL...");
-							}
-						}
-
-						db.updateFile(cachedFile);
-					} else {
-						Log.d("SYNC SSHPW", "CONFILCT FILE");
-					}
+   		
+		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());	
+		
+		Log.d("jada","Dir"+dir.getAbsolutePath());
+		Log.d("jada","files:"+localFiles);
+	   for (File file : localFiles) {
+		   	if(syncerror){
+		   		connectionError();
+		   		
+		   	}else
+		   	{
+			   	
+			   	if(file.isDirectory())
+				{
+			   		syncLocalDirectory(file);
 				}
-			}
-		}
+				else{
+	
+					filecount++;
+					percent = filecount * 100 / maxfiles;
+					Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
+					publishProgress(dir.getAbsolutePath(), Integer.toString(percent));
+			   		syncConnectionObj.initFolderSync(server.getRemoteroot() + dir.getPath());			
+	
+					SyncFile cachedFile = db.getFile(file.getPath(), folder.getId());
+					
+					String localCheckSum = getLocalCheckSum(file.getPath());
+					String remoteCheckSum = getRemoteCheckSum(file.getPath());
+	
+					// first run
+					if(cachedFile == null)
+					{
+						cachedFile = new SyncFile(folder.getId(), file.getPath());
+						cachedFile = uploadFile(file, cachedFile);
+						if(cachedFile==null)
+						{
+							syncerror=true;
+						}
+						{
+							db.createFile(cachedFile);
+							Log.d("SYNC SSHPW", "NEW FILE SYNC ...");
+						}
+					}
+					else
+					{
+						if(!cachedFile.isConflict())
+						{
+							if(cachedFile != null && file != null && remoteCheckSum != null) 
+							{
+								if(cachedFile.getRemoteCheckSum() == null || remoteCheckSum.isEmpty())
+								{
+									Log.d("SYNC SSHPW", "REMOTE NULL UPLOAD...");
+									cachedFile = uploadFile(file, cachedFile);
+								}
+								else if(cachedFile.getLocalCheckSum() == null)
+								{
+									Log.d("SYNC SSHPW", "LOCAL NULL DOWNLOAD...");
+		
+									cachedFile = downloadFile(file, cachedFile);
+								}
+								// check if remote has been changed since last sync
+								else if(cachedFile.getRemoteCheckSum().equals(remoteCheckSum))
+								{
+									if(!cachedFile.getLocalCheckSum().equals(localCheckSum))
+									{			
+										Log.d("SYNC SSHPW", "LOCAL CHANGED UPLOAD...");
+		
+										cachedFile = uploadFile(file, cachedFile);
+									}					
+								}
+								// file has been changed on remote srv
+								else 
+								{
+									// check if file has been changed on the mobile device
+									if(cachedFile.getLocalCheckSum().equals(localCheckSum))
+									{
+										cachedFile = downloadFile(file, cachedFile);
+										Log.d("SYNC SSHPW", "FILE DOWNLOADED...");
+									}
+									else
+									{
+										// !conflict! file has been changed on remote srv and local device
+										cachedFile.setConflict(true);
+										Log.d("SYNC SSHPW", "FILE CHANGED REMOTE AND LOCAL...");
+									}
+								}					
+								if(cachedFile != null)
+								{
+									db.updateFile(cachedFile);
+								}
+							}
+						}
+						else
+						{
+							Log.d("SYNC SSHPW", "CONFILCT FILE");
+						}
+					}
+				}	
+		   	}
+
+	   }
+
+
+
 		// this.cancel(isRunning());
 		// this.cancel(isCancelled());
 	}
@@ -150,51 +199,99 @@ public class SyncClient extends AsyncTask<String, String, String> {
 		Log.e("SYNC CLIENT REMOTE PATH", path);
 		filecount = 0;
 		percent = 0;
-		maxfiles = remoteList.size();
-		for (LsEntry remoteObj : remoteList) {
-			String fileName = remoteObj.getFilename();
-			Log.d("jada", "Processing remote File:" + fileName);
-			if (!fileName.equals(".") && !fileName.equals("..")) {
-				if (remoteObj.getLongname().substring(0, 1).equals("d")) {
-					syncRemoteFile(path + "/" + remoteObj.getFilename());
-				} else {
-					String localPath = path.replace(server.getRemoteroot()
-							+ "/", "")
-							+ "/" + fileName;
 
-					if (db.getFile(localPath, folder.getId()) == null) {
-						Log.d("jada", "Remote file not held locally, Localpath:" + localPath);
-						File file = new File(localPath);
-
-						SyncFile syncFile = new SyncFile(folder.getId(), localPath);
-						syncFile = downloadFile(file, syncFile);
-
-						db.createFile(syncFile);
-					}
-				}
-			}
+		if(remoteList==null)
+		{
+			connectionError();
+			syncerror = true;	
+		}
+		else
+		{
+			maxfiles = remoteList.size();	
 			
-			// updating Progressbar
-			filecount++;
-			percent = filecount * 100 / maxfiles;
-			Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
-			publishProgress(path, Integer.toString(percent));
+			for(LsEntry remoteObj : remoteList)
+			{
+				if(syncerror){
+			   		Log.d("syncclient","connectionerror");
+			   	}
+				else
+			  	{
+					String fileName = remoteObj.getFilename();
+					Log.d("syncclient","Processing remote File:"+fileName);
+					if(!fileName.equals(".") && !fileName.equals(".."))
+					{
+						if(remoteObj.getLongname().substring(0,1).equals("d"))
+						{
+							syncRemoteFile(path + "/" + remoteObj.getFilename());
+						}
+						else
+						{
+							String localPath = path.replace(server.getRemoteroot() + "/", "") + "/" + fileName;
+									
+							if(db.getFile(localPath, folder.getId()) == null)
+							{
+								Log.d("jada","Remote file not held locally, Localpath:"+localPath);
+								File file = new File(localPath);
+								
+								SyncFile syncFile = new SyncFile(folder.getId(), localPath);
+								syncFile = downloadFile(file, syncFile);
+								
+								db.createFile(syncFile);
+							}
+						}
+
+
+					}
+					//updating Progressbar
+					filecount++;
+					percent = filecount * 100 / maxfiles;
+					Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
+					publishProgress(path, Integer.toString(percent));
+				
+			   	}
+			}
 		}
 	}
 
-	private SyncFile uploadFile(File file, SyncFile syncFile) {
+	private SyncFile uploadFile(File file, SyncFile syncFile)
+	{
+		
 		syncFile = syncConnectionObj.uploadFile(file, syncFile);
-		syncFile.setLocalCheckSum(getLocalCheckSum(file.getPath()));
+		if(syncFile == null)
+		{
+			syncerror = true;
+			return null;
+		}
+		else
+		{
+			syncFile.setLocalCheckSum(getLocalCheckSum(file.getPath())); 	
+			return syncFile;
+		}
 
-		return syncFile;
+			
+
+		
 	}
+
+
 
 	private SyncFile downloadFile(File file, SyncFile syncFile) {
 		syncFile = syncConnectionObj.downloadFile(file, syncFile);
-		syncFile.setLocalCheckSum(getLocalCheckSum(file.getPath()));
+
+		try {
+			syncFile.setLocalCheckSum(getLocalCheckSum(file.getPath()));
+		} catch (Exception e) {
+			syncerror = true;
+			e.printStackTrace();
+		} 	
 
 		return syncFile;
 	}
+	private void connectionError(){
+		publishProgress("Connection error", "0");
+	}
+	
+
 
 	private String getLocalCheckSum(String filePath) {
 		InputStream inputStream = null;
@@ -230,9 +327,23 @@ public class SyncClient extends AsyncTask<String, String, String> {
 		}
 	}
 
-	private String getRemoteCheckSum(String filePath) {
-		return syncConnectionObj.getRemoteCheckSum(filePath);
+	
+	
+	private String getRemoteCheckSum(String filePath)
+	{
+		try {
+			String remoteChecksum = syncConnectionObj.getRemoteCheckSum(filePath);
+			return remoteChecksum;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			syncerror = true;
+			e.printStackTrace();
+			return null;
+			
+		}
 	}
+		
+
 
 	private static int getFilesCount(File file) {
 		File[] files = file.listFiles();

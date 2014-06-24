@@ -84,8 +84,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            style="?android:attr/buttonBarStyle"
-            
             android:layout_marginTop="40dp" >
 
             <Button
@@ -95,7 +93,6 @@
                 android:layout_marginLeft="@dimen/default_gap"
                 android:layout_marginRight="@dimen/default_gap"
                 android:layout_weight="1"
-                style="?android:attr/buttonBarButtonStyle"
                 android:onClick="onButtonClicked"
                 android:text="@string/main_button_settings" />
 
@@ -106,7 +103,6 @@
                 android:layout_marginRight="@dimen/default_gap"
                 android:layout_marginLeft="@dimen/default_gap"
                 android:layout_weight="1"
-                style="?android:attr/buttonBarButtonStyle"
                 android:onClick="onButtonClicked"
                 android:text="@string/main_button_folders" />
         </LinearLayout>

@@ -1,5 +1,8 @@
 package ch.ffhs.privatecloudffhs.database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 /**
@@ -278,7 +282,8 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 
 		Cursor c = db.rawQuery(selectQuery, null);
 
-		if (c != null && c.moveToFirst()) {
+		if (c != null && c.moveToFirst()) 
+		{
 			SyncFile file = new SyncFile(c.getInt(c
 					.getColumnIndex(KEY_FOLDER_ID)), c.getString(c
 					.getColumnIndex(KEY_PATH)));
@@ -302,14 +307,14 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 	 */
 	public SyncFile getFile(String path, int folderId) {
 		SQLiteDatabase db = this.getReadableDatabase();
-
 		String selectQuery = "SELECT  * FROM " + TABLE_FILE + " WHERE "
 				+ KEY_FOLDER_ID + " = " + folderId + " AND " + KEY_PATH
-				+ " = '" + path + "'";
+				+ " = ? ";
+
 
 		Log.e(LOG, selectQuery);
 
-		Cursor c = db.rawQuery(selectQuery, null);
+		Cursor c = db.rawQuery(selectQuery, new String[] {path});
 
 		if (c != null && c.moveToFirst()) {
 			SyncFile file = new SyncFile(c.getInt(c
