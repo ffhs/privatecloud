@@ -5,14 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-public class SyncReceiver extends BroadcastReceiver {   
+/**
+ * SyncReceiver
+ * 
+ * Startet den Service nach dem Bootvorgang des Geräts
+ * 
+ * @author Thierry Baumann
+ */
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-    	Log.d("TimeService", "RECEIVER DIESEEEE");
-		Log.e("TimeService", "RECEIVER DIESEEEE");
+public class SyncReceiver extends BroadcastReceiver {
+
+	@Override
+	public void onReceive(Context context, Intent intent) {
 		Intent myIntent = new Intent(context, SyncService.class);
-        context.startService(myIntent);
-    }
+		context.startService(myIntent);
+	}
 
 }

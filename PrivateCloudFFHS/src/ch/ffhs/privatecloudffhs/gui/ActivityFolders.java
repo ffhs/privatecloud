@@ -22,9 +22,9 @@ import android.widget.AbsListView.MultiChoiceModeListener;
 /**
  * ActivityFolders
  * 
- * Diese Activity wird verwendet um alle zu synchronisierenden aufzulisten. Ebenso kšnnen Order hinzugefŸgt und gelšscht werden.
+ * Diese Activity wird verwendet um alle zu synchronisierenden aufzulisten. Ebenso kï¿½nnen Order hinzugefï¿½gt und gelï¿½scht werden.
  
- * @author         Thierry Baumann
+ * @author         Thierry Baumann Martin MÃ¼ller
  */
 
 @SuppressLint("NewApi")

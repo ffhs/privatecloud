@@ -13,13 +13,25 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 	PrivateCloudDatabase privateCloudDatabase;
 	public void testPrivateCloudDatabase() {
 		privateCloudDatabase = new PrivateCloudDatabase(getContext());
-		assertNotNull(privateCloudDatabase);
+		try{
+			assertNotNull(privateCloudDatabase);
+		}
+		catch(Exception e){
+		      fail("Should not have thrown any exception");
+		}
+
 		privateCloudDatabase.close();
 	}
 	public void testCreateServer() {
 		privateCloudDatabase = new PrivateCloudDatabase(getContext());
 		Server server = new Server("Servername for Junit");
-		privateCloudDatabase.createServer(server);
+		try{
+			privateCloudDatabase.createServer(server);
+		}
+		catch(Exception e){
+		      fail("Should not have thrown any exception");
+		}
+		
 		privateCloudDatabase.close();
 	}
 
@@ -33,7 +45,13 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 			if(server.getServername().equals("Servername for Junit"))
 			{
 				server.setHostname("bla.bli.blu");
-				privateCloudDatabase.updateServer(server);
+				try{
+					privateCloudDatabase.updateServer(server);
+				}
+				catch(Exception e){
+				      fail("Should not have thrown any exception");
+				}
+				
 			}
 		}
 		privateCloudDatabase.close();
@@ -42,7 +60,13 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 		privateCloudDatabase = new PrivateCloudDatabase(getContext());
 		Folder folder = new Folder();
 		folder.setPath("Testpath for junit");
-		privateCloudDatabase.createFolder(folder);
+		try{
+			privateCloudDatabase.createFolder(folder);
+		}
+		catch(Exception e){
+		      fail("Should not have thrown any exception");
+		}
+		
 		privateCloudDatabase.close();
 	}
 	public void testGetAllFolders() {
@@ -56,7 +80,12 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 	public void testCreateFile() {
 		privateCloudDatabase = new PrivateCloudDatabase(getContext());
 		SyncFile syncfile = new SyncFile(99, "filename for junit");
-		privateCloudDatabase.createFile(syncfile);
+		try{
+			privateCloudDatabase.createFile(syncfile);
+		}
+		catch(Exception e){
+		      fail("Should not have thrown any exception");
+		}
 		privateCloudDatabase.close();
 	}
 
@@ -71,7 +100,13 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 			{
 				SyncFile syncfile1 = privateCloudDatabase.getFile(syncfile.getId());
 				syncfile1.setPath("filename2");
-				privateCloudDatabase.updateFile(syncfile1);
+				try{
+					privateCloudDatabase.updateFile(syncfile1);
+				}
+				catch(Exception e){
+				      fail("Should not have thrown any exception");
+				}
+				
 			}
 		}
 		
@@ -87,8 +122,13 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 			syncfile = iterator.next();
 			if ( syncfile.getPath().equals("filename for junit"))
 			{
+				try{
+					privateCloudDatabase.deleteFile(syncfile.getId());
+				}
+				catch(Exception e){
+				      fail("Should not have thrown any exception");
+				}
 				
-				privateCloudDatabase.deleteFile(syncfile.getId());
 			}
 		}		
 		
@@ -104,7 +144,13 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 			folder = iterator.next();
 			if ( folder.getPath().equals("Testpath for junit"))
 			{
-				privateCloudDatabase.deleteFolder(folder.getId());
+				try{
+					privateCloudDatabase.deleteFolder(folder.getId());
+				}
+				catch(Exception e){
+				      fail("Should not have thrown any exception");
+				}
+				
 			}
 		}
 		privateCloudDatabase.close();
@@ -119,7 +165,13 @@ public class PrivateCloudDatabaseTest extends AndroidTestCase {
 			server = iterator.next();
 			if(server.getServername().equals("Servername for Junit"))
 			{
-				privateCloudDatabase.deleteServer(server.getId());
+				try{
+					privateCloudDatabase.deleteServer(server.getId());
+				}
+				catch(Exception e){
+				      fail("Should not have thrown any exception");
+				}
+
 			}
 		}
 		privateCloudDatabase.close();

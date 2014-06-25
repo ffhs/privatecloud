@@ -64,7 +64,7 @@ public class ActivityMain extends Activity {
 				try {
 					String TEXT = intent.getStringExtra("TEXT");
 					String percent = intent.getStringExtra("PERCENT");
-					Log.e("MAIN", "Progressbar intent received. TEXT:" + TEXT
+					Log.d("MAIN", "Progressbar intent received. TEXT:" + TEXT
 							+ " PERCENT:" + percent);
 					Text_SyncProgress.setText(TEXT);
 					progressbar.setProgress(Integer.parseInt(percent));
@@ -154,16 +154,20 @@ public class ActivityMain extends Activity {
 		mSensorManager.registerListener(mShakeDetector, mAccelerometer,
 				SensorManager.SENSOR_DELAY_UI);
 
+		
+		
+		updateLastSync();
+	}
+
+	
+	private void checkconflict() {
 		Button buttonConflict = (Button) findViewById(R.id.Main_Button_Conflict);
 		if (db.isanyconflict()) {
 			buttonConflict.setVisibility(View.VISIBLE);
 		} else {
 			buttonConflict.setVisibility(View.GONE);
 		}
-
-		updateLastSync();
 	}
-
 	private void updateLastSync() {
 		Folder lastSyncedFolder = db.getLastSyncedFolder();
 		TextView txtLastSync = (TextView) findViewById(R.id.Main_Text_LastSync);
@@ -179,6 +183,7 @@ public class ActivityMain extends Activity {
 		} else {
 			txtLastSync.setText(R.string.main_label_lastsync_none);
 		}
+		checkconflict();
 	}
 
 	@Override

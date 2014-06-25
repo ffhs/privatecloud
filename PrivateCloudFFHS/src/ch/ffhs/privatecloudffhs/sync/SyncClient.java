@@ -18,9 +18,16 @@ import ch.ffhs.privatecloudffhs.database.Folder;
 import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.Server;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
-
+/**
+* SyncClient
+*
+* Für jeden zu synchronisierenden lokalen Order wird ein SyncClient gestartet. Der SyncClient führt die synchronisation des Ordners durch.
+* Die Verbindung wird mit dem syncConnectionObj hergestellt welches am Konstruktor übergeben wird.
+*  
+* @author         Thierry Baumann, Martin Müller, Pascal Bieri
+*/
 public class SyncClient extends AsyncTask<String, String, String> {
- 
+
 	private Folder folder;
 	private Server server;
 	private Boolean running;
@@ -31,7 +38,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 	private int filecount;
 	private int maxfiles;
 	private int percent;
-
+	private static final String TAG = "SyncClient";
 	private boolean syncerror = false;
 	public SyncClient(Context context, Folder folder, SyncConnection syncConnectionObj, Server server) {
 		super();
@@ -48,7 +55,6 @@ public class SyncClient extends AsyncTask<String, String, String> {
 		// Reset values for Progressbar before Sync --> syncLocalDirectory() is
 		// recursive
 		maxfiles = getFilesCount(file);
-		Log.d("SYNC TEST", maxfiles + "");
 		percent = 0;
 		filecount = 0;
 		syncLocalDirectory(file);
@@ -80,14 +86,15 @@ public class SyncClient extends AsyncTask<String, String, String> {
 	private void syncLocalDirectory(File dir) {
 		File[] localFiles = dir.listFiles();
 		syncConnectionObj.mkDir(server.getRemoteroot() + dir.getPath());
-		Log.d("jada","Dir"+dir.getAbsolutePath());
-		Log.d("jada","files:"+localFiles);
+		Log.d(TAG,"Dir"+dir.getAbsolutePath());
+		Log.d(TAG,"files:"+localFiles);
 	   for (File file : localFiles) {
 		   	if(syncerror){
 		   		connectionError();
 		   	}
 		   	else
 		   	{
+		   		Log.d(TAG,"Processing File:"+file.getPath());
 			   	if(file.isDirectory())
 				{
 			   		syncLocalDirectory(file);
@@ -96,7 +103,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 					filecount++;
 					percent = filecount * 100 / maxfiles;
 					Log.e("SyncClient", "Maxfiles:" + maxfiles + " filecount:" + filecount + " result:" + percent);
-					publishProgress(dir.getAbsolutePath(), Integer.toString(percent));
+					publishProgress(file.getAbsolutePath(), Integer.toString(percent));
 			   		syncConnectionObj.initFolderSync(server.getRemoteroot() + dir.getPath());			
 	
 					SyncFile cachedFile = db.getFile(file.getPath(), folder.getId());
@@ -115,7 +122,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 						}else
 						{
 							db.createFile(cachedFile);
-							Log.d("SYNC SSHPW", "NEW FILE SYNC ...");
+							Log.d(TAG, "NEW FILE SYNC ...");
 						}
 					}
 					else
@@ -126,12 +133,13 @@ public class SyncClient extends AsyncTask<String, String, String> {
 							{
 								if(cachedFile.getRemoteCheckSum() == null || remoteCheckSum.isEmpty())
 								{
-									Log.d("SYNC SSHPW", "REMOTE NULL UPLOAD...");
+									
+									Log.d(TAG, "REMOTE NULL UPLOAD...");
 									cachedFile = uploadFile(file, cachedFile);
 								}
 								else if(cachedFile.getLocalCheckSum() == null)
 								{
-									Log.d("SYNC SSHPW", "LOCAL NULL DOWNLOAD...");
+									Log.d(TAG, "LOCAL NULL DOWNLOAD...");
 		
 									cachedFile = downloadFile(file, cachedFile);
 								}
@@ -140,7 +148,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 								{
 									if(!cachedFile.getLocalCheckSum().equals(localCheckSum))
 									{			
-										Log.d("SYNC SSHPW", "LOCAL CHANGED UPLOAD...");
+										Log.d(TAG, "LOCAL CHANGED UPLOAD...");
 		
 										cachedFile = uploadFile(file, cachedFile);
 									}					
@@ -152,13 +160,13 @@ public class SyncClient extends AsyncTask<String, String, String> {
 									if(cachedFile.getLocalCheckSum().equals(localCheckSum))
 									{
 										cachedFile = downloadFile(file, cachedFile);
-										Log.d("SYNC SSHPW", "FILE DOWNLOADED...");
+										Log.d(TAG, "FILE DOWNLOADED...");
 									}
 									else
 									{
 										// !conflict! file has been changed on remote srv and local device
 										cachedFile.setConflict(true);
-										Log.d("SYNC SSHPW", "FILE CHANGED REMOTE AND LOCAL...");
+										Log.d(TAG, "FILE CHANGED REMOTE AND LOCAL...");
 									}
 								}					
 								if(cachedFile != null)
@@ -169,7 +177,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 						}
 						else
 						{
-							Log.d("SYNC SSHPW", "CONFILCT FILE");
+							Log.d(TAG, "CONFILCT FILE");
 						}
 					}
 				}	
@@ -220,7 +228,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 									
 							if(db.getFile(localPath, folder.getId()) == null)
 							{
-								Log.d("jada","Remote file not held locally, Localpath:"+localPath);
+								Log.d(TAG,"Remote file not held locally, Localpath:"+localPath);
 								File file = new File(localPath);
 								
 								SyncFile syncFile = new SyncFile(folder.getId(), localPath);
@@ -316,17 +324,14 @@ public class SyncClient extends AsyncTask<String, String, String> {
 	private String getRemoteCheckSum(String filePath)
 	{
 		String remoteChecksum;
-
 		remoteChecksum = syncConnectionObj.getRemoteCheckSum(filePath);
 		if(remoteChecksum==null)
 		{
 			syncerror = true;
-			return null;
+			return "123";
 		}
 		return remoteChecksum;
 	}
-		
-
 
 	private static int getFilesCount(File file) {
 		File[] files = file.listFiles();
@@ -346,7 +351,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 		for (int i = 0; i < 20; i++) {
 			if (!syncConnectionObj.isConnected()
 					&& !syncConnectionObj.isError()) {
-				Log.d("SYNC CLIENT", "SYNC SLEEP");
+				Log.d(TAG, "SYNC SLEEP");
 
 				try {
 					Thread.sleep(1000);
@@ -362,7 +367,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 		}
 
 		if (syncConnectionObj.isConnected()) {
-			Log.d("SYNC CLIENT", "SYNC START DO IN BACKGROUND");
+			Log.d(TAG, "SYNC START DO IN BACKGROUND");
 			sync();
 		}
 

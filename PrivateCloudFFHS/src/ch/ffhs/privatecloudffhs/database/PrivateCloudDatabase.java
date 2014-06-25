@@ -19,7 +19,7 @@ import android.util.Log;
  * 
  * PrivateCloud Datenbank-Anbindung
  * 
- * @author         Thierry Baumann
+ * @author         Thierry Baumann, Pascal Bieri
  */
 public class PrivateCloudDatabase extends SQLiteOpenHelper {
 
@@ -112,7 +112,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 		List<Folder> folders = new ArrayList<Folder>();
 		String selectQuery = "SELECT  * FROM " + TABLE_FOLDER;
 
-		Log.e(LOG, selectQuery);
+		Log.d(LOG, selectQuery);
 
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
@@ -143,7 +143,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 		String selectQuery = "SELECT  * FROM " + TABLE_FOLDER + " WHERE "
 				+ KEY_ID + " = " + folderId;
 
-		Log.e(LOG, selectQuery);
+		Log.d(LOG, selectQuery);
 
 		Cursor c = db.rawQuery(selectQuery, null);
 
@@ -170,7 +170,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 		String selectQuery = "SELECT  * FROM " + TABLE_FOLDER + " ORDER BY "
 				+ KEY_LASTSYNC + " DESC LIMIT 1";
 
-		Log.e(LOG, selectQuery);
+		Log.d(LOG, selectQuery);
 
 		Cursor c = db.rawQuery(selectQuery, null);
 
@@ -241,7 +241,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 		List<SyncFile> files = new ArrayList<SyncFile>();
 		String selectQuery = "SELECT  * FROM " + TABLE_FILE;
 
-		Log.e(LOG, selectQuery);
+		Log.d(LOG, selectQuery);
 
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
@@ -278,7 +278,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 		String selectQuery = "SELECT  * FROM " + TABLE_FILE + " WHERE "
 				+ KEY_ID + " = " + fileId;
 
-		Log.e(LOG, selectQuery);
+		Log.d(LOG, selectQuery);
 
 		Cursor c = db.rawQuery(selectQuery, null);
 
@@ -312,7 +312,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 				+ " = ? ";
 
 
-		Log.e(LOG, selectQuery);
+		Log.d(LOG, selectQuery);
 
 		Cursor c = db.rawQuery(selectQuery, new String[] {path});
 
@@ -397,7 +397,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 		List<Server> servers = new ArrayList<Server>();
 		String selectQuery = "SELECT  * FROM " + TABLE_SERVER;
 
-		Log.e(LOG, selectQuery);
+		Log.d(LOG, selectQuery);
 
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
@@ -436,7 +436,7 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 		String selectQuery = "SELECT  * FROM " + TABLE_SERVER + " WHERE "
 				+ KEY_ID + " = " + serverId;
 
-		Log.e(LOG, selectQuery);
+		Log.d(LOG, selectQuery);
 
 		Cursor c = db.rawQuery(selectQuery, null);
 
@@ -484,14 +484,6 @@ public class PrivateCloudDatabase extends SQLiteOpenHelper {
 
 	public int updateServer(Server server) {
 		SQLiteDatabase db = this.getWritableDatabase();
-
-
-//		if (server.getPassword() != null) {
-//			String password = server.getPassword();
-//		}
-//		if (server.getCertpath() != null) {
-//			String certPath = server.getCertpath();
-//		}
 
 		ContentValues values = new ContentValues();
 		values.put(KEY_SERVERNAME, server.getServername());

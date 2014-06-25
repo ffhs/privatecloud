@@ -8,18 +8,21 @@ import ch.ffhs.privatecloudffhs.database.PrivateCloudDatabase;
 import ch.ffhs.privatecloudffhs.database.SyncFile;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 
 /**
  * ConflictListAdapter
  * 
- * Listen Adapter fŸr Dateien mit Konflikten
+ * Listen Adapter fï¿½r Dateien mit Konflikten
  *  
  * @author         Thierry Baumann
  */
@@ -55,13 +58,28 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile> {
 					.findViewById(R.id.Conflict_List_Server);
 			holder.decision = (Switch) convertView
 					.findViewById(R.id.Conflict_List_Decision);
-
+			holder.decision.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					// TODO Auto-generated method stub
+					SyncFile file = (SyncFile) buttonView.getTag();
+					// local file chosen
+					if (isChecked) {
+						file.setDecision(1);
+					} else {
+						file.setDecision(2);
+					}
+					Log.d("jada",isChecked+"da");
+				}
+			
+			});
+			
+			/*
 			// if switch is toggled, update the decision
 			holder.decision.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					Switch cb = (Switch) v;
 					SyncFile file = (SyncFile) cb.getTag();
-
 					// local file chosen
 					if (cb.isChecked()) {
 						file.setDecision(1);
@@ -70,6 +88,7 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile> {
 					}
 				}
 			});
+			*/
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
@@ -117,13 +136,14 @@ public class ConflictListAdapter extends ArrayAdapter<SyncFile> {
 				file.setRemoteCheckSum(null);
 			} else {
 				file.setLocalCheckSum(null);
+				Log.d("jada","OK");
 			}
 
 			file.setConflict(false);
-
-			db.updateFile(file);
-			db.close();
+			
+			db.updateFile(file);	
 		}
+		db.close();
 	}
 
 	private class ViewHolder {

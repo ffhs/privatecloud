@@ -6,7 +6,13 @@ import java.util.Vector;
 import com.jcraft.jsch.ChannelSftp.LsEntry;
 
 import ch.ffhs.privatecloudffhs.database.SyncFile;
-
+/**
+* SyncConnection
+*
+* Interface für alle Verbindungs Objekten
+*
+* @author Thierry Baumann
+*/
 public interface SyncConnection {
 	public SyncFile uploadFile(File file, SyncFile syncFile);
 	public SyncFile downloadFile(File file, SyncFile syncFile);

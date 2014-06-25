@@ -41,7 +41,7 @@ public class SshCertConnection extends SshConnection {
 		if (length > Integer.MAX_VALUE) {
 			try {
 				throw new IOException(
-						"File to process is too big to process in this example.");
+						"File to process is too big to process");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
