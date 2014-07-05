@@ -197,9 +197,38 @@ public class ActivityMain extends Activity {
 			break;
 
 		case R.id.Main_Button_SyncNow:
-			Log.d("MAIN", "R.id.Main_Button_SyncNow clicked");
-			Text_SyncProgress.setText(getString(R.string.progress_sync_start));
-			syncService.syncNow();
+			if (db.getAllServers().size() == 0) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+						context);
+
+				// set title
+				alertDialogBuilder.setTitle(R.string.error);
+
+				// set dialog message
+				alertDialogBuilder
+						.setMessage(R.string.error_server_first)
+						.setCancelable(false)
+						.setPositiveButton(android.R.string.ok,
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int id) {
+										// if this button is clicked, just close
+										// the dialog box and do nothing
+										dialog.cancel();
+									}
+								});
+
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+
+				// show it
+				alertDialog.show();
+			}
+			else {
+				Log.d("MAIN", "R.id.Main_Button_SyncNow clicked");
+				if(syncService.syncNow()) Text_SyncProgress.setText(getString(R.string.progress_sync_start));
+			}
 
 			break;
 

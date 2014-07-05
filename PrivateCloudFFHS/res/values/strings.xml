@@ -57,7 +57,10 @@
 	<string name="progress_sync_start">Starting</string>
     <string name="progress_connection_local_start">Start sync local files...</string>
     <string name="progress_connection_remote_start">Start sync remote files...</string>
-    <string name="progress_connection_error">Connection to server could not be established, please check your configuration...</string>
+    <string name="progress_connection_error">connection to server could not be established, please check your configuration...</string>
+    <string name="progress_error_no_server_linked_1">no remote server for local folder</string>
+    <string name="progress_error_no_server_linked_2">has been removed</string>
+   	<string name="progress_error_no_folders">no local folders selected to sync</string>
     
     	
 	<string name="notification_title">Sync conflict</string>
@@ -78,8 +81,6 @@
 
     <string-array name="protocols">
         <item>SFTP (ssh)</item>
-        <item>FTP (Premium only)</item>
-        <item>FTPS (Premium only)</item>
     </string-array>
 
     <string name="title_activity_conflict">ConflictActivity</string>

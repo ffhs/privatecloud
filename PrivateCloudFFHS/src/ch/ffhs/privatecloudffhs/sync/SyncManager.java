@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 
 public class SyncManager {
@@ -25,7 +26,8 @@ public class SyncManager {
 	private PrivateCloudDatabase db;
 	private Context context;
 	private ArrayList<SyncClient> syncClients;
-	
+	public static final String ProgressBar_Intent = "ch.ffhs.privatecloudffhs.sync";
+
 	public SyncManager(Context context) {
 		this.context = context;
 		
@@ -34,7 +36,7 @@ public class SyncManager {
 	}
 	
 	
-	private class LongOperation extends AsyncTask<String, Integer, String> {
+	private class LongOperation extends AsyncTask<String, String, String> {
 		
 		public LongOperation(){
 			super();
@@ -44,18 +46,17 @@ public class SyncManager {
 			List<Folder> syncfolders = db.getAllFolders();
 			for (Folder folder : syncfolders) {
 				Server server = db.getServer(folder.getServerId());
-				if(server != null){
+				if(server != null && (server.getPassword() != null || server.getCertpath() != null)){
 						
 					SyncConnection syncConnectionObj = null;
 	
-					if(server.getPassword() == null) {
-						// build connection using cert
-						syncConnectionObj = new SshCertConnection(server,folder);
-						
-					}
-					else {
+					if(server.getPassword() != null) {
 						// build connection with password-based authentication 
 						syncConnectionObj = new SshPwConnection(server,folder);
+					}
+					else {
+						// build connection using cert
+						syncConnectionObj = new SshCertConnection(server,folder);
 					}
 					
 					SyncClient syncClientObj = new SyncClient(context, folder, syncConnectionObj, server);
@@ -63,7 +64,20 @@ public class SyncManager {
 	
 					syncClients.add(syncClientObj);
 				}
+				else
+				{
+					StringBuilder errorMsg =  new StringBuilder();
+					errorMsg .append(context.getString(R.string.error)).append(", ");
+					errorMsg.append(context.getString(R.string.progress_connection_error)).append(" ");
+					errorMsg.append(context.getString(R.string.progress_error_no_server_linked_1)).append(folder.getPath()).append(" ");
+					
+					publishProgress(errorMsg.toString(), "0");
+				}
 			}	
+			
+			if(syncfolders.size() == 0) {
+				publishProgress(context.getString(R.string.error) + ", " + context.getString(R.string.progress_error_no_folders), "0");
+			}
 			
 			while(isRunning())
 			{
@@ -80,6 +94,22 @@ public class SyncManager {
 			Log.d(TAG, "DONE");
 
 			return "Executed";
+		}
+		
+
+		protected void onProgressUpdate(String... progress) {
+			Intent i = new Intent();
+			Bundle extras = new Bundle();
+
+			if (Integer.parseInt(progress[1]) > 99) progress[1] = "99";
+			if (progress.length > 2 && progress[2] == "1") progress[1] = "100";
+
+			extras.putString("TEXT", progress[0]);
+			extras.putString("PERCENT", progress[1]);
+			i.putExtras(extras);
+
+			i.setAction(ProgressBar_Intent);
+			context.sendBroadcast(i);
 		}
 	}
 	
@@ -102,7 +132,7 @@ public class SyncManager {
 	private void conflictnotification(){
 		db = new PrivateCloudDatabase(context);
 		if(db.isanyconflict()){
-			Log.d("jada", "There is a conflict");
+			Log.d(TAG, "There is a conflict");
 			int icon = R.drawable.notification_icon;
 			long when = System.currentTimeMillis();
 			String ns = Context.NOTIFICATION_SERVICE;
@@ -136,80 +166,8 @@ public class SyncManager {
 			
 		}
 		else{
-			Log.d("jada", "There is no conflict");
+			Log.d(TAG, "There is no conflict");
 		}
-		/*
-
-	    int icon = R.drawable.notification_icon;
-	    long when = System.currentTimeMillis();
-	    String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
-	    Intent intent=new Intent(context,Main.class);
-	    PendingIntent  pending=PendingIntent.getActivity(context, 0, intent, 0);
-	    Notification notification;
-	        if (Build.VERSION.SDK_INT < 11) {
-	            notification = new Notification(icon, "Title", when);
-	            notification.setLatestEventInfo(
-	                    context,
-	                    context.getResources().getString(R.string.notification_title),
-	                    context.getResources().getString(R.string.notification_text),
-	                    pending);
-	        } else {
-	            notification = new Notification.Builder(context)
-	                    .setContentTitle(context.getResources().getString(R.string.notification_title))
-	                    .setContentText(
-	                    		context.getResources().getString(R.string.notification_text)).setSmallIcon(R.drawable.notification_icon)
-	                    .setContentIntent(pending).setWhen(when).setAutoCancel(true)
-	                    .setPriority(Notification.PRIORITY_MIN)
-	                    .build();
-	        }
-	    notification.flags |= Notification.FLAG_AUTO_CANCEL;
-	    notification.defaults |= Notification.DEFAULT_SOUND;
-	    mNotificationManager.notify(0, notification);
-	    
-*/
-		
-		
-		/*
-		    final NotificationCompat.Builder builder = new Builder(context);
-	        builder.setSmallIcon(R.drawable.ic_launcher);
-	        builder.setContentTitle("content title");
-	        builder.setTicker("ticker");
-	        builder.setContentText("content text");
-	        final Intent notificationIntent = new Intent(context, Main.class);
-	        final PendingIntent pi = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-	        builder.setContentIntent(pi);
-	        final Notification notification = builder.build();
-	        // notification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
-	        // notification.flags |= Notification.FLAG_NO_CLEAR;
-	        // notification.flags |= Notification.FLAG_ONGOING_EVENT;
-
-	        startForeground(0, notification);
-	        
-	        
-	        
-	        */
-		
-		
-		
-
-			
-		
-		/*
-			int icon = R.drawable.notification_icon;
-			NotificationCompat.Builder builder =
-		            new NotificationCompat.Builder(context)
-		                    .setSmallIcon(icon)
-		                    .setContentTitle("My Notification Title")
-		                    .setContentText("Something interesting happened");
-		    int NOTIFICATION_ID = 12345;
-
-		    Intent targetIntent = new Intent(context, Main.class);
-		    PendingIntent contentIntent = PendingIntent.getActivity(context, 0, targetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		    builder.setContentIntent(contentIntent);
-		    NotificationManager nManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		    nManager.notify(NOTIFICATION_ID, builder.build());
-			*/
 	}
 	
 	public boolean isRunning()
@@ -218,12 +176,13 @@ public class SyncManager {
 		{
 			if(syncClient.isRunning())
 			{
-				Log.d("threads","running");
+				Log.d(TAG,"running");
 				return true;
 			}
-			//syncClients.remove(syncClient);
 		}
 		
 		return false;
 	}
+	
+
 }

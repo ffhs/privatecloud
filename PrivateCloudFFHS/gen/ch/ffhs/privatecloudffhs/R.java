@@ -110,9 +110,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int folders=0x7f090000;
     }
     public static final class string {
-        public static final int action_settings=0x7f060044;
+        public static final int action_settings=0x7f060047;
         public static final int app_name=0x7f060000;
-        public static final int confirm_folder_added=0x7f060036;
+        public static final int confirm_folder_added=0x7f060039;
         public static final int conflict_button_cancel=0x7f060027;
         public static final int conflict_button_save=0x7f060026;
         public static final int conflict_switch_local=0x7f060024;
@@ -120,9 +120,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int dummy_button=0x7f06002a;
         public static final int dummy_content=0x7f06002b;
         public static final int editfolders_no_folder=0x7f06002c;
-        public static final int error=0x7f06003e;
-        public static final int error_folder_path=0x7f060040;
-        public static final int error_server_first=0x7f06003f;
+        public static final int error=0x7f060041;
+        public static final int error_folder_path=0x7f060043;
+        public static final int error_server_first=0x7f060042;
         public static final int folders_button_add=0x7f06000c;
         public static final int folders_button_cancel=0x7f060010;
         public static final int folders_button_delete=0x7f06000e;
@@ -132,7 +132,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int folders_label_lastsync=0x7f06000a;
         public static final int folders_label_path=0x7f060009;
         public static final int folders_label_title=0x7f060008;
-        public static final int hello_world=0x7f060043;
+        public static final int hello_world=0x7f060046;
         public static final int main_button_conflict=0x7f060007;
         public static final int main_button_folders=0x7f060005;
         public static final int main_button_settings=0x7f060004;
@@ -140,20 +140,23 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_label_lastsync=0x7f060002;
         public static final int main_label_lastsync_none=0x7f060003;
         public static final int main_label_title=0x7f060001;
-        public static final int notification_text=0x7f060035;
-        public static final int notification_title=0x7f060034;
-        public static final int perfname=0x7f06003d;
-        public static final int perfs_hostname=0x7f060037;
-        public static final int perfs_keyorpw=0x7f06003c;
-        public static final int perfs_password=0x7f06003b;
-        public static final int perfs_port=0x7f060038;
-        public static final int perfs_remotedir=0x7f06003a;
-        public static final int perfs_username=0x7f060039;
+        public static final int notification_text=0x7f060038;
+        public static final int notification_title=0x7f060037;
+        public static final int perfname=0x7f060040;
+        public static final int perfs_hostname=0x7f06003a;
+        public static final int perfs_keyorpw=0x7f06003f;
+        public static final int perfs_password=0x7f06003e;
+        public static final int perfs_port=0x7f06003b;
+        public static final int perfs_remotedir=0x7f06003d;
+        public static final int perfs_username=0x7f06003c;
         public static final int progress_connection_error=0x7f060033;
         public static final int progress_connection_local_start=0x7f060031;
         public static final int progress_connection_remote_start=0x7f060032;
+        public static final int progress_error_no_folders=0x7f060036;
+        public static final int progress_error_no_server_linked_1=0x7f060034;
+        public static final int progress_error_no_server_linked_2=0x7f060035;
         public static final int progress_sync_start=0x7f060030;
-        public static final int server_key_sendmail=0x7f060041;
+        public static final int server_key_sendmail=0x7f060044;
         public static final int server_label_password=0x7f060022;
         public static final int server_label_protocol=0x7f06001f;
         public static final int server_label_servername=0x7f06001e;
@@ -176,7 +179,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int settings_label_title=0x7f060011;
         public static final int settings_label_username=0x7f060014;
         public static final int title_activity_activity_edit_folder=0x7f06002d;
-        public static final int title_activity_conflict=0x7f060042;
+        public static final int title_activity_conflict=0x7f060045;
         public static final int title_activity_folders=0x7f060028;
         public static final int title_activity_server=0x7f060029;
     }

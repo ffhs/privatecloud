@@ -160,16 +160,18 @@ public class SyncService extends Service {
 	}
 	
 	public class SyncServiceBinder extends Binder {		
-		public void syncNow()
+		public boolean syncNow()
 		{
 			if(!syncManagerObj.isRunning())
 			{
 				sync();
 				Toast.makeText(getApplicationContext(), R.string.service_sync_start, Toast.LENGTH_LONG).show();
+				return true;
 			}
 			else
 			{
 				Toast.makeText(getApplicationContext(), R.string.service_sync_running, Toast.LENGTH_LONG).show();
+				return false;
 			}
 		}	
 	}

@@ -58,8 +58,8 @@ public class SimpleFileDialog
 	{
 		m_context = context;
 		m_SimpleFileDialogListener = SimpleFileDialogListener;
-		m_sdcardDirectory = Environment.getRootDirectory().getAbsolutePath();
-		m_sdcardDirectory = "/";
+		m_sdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+		//m_sdcardDirectory = "/";
 
 		try
 		{
