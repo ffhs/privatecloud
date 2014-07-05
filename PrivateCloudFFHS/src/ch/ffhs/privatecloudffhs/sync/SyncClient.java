@@ -216,7 +216,7 @@ public class SyncClient extends AsyncTask<String, String, String> {
 						}
 						else
 						{
-							String localPath = path.replace(server.getRemoteroot() + "/", "") + "/" + fileName;
+							String localPath = path.replace(server.getRemoteroot(), "") + "/" + fileName;
 									
 							if(db.getFile(localPath, folder.getId()) == null)
 							{
